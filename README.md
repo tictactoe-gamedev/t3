@@ -15,3 +15,5 @@ An open source hobby game framework done by tictactoe game developer community
 * We don't have so much coding standards. Just write readable code, and don't try to look smart. (We already know you're smart)
 * If you have an idea to implement, let's discuss it on discord. If you don't have an idea but want to contribute, we have a projects page. Check there for any todo's that you can do. 
 
+### documentation
+* Yes, we have one at [here](docs/idea.md)
