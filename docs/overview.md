@@ -13,3 +13,11 @@ Predefined log levels:
 `LOG_LEVEL_INFO `   
 `LOG_LEVEL_WARNING`  
 `LOG_LEVEL_ERROR`
+
+## Assertion
+`#include (framework/helper/logging.h)`   
+If you want to halt the execution at some cases, you can use assertion. Example:
+
+`T3_Assert(someCondition, "The message that will be logged, if the condition is true.");`
+
+Assertions will not be included in the builds.
