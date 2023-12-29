@@ -6,15 +6,21 @@
 
 Uint64 PreviousFrameMS = 0;
 Uint64 CurrentFrameMS = 0;
+SDL_Color DefaultBackground = GAME_CONFIG_DEFAULT_BACKGROUND;
+
 
 //Initialize SDL Libraries
-void Init_SDL();
+void T3_Init();
+void T3_GameLoop();
+void T3_Destroy();
 
 int main(int argc, char *args[]) {
-    Init_SDL();    
+    T3_Init();    
+    T3_GameLoop();
+    T3_Destroy();
 }
 
-void Init_SDL(){
+void T3_Init(){
     MainWindow = NULL;
     SDL_Surface *screenSurface = NULL;
 
@@ -32,16 +38,46 @@ void Init_SDL(){
 
     MainRenderer = SDL_CreateRenderer(MainWindow, -1, SDL_RENDERER_ACCELERATED);
     T3_Assert(MainRenderer == NULL, "%s", SDL_GetError())
-
+    
     T3_Assert(
             IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_WEBP) == 0,
             "Couldn't load image libraries.")
-
-    SDL_Color DefaultBackground = GAME_CONFIG_DEFAULT_BACKGROUND;
 
     SDL_SetRenderDrawColor(MainRenderer,
                            DefaultBackground.r,
                            DefaultBackground.g,
                            DefaultBackground.b,
                            DefaultBackground.a);
+}
+
+void T3_GameLoop(){
+    SDL_Event e;
+    bool quit= false;
+
+    while (!quit){
+        CurrentFrameMS = SDL_GetTicks64();
+        DeltaTimeInSeconds = (CurrentFrameMS - PreviousFrameMS) / 1000.0;
+        SDL_SetRenderDrawColor(MainRenderer,
+                               DefaultBackground.r,
+                               DefaultBackground.g,
+                               DefaultBackground.b,
+                               DefaultBackground.a);
+        SDL_RenderClear(MainRenderer);
+
+        while (SDL_PollEvent(&e)) {
+            if (e.type == SDL_QUIT) {
+                quit= true;
+            }
+        }
+
+        SDL_RenderPresent(MainRenderer);
+        PreviousFrameMS = CurrentFrameMS;
+    }
+}
+
+void T3_Destroy(){
+    SDL_DestroyRenderer(MainRenderer);
+    SDL_DestroyWindow(MainWindow);
+    IMG_Quit();
+    SDL_Quit();
 }
