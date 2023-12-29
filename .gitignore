@@ -1,6 +1,8 @@
 cmake-build-debug
 SDL-release-2.28.5
+SDL_image-release-2.8.1
 SDL_Build
+SDL_Image_Build
 .idea
 
 # Prerequisites

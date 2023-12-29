@@ -1,17 +1,24 @@
 #include "SDL.h"
+#include "SDL_image.h"
 #include "config/game-config.h"
 #include "helper/logging.h"
 #include "main.h"
 
-Uint64  PreviousFrameMS = 0;
-Uint64  CurrentFrameMS = 0;
+Uint64 PreviousFrameMS = 0;
+Uint64 CurrentFrameMS = 0;
+
+//Initialize SDL Libraries
+void Init_SDL();
 
 int main(int argc, char *args[]) {
-    
+    Init_SDL();    
+}
+
+void Init_SDL(){
     MainWindow = NULL;
     SDL_Surface *screenSurface = NULL;
 
-    T3_Assert(SDL_Init(SDL_INIT_VIDEO)<=0, "%s \n", SDL_GetError());
+    T3_Assert(SDL_Init(SDL_INIT_VIDEO) < 0, "%s \n", SDL_GetError())
 
     MainWindow = SDL_CreateWindow(GAME_CONFIG_TITLE,
                                   SDL_WINDOWPOS_UNDEFINED,
@@ -20,45 +27,21 @@ int main(int argc, char *args[]) {
                                   GAME_CONFIG_SCREEN_HEIGHT,
                                   SDL_WINDOW_SHOWN);
 
-    T3_Assert(MainWindow == NULL, "%s", SDL_GetError() );
-    
-    
+    T3_Assert(MainWindow == NULL, "%s", SDL_GetError())
+
+
     MainRenderer = SDL_CreateRenderer(MainWindow, -1, SDL_RENDERER_ACCELERATED);
-    T3_Assert(MainRenderer == NULL, "%s", SDL_GetError());
-    
-    //Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-    } else {
-        
-        
-        
-        if (MainWindow == NULL) {
-            printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-        } else {
-            //Get window surface
-            //screenSurface = SDL_GetWindowSurface(window);
+    T3_Assert(MainRenderer == NULL, "%s", SDL_GetError())
 
-            //Fill the surface white
-            SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
+    T3_Assert(
+            IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_WEBP) == 0,
+            "Couldn't load image libraries.")
 
-            //Update the surface
-            //SDL_UpdateWindowSurface(window);
+    SDL_Color DefaultBackground = GAME_CONFIG_DEFAULT_BACKGROUND;
 
-            //Hack to get window to stay up
-            SDL_Event e;
-            bool quit = false;
-            while (quit == false) { while (SDL_PollEvent(&e)) { if (e.type == SDL_QUIT) quit = true; }}
-        }
-
-        
-        //Destroy window
-        //SDL_DestroyWindow(window);
-
-        //Quit SDL subsystems
-        SDL_Quit();
-        
-        return 0;
-    }
-
+    SDL_SetRenderDrawColor(MainRenderer,
+                           DefaultBackground.r,
+                           DefaultBackground.g,
+                           DefaultBackground.b,
+                           DefaultBackground.a);
 }
