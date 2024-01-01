@@ -57,11 +57,13 @@ void T3_GameLoop(){
     while (!quit){
         CurrentFrameMS = SDL_GetTicks64();
         DeltaTimeInSeconds = (CurrentFrameMS - PreviousFrameMS) / 1000.0;
+        
         SDL_SetRenderDrawColor(MainRenderer,
                                DefaultBackground.r,
                                DefaultBackground.g,
                                DefaultBackground.b,
                                DefaultBackground.a);
+        
         SDL_RenderClear(MainRenderer);
 
         while (SDL_PollEvent(&e)) {

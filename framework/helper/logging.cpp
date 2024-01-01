@@ -1,11 +1,11 @@
 #include <cstdio>
 #include <cstdarg>
 #include "logging.h"
+#include "config/game-config.h"
 
-const char *GetLogLevelString(int logLevel);
+const char *GetLogLevelString(uint logLevel);
 
-
-void LogMessage(int logLevel, const char *filename, int lineNumber, const char *message, va_list args) {
+void LogMessage(uint logLevel, const char *filename, int lineNumber, const char *message, va_list args) {
     printf("%s[%d]: [%s]: ",
            filename,
            lineNumber,
@@ -15,8 +15,7 @@ void LogMessage(int logLevel, const char *filename, int lineNumber, const char *
     printf("\n");
 }
 
-
-const char *GetLogLevelString(int logLevel) {
+const char *GetLogLevelString(uint logLevel) {
     switch (logLevel) {
         case LOG_LEVEL_INFO:
             return "INFO";
@@ -29,9 +28,14 @@ const char *GetLogLevelString(int logLevel) {
     }
 }
 
-void __T3_Log(int logLevel, const char *filename, int lineNumber, const char *message, ...) {
+void __T3_Log(uint logLevel, const char *filename, int lineNumber, const char *message, ...) {
+
+    if (GAME_LOGGING_LEVEL<logLevel)
+        return;
+    
     va_list args;
-    va_start(args,message);
-    LogMessage(logLevel, filename, lineNumber,message, args);
+    va_start(args, message);
+    LogMessage(logLevel, filename, lineNumber, message, args);
     va_end(args);
+
 }

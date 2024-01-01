@@ -22,7 +22,16 @@ add_executable(t3 main.cpp
         framework/config/game-config.h
         main.h
         framework/helper/logging.h
-        framework/helper/logging.cpp)
+        framework/helper/logging.cpp
+        framework/library/ecs/entity.h
+        framework/library/ecs/entity.cpp
+        framework/library/data_structures/stack.h
+        framework/library/data_structures/stack.cpp
+        framework/library/data_structures/linked_list.h
+        framework/library/data_structures/linked_list.cpp
+        framework/library/data_structures/node.h
+        framework/library/data_structures/node.cpp
+        framework/helper/memory.h)
 
 # Link SDL2 and SDL_image libraries with full paths
 target_link_libraries(t3 PRIVATE ${SDL2_INSTALL_DIR}/lib/libSDL2.so)
