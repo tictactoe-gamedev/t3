@@ -1,0 +1,13 @@
+Implemented LinkedList_AddNode in linked_list.cpp
+Implemented LinkedListDouble_AddNode in linked_list.cpp
+Implemented LinkedListDouble_GetNode in linked_list.cpp (using the LinkedList_GetNode method)
+Implemented LinkedList_Remove in linked_list.cpp
+Implemented LinkedListDouble_Remove in linked_list.cpp
+Implemented LinkedList_RemoveAt in linked_list.cpp (using LinkedList_GetNode method and LinkedList_Remove method)
+Implemented LinkedListDouble_RemoveAt in linked_list.cpp (using LinkedListDouble_GetNode method and LinkedListDouble_Remove method)
+Implemented LinkedList_DestroyNode in linked_list.cpp (using LinkedList_Remove method)
+Implemented LinkedListDouble_DestroyNode in linked_list.cpp (using LinkedListDouble_Remove method)
+Implemented LinkedList_DestroyNodeAt in linked_list.cpp (using LinkedList_DestroyNode method)
+Implemented LinkedListDouble_DestroyNodeAt in linked_list.cpp (using LinkedListDouble_DestroyNode method)
+Added and implemented LinkedList_DestroyList in linked_list.h and linked_list.cpp (Destroy the whole list using LinkedList_Remove method)
+Added and implemented LinkedList_DestroyList in linked_list.h and linked_list.cpp (Destroy the whole list using LinkedList_Remove method)

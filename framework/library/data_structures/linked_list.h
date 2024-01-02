@@ -38,5 +38,9 @@ void LinkedListDouble_DestroyNode(LinkedListDouble* list, T3_NodeDouble * node);
 void LinkedList_DestroyNodeAt(LinkedList* list, uint index);
 void LinkedListDouble_DestroyNodeAt(LinkedListDouble* list, uint index);
 
+void LinkedList_DestroyList(LinkedList* list);
+void LinkedListDouble_DestroyList(LinkedListDouble* list);
+
+
 
 #endif //T3_LINKED_LIST_H
