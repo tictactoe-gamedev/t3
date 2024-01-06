@@ -206,26 +206,22 @@ void T3_LinkedListDouble_RemoveAt(T3_LinkedListDouble *list, uint index) {
 
 void T3_LinkedList_DestroyNode(T3_LinkedList *list, T3_Node *node) {
     T3_LinkedList_Remove((list), (node));
-    free((node)->Data);
-    free((node));
+    T3_Node_Destroy(node);
 }
 
 void T3_LinkedListDouble_DestroyNode(T3_LinkedListDouble *list, T3_NodeDouble *node) {
     T3_LinkedListDouble_Remove((list), (node));
-    free((node)->Data);
-    free((node));
+    T3_NodeDouble_Destroy(node);
 }
 
 void T3_LinkedList_DestroyNodeAt(T3_LinkedList *list, uint index) {
     T3_Node *node = T3_LinkedList_GetNode(list, index);
-    T3_LinkedList_Remove((list), (node));
-    free((node)->Data);
-    free((node));
+    T3_LinkedList_Remove(list, node);
+    T3_Node_Destroy(node);
 }
 
 void T3_LinkedListDouble_DestroyNodeAt(T3_LinkedListDouble *list, uint index) {
     T3_NodeDouble *node = T3_LinkedListDouble_GetNode(list, index);
-    T3_LinkedListDouble_Remove((list), (node));
-    free((node)->Data);
-    free((node));
+    T3_LinkedListDouble_Remove(list, node);
+    T3_NodeDouble_Destroy(node);
 }

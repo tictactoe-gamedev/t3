@@ -2,7 +2,7 @@
 #include "SDL_image.h"
 #include "config/game-config.h"
 #include "helper/logging.h"
-#include "main.h"
+#include "main.h" 
 
 Uint64 PreviousFrameMS = 0;
 Uint64 CurrentFrameMS = 0;

@@ -16,3 +16,13 @@ T3_NodeDouble* T3_NodeDouble_Init(void* data){
     nodeDouble->Ptr2 = NULL;
     return nodeDouble;
 }
+
+void T3_Node_Destroy(T3_Node *node) {
+    free(node->Data);
+    free(node);
+}
+
+void T3_NodeDouble_Destroy(T3_NodeDouble *node) {
+    free(node->Data);
+    free(node);
+}
