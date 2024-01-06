@@ -5,7 +5,7 @@
 T3_Node* T3_Node_Init(void* data){
     T3_MallocSecure(T3_Node,node);
     node->Data = data;
-    node->Ptr = NULL;
+    node->Ptr1 = NULL;
     return node;
 }
 
@@ -16,4 +16,3 @@ T3_NodeDouble* T3_NodeDouble_Init(void* data){
     nodeDouble->Ptr2 = NULL;
     return nodeDouble;
 }
-
