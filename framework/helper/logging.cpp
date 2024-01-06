@@ -28,7 +28,7 @@ const char *GetLogLevelString(uint logLevel) {
     }
 }
 
-void __T3_Log(uint logLevel, const char *filename, int lineNumber, const char *message, ...) {
+void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, const char *message, ...) {
 
     if (GAME_LOGGING_LEVEL<logLevel)
         return;
