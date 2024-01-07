@@ -260,9 +260,12 @@ uint T3_LinkedList_FindIndexOf(T3_LinkedList *list, T3_Node *node) {
     if (node == list->Tail) {
         return list->Count - 1;
     }
-
-    T3_Node *current = list->Head;
-    for (uint i = 0; i < list->Count - 1; ++i) {
+    if (node == list->Head){
+        return 0;
+    }
+    
+    T3_Node *current = list->Head->Next;
+    for (uint i = 0; i < list->Count - 2; ++i) {
         if (current == node) {
             return i;
         }
@@ -275,9 +278,13 @@ uint T3_LinkedListDouble_FindIndexOf(T3_LinkedListDouble *list, T3_NodeDouble *n
     if (node == list->Tail) {
         return list->Count - 1;
     }
-
-    T3_NodeDouble *current = list->Head;
-    for (uint i = 0; i < list->Count; ++i) {
+    
+    if (node == list->Head){
+        return 0;
+    }
+    
+    T3_NodeDouble *current = list->Head->Next;
+    for (uint i = 0; i < list->Count - 2; ++i) {
         if (current == node) {
             return i;
         }

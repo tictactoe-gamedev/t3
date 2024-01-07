@@ -42,16 +42,12 @@ void T3_LinkedList_Remove(T3_LinkedList *list, T3_Node *node);
 void T3_LinkedListDouble_Remove(T3_LinkedListDouble *list, T3_NodeDouble *node);
 
 T3_Node *T3_LinkedList_RemoveAt(T3_LinkedList *list, uint index);
-
 T3_NodeDouble *T3_LinkedListDouble_RemoveAt(T3_LinkedListDouble *list, uint index);
 
 void T3_LinkedList_DestroyNode(T3_LinkedList *list, T3_Node *node);
-
 void T3_LinkedListDouble_DestroyNode(T3_LinkedListDouble *list, T3_NodeDouble *node);
 
 void T3_LinkedList_DestroyNodeAt(T3_LinkedList *list, uint index);
-
 void T3_LinkedListDouble_DestroyNodeAt(T3_LinkedListDouble *list, uint index);
-
 
 #endif //T3_LINKED_LIST_H
