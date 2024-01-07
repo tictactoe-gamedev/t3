@@ -3,14 +3,14 @@
 #include <cstdlib>
 
 T3_Node* T3_Node_Init(void* data){
-    T3_MallocSecure(T3_Node,node);
+    T3_MallocSafe(T3_Node, node);
     node->Data = data;
     node->Ptr1 = NULL;
     return node;
 }
 
 T3_NodeDouble* T3_NodeDouble_Init(void* data){
-    T3_MallocSecure(T3_NodeDouble,nodeDouble);
+    T3_MallocSafe(T3_NodeDouble, nodeDouble);
     nodeDouble->Data = data;
     nodeDouble->Ptr1 = NULL;
     nodeDouble->Ptr2 = NULL;

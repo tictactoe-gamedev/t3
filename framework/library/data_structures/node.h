@@ -18,3 +18,5 @@ T3_NodeDouble* T3_NodeDouble_Init(void* data);
 void T3_Node_Destroy(T3_Node* node);
 void T3_NodeDouble_Destroy(T3_NodeDouble* node);
 #endif //T3_NODE_H
+
+
