@@ -1,5 +1,6 @@
 #include "stack.h"
 #include "helper/memory.h"
+#include "config/game-config.h"
 
 #define Below Ptr1
 
@@ -34,3 +35,21 @@ void T3_Stack_Destroy(T3_Stack* stack) {
 }
 
 
+void T3_Stack_Test() {
+#ifdef GAME_RELEASE
+    #if GAME_RELEASE == DEVELOPMENT
+        T3_Stack* stack = T3_Stack_Init();
+        T3_Stack_Push(stack, T3_Node_Init(1));
+        T3_Node* node = T3_Stack_Pop(stack);
+        T3_Log(LOG_LEVEL_INFO,stack);
+        T3_Stack_Push(stack, T3_Node_Init(2));
+        T3_Stack_Push(stack, T3_Node_Init(3));
+        T3_Log(LOG_LEVEL_INFO,stack);
+        T3_Stack_Push(stack, T3_Node_Init(3));
+        T3_Stack_Pop(stack);
+        T3_Log(LOG_LEVEL_INFO,stack);
+    
+        T3_Stack_Destroy(stack);
+    #endif
+#endif
+}
