@@ -3,6 +3,8 @@
 
 #include <cstdlib>
 #include "library/data_structures/linked_list.h"
+#include "library/data_structures/stack.h"
+#include "library/data_structures/queue.h"
 
 const uint LOG_LEVEL_INFO = 0;
 const uint LOG_LEVEL_WARNING = 1;
@@ -10,6 +12,9 @@ const uint LOG_LEVEL_ERROR = 2;
 
 void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, const char *message, ...);
 void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, T3_LinkedList* linkedList, ...);
+void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, T3_LinkedListDouble* linkedList, ...);
+void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, T3_Stack* stack, ...);
+void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, T3_Queue* queue, ...);
 
 #define T3_Log(level, message, ...) \
 INTERNAL_T3_Log(level, __FILE__, __LINE__, message, ## __VA_ARGS__)
