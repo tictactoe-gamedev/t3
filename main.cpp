@@ -108,6 +108,8 @@ void T3_Test_LinkedList(){
     
     T3_LinkedList_Remove(list,node);
     T3_Node_Destroy(node);
+
+    T3_LinkedList_Destroy(list);
 }
 
 void T3_Test_Stack() {
