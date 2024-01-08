@@ -43,7 +43,7 @@ void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, const 
 }
 
 #define INTERNAL_T3_Log_LinkedIn_Implementation(linkedListType, nodeType, initialNodePointerName) \
-void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, linkedListType *list) {  \
+void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, linkedListType *list, ...) {  \
     nodeType * current = list->initialNodePointerName;                                             \
     int i=0;                                                                                             \
     while (current!=NULL){                                                                               \
