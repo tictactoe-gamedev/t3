@@ -2,9 +2,7 @@
 #include "SDL_image.h"
 #include "config/game-config.h"
 #include "helper/logging.h"
-#include "main.h"
-#include "library/data_structures/stack.h"
-#include "library/data_structures/queue.h"
+#include "main.h" 
 #include "library/data_structures/linked_list.h"
 
 Uint64 PreviousFrameMS = 0;
@@ -20,6 +18,7 @@ void T3_Destroy();
 
 int main(int argc, char *args[]) {
     T3_Test_LinkedList();
+    
     T3_Init();    
     T3_GameLoop();
     T3_Destroy();
