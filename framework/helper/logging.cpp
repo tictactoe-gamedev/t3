@@ -2,6 +2,8 @@
 #include <cstdarg>
 #include "logging.h"
 #include "config/game-config.h"
+#include "library/data_structures/queue.h"
+#include "library/data_structures/stack.h"
 
 const char *GetLogLevelString(uint logLevel);
 
@@ -40,12 +42,18 @@ void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, const 
 
 }
 
-void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, T3_LinkedList *linkedList, ...) {
-    T3_Node* current = linkedList->Head;
-    int i=0;
-    while (current!=NULL){
-        T3_Log(logLevel,"[%d] Value: %d",i,*(int*)current->Data);
-        current = current->Ptr1;
-        i++;
-    }
-}
+#define INTERNAL_T3_Log_LinkedIn_Implementation(linkedListType, nodeType, initialNodePointerName) \
+void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, linkedListType *list) {  \
+    nodeType * current = list->initialNodePointerName;                                             \
+    int i=0;                                                                                             \
+    while (current!=NULL){                                                                               \
+        T3_Log(logLevel,"[%d] Value: %d",i,*(int*)current->Data);                                        \
+        current = current->Ptr1;                                                                         \
+        i++;                                                                                             \
+    }                                                                                                    \
+}                                                                           
+
+INTERNAL_T3_Log_LinkedIn_Implementation(T3_LinkedList,T3_Node, Head)
+INTERNAL_T3_Log_LinkedIn_Implementation(T3_LinkedListDouble,T3_NodeDouble, Head)
+INTERNAL_T3_Log_LinkedIn_Implementation(T3_Queue,T3_Node, Head)
+INTERNAL_T3_Log_LinkedIn_Implementation(T3_Stack,T3_Node, Top)
