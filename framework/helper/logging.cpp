@@ -30,7 +30,7 @@ const char *GetLogLevelString(uint logLevel) {
 
 void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, const char *message, ...) {
 
-    if (GAME_LOGGING_LEVEL<logLevel)
+    if (GAME_LOGGING_LEVEL>logLevel)
         return;
     
     va_list args;
@@ -38,4 +38,14 @@ void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, const 
     LogMessage(logLevel, filename, lineNumber, message, args);
     va_end(args);
 
+}
+
+void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, T3_LinkedList *linkedList, ...) {
+    T3_Node* current = linkedList->Head;
+    int i=0;
+    while (current!=NULL){
+        T3_Log(logLevel,"[%d] Value: %d",i,*(int*)current->Data);
+        current = current->Ptr1;
+        i++;
+    }
 }
