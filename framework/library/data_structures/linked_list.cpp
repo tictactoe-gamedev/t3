@@ -328,4 +328,32 @@ void T3_LinkedListDouble_DestroyNodeAt(T3_LinkedListDouble *list, uint index) {
     T3_NodeDouble_Destroy(node);
 }
 
+void T3_LinkedListDouble_Destroy(T3_LinkedListDouble *list) {
+    if (list->Count>0){
+        T3_NodeDouble * current = list->Head;
+        for (int i = 0; i < list->Count; ++i) {
+            T3_NodeDouble * remove = current;
+            T3_LinkedListDouble_Remove(list,remove);
+            T3_NodeDouble_Destroy(remove);
+            current = current->Next;
+        }
+    }
+
+    free(list);
+}
+
+void T3_LinkedList_Destroy(T3_LinkedList *list) {
+    if (list->Count>0){
+        T3_Node * current = list->Head;
+        for (int i = 0; i < list->Count; ++i) {
+            T3_Node * remove = current;
+            T3_LinkedList_Remove(list,remove);
+            T3_Node_Destroy(remove);
+            current = current->Next;
+        }
+    }
+
+    free(list);
+}
+
 
