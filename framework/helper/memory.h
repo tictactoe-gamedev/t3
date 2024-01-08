@@ -12,7 +12,7 @@
  * Initialize a pointer from given type and make assertion to 
  * check if allocation failed
  */
-#define T3_MallocSecure(type, variableName)                         \
+#define T3_MallocSafe(type, variableName)                         \
 type* variableName = T3_Malloc(type);                               \
 T3_Assert(variableName==NULL,"Malloc failed for ", variableName)        
 
