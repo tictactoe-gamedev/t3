@@ -24,6 +24,11 @@ void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, T3_Que
 #define T3_Log(level, message, ...) \
 INTERNAL_T3_Log(level, __FILE__, __LINE__, message, ## __VA_ARGS__)
 
+#define T3_ErrorIf(condition, message, ...) \
+if ((condition)) { \
+    INTERNAL_T3_Log(LOG_LEVEL_ERROR, __FILE__, __LINE__, message, ##__VA_ARGS__); \
+    exit(-1); \
+}
 
 #ifdef GAME_RELEASE
     #if GAME_RELEASE == DEVELOPMENT
