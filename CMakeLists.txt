@@ -31,7 +31,9 @@ add_executable(t3 main.cpp
         framework/helper/memory.h
         framework/library/data_structures/queue.h
         framework/library/data_structures/queue.cpp
-        framework/library/data_structures/stack.cpp)
+        framework/library/data_structures/stack.cpp
+        framework/library/data_structures/list.cpp
+        framework/library/data_structures/list.h)
 
 # Link SDL2 and SDL_image libraries with full paths
 target_link_libraries(t3 PRIVATE ${SDL2_INSTALL_DIR}/lib/libSDL2.so)

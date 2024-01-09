@@ -2,7 +2,8 @@
 #include "SDL_image.h"
 #include "config/game-config.h"
 #include "helper/logging.h"
-#include "main.h" 
+#include "main.h"
+#include "library/data_structures/list.h"
 
 Uint64 PreviousFrameMS = 0;
 Uint64 CurrentFrameMS = 0;
@@ -13,7 +14,6 @@ void T3_GameLoop();
 void T3_Destroy();
 
 int main(int argc, char *args[]) {
-    
     T3_Init();    
     T3_GameLoop();
     T3_Destroy();
@@ -23,7 +23,7 @@ void T3_Init(){
     MainWindow = NULL;
     SDL_Surface *screenSurface = NULL;
 
-    T3_Assert(SDL_Init(SDL_INIT_VIDEO) < 0, "%s \n", SDL_GetError())
+    T3_ErrorIf(SDL_Init(SDL_INIT_VIDEO) < 0, "%s \n", SDL_GetError())
 
     MainWindow = SDL_CreateWindow(GAME_CONFIG_TITLE,
                                   SDL_WINDOWPOS_UNDEFINED,
@@ -32,13 +32,13 @@ void T3_Init(){
                                   GAME_CONFIG_SCREEN_HEIGHT,
                                   SDL_WINDOW_SHOWN);
 
-    T3_Assert(MainWindow == NULL, "%s", SDL_GetError())
+    T3_ErrorIf(MainWindow == NULL, "%s", SDL_GetError())
 
 
     MainRenderer = SDL_CreateRenderer(MainWindow, -1, SDL_RENDERER_ACCELERATED);
-    T3_Assert(MainRenderer == NULL, "%s", SDL_GetError())
+    T3_ErrorIf(MainRenderer == NULL, "%s", SDL_GetError())
     
-    T3_Assert(
+    T3_ErrorIf(
             IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_WEBP) == 0,
             "Couldn't load image libraries.")
 
