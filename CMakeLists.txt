@@ -23,8 +23,6 @@ add_executable(t3 main.cpp
         main.h
         framework/helper/logging.h
         framework/helper/logging.cpp
-        framework/library/ecs/entity.h
-        framework/library/ecs/entity.cpp
         framework/library/data_structures/stack.h 
         framework/library/data_structures/linked_list.h
         framework/library/data_structures/linked_list.cpp
