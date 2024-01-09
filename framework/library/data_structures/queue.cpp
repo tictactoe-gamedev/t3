@@ -1,8 +1,8 @@
 #include "queue.h"
 #include "helper/memory.h"
+#include "config/game-config.h"
 
 #define Next Ptr1
-
 
 T3_Queue *T3_Queue_Init() {
     T3_MallocSafe(T3_Queue, queue)
@@ -49,6 +49,9 @@ void T3_Queue_Destroy(T3_Queue *queue) {
 }
 
 void T3_Queue_Test() {
+#ifdef GAME_RELEASE
+    #if GAME_RELEASE == DEVELOPMENT
+
     T3_Queue * queue = T3_Queue_Init();
     T3_Queue_Enqueue(queue, T3_Node_Init(1));
     T3_Queue_Enqueue(queue, T3_Node_Init(2));
@@ -57,7 +60,11 @@ void T3_Queue_Test() {
     T3_Node* node = T3_Queue_Dequeue(queue);
     T3_Log(LOG_LEVEL_INFO,queue);
     T3_Queue_Destroy(queue);    
+    
+    #endif
+#endif
 }
+
 
 
 
