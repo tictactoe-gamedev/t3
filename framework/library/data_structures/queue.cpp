@@ -4,9 +4,8 @@
 #define Next Ptr1
 
 
-T3_Queue *T3_QueueInit(bool isCircular) {
+T3_Queue *T3_Queue_Init() {
     T3_MallocSafe(T3_Queue, queue)
-    queue->IsCircular = isCircular;
     queue->Head = NULL;
     queue->Tail = NULL;
     queue->Count = 0;
@@ -25,10 +24,6 @@ void T3_Queue_Enqueue(T3_Queue *queue, T3_Node *node) {
     }
 
     queue->Count++;
-
-    if (queue->IsCircular) {
-        node->Next = queue->Head;
-    }
 }
 
 T3_Node *T3_Queue_Dequeue(T3_Queue *queue) {
@@ -42,15 +37,27 @@ T3_Node *T3_Queue_Dequeue(T3_Queue *queue) {
 
     queue->Count--;
 
-    if (queue->IsCircular && queue->Count > 0) {
-        if (queue->Count == 1) {
-            queue->Head->Next = queue->Head;
-        } else {
-            queue->Tail->Next = queue->Head;
-        }
-    }
-
     return current;
 }
+
+void T3_Queue_Destroy(T3_Queue *queue) {
+    for (int i = 0; i < queue->Count; ++i) {
+        T3_Node * removed = T3_Queue_Dequeue(queue);
+        T3_Node_Destroy(removed);
+    }
+    free(queue);
+}
+
+void T3_Queue_Test() {
+    T3_Queue * queue = T3_Queue_Init();
+    T3_Queue_Enqueue(queue, T3_Node_Init(1));
+    T3_Queue_Enqueue(queue, T3_Node_Init(2));
+    T3_Queue_Enqueue(queue, T3_Node_Init(3));
+    T3_Log(LOG_LEVEL_INFO,queue);
+    T3_Node* node = T3_Queue_Dequeue(queue);
+    T3_Log(LOG_LEVEL_INFO,queue);
+    T3_Queue_Destroy(queue);    
+}
+
 
 

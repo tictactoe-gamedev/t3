@@ -19,7 +19,7 @@ void T3_GameLoop();
 void T3_Destroy();
 
 int main(int argc, char *args[]) {
-    T3_Test_Stack();
+    T3_Queue_Test();
     T3_Init();    
     T3_GameLoop();
     T3_Destroy();
