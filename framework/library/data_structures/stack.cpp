@@ -25,4 +25,12 @@ T3_Node *T3_Stack_Pop(T3_Stack *stack) {
     return popped;
 }
 
+void T3_Stack_Destroy(T3_Stack* stack) {
+    for (int i = 0; i < stack->Count; ++i) {
+        T3_Node * node = T3_Stack_Pop(stack);
+        T3_Node_Destroy(node);
+    }
+    free(stack);
+}
+
 

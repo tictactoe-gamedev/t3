@@ -4,12 +4,14 @@
 #include "helper/logging.h"
 #include "main.h" 
 #include "library/data_structures/linked_list.h"
+#include "library/data_structures/stack.h"
 
 Uint64 PreviousFrameMS = 0;
 Uint64 CurrentFrameMS = 0;
 SDL_Color DefaultBackground = GAME_CONFIG_DEFAULT_BACKGROUND;
 
 void T3_Test_LinkedList();
+void T3_Test_Stack();
 
 //Initialize SDL Libraries
 void T3_Init();
@@ -17,8 +19,7 @@ void T3_GameLoop();
 void T3_Destroy();
 
 int main(int argc, char *args[]) {
-    T3_Test_LinkedList();
-    
+    T3_Test_Stack();
     T3_Init();    
     T3_GameLoop();
     T3_Destroy();
@@ -107,4 +108,22 @@ void T3_Test_LinkedList(){
     
     T3_LinkedList_Remove(list,node);
     T3_Node_Destroy(node);
+
+    T3_LinkedList_Destroy(list);
+}
+
+void T3_Test_Stack() {
+    T3_Stack* stack = T3_Stack_Init();
+    T3_Stack_Push(stack, T3_Node_Init(1));
+    T3_Node* node = T3_Stack_Pop(stack);
+    T3_Log(LOG_LEVEL_INFO,stack);
+    T3_Stack_Push(stack, T3_Node_Init(2));
+    T3_Stack_Push(stack, T3_Node_Init(3));
+    T3_Log(LOG_LEVEL_INFO,stack);
+    T3_Stack_Push(stack, T3_Node_Init(3));
+    T3_Stack_Pop(stack);
+    T3_Log(LOG_LEVEL_INFO,stack);
+
+    T3_Stack_Destroy(stack);
+    
 }
