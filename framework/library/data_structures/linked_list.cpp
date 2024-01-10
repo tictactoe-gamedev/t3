@@ -25,7 +25,7 @@ T3_LinkedListDouble *T3_LinkedListDouble_Init() {
 /**
  * Add node without considering if its head, tail or between. Secure but relatively slow
  */
-void T3_LinkedList_AddNode(T3_LinkedList *list, T3_Node *node, uint index) {
+void T3_LinkedList_AddNode(T3_LinkedList *list, T3_Node *node, size_t index) {
     if (index == 0) {
         T3_LinkedList_AddToHead(list, node);
     } else if (index == list->Count) {
@@ -38,7 +38,7 @@ void T3_LinkedList_AddNode(T3_LinkedList *list, T3_Node *node, uint index) {
 /**
  * Add node without considering if its head, tail or between. Secure but relatively slow
  */
-void T3_LinkedListDouble_AddNode(T3_LinkedListDouble *list, T3_NodeDouble *node, uint index) {
+void T3_LinkedListDouble_AddNode(T3_LinkedListDouble *list, T3_NodeDouble *node, size_t index) {
     if (index == 0) {
         T3_LinkedListDouble_AddToHead(list, node);
     } else if (index == list->Count) {
@@ -118,7 +118,7 @@ void T3_LinkedListDouble_AddToTail(T3_LinkedListDouble *list, T3_NodeDouble *nod
  * @param node 
  * @param index 
  */
-void T3_LinkedList_AddToIndex(T3_LinkedList *list, T3_Node *node, uint index) {
+void T3_LinkedList_AddToIndex(T3_LinkedList *list, T3_Node *node, size_t index) {
     T3_Assert(index > list->Count, "OutOfRange index!");
     T3_Assert(index == 0 || index == list->Count, "Adding to head or tail. Use AddNode instead!")
 
@@ -135,7 +135,7 @@ void T3_LinkedList_AddToIndex(T3_LinkedList *list, T3_Node *node, uint index) {
  * @param node 
  * @param index 
  */
-void T3_LinkedListDouble_AddToIndex(T3_LinkedListDouble *list, T3_NodeDouble *node, uint index) {
+void T3_LinkedListDouble_AddToIndex(T3_LinkedListDouble *list, T3_NodeDouble *node, size_t index) {
     T3_Assert(index > list->Count, "OutOfRange index!");
     T3_Assert(index == 0 || index == list->Count, "Adding to head or tail. Use AddNode instead!")
 
@@ -148,7 +148,7 @@ void T3_LinkedListDouble_AddToIndex(T3_LinkedListDouble *list, T3_NodeDouble *no
     list->Count++;
 }
 
-T3_Node *T3_LinkedList_GetNode(T3_LinkedList *list, uint index) {
+T3_Node *T3_LinkedList_GetNode(T3_LinkedList *list, size_t index) {
     T3_Assert(index > list->Count - 1, "OutOfRange index!");
 
     if (index == 0) {
@@ -166,7 +166,7 @@ T3_Node *T3_LinkedList_GetNode(T3_LinkedList *list, uint index) {
     return current;
 }
 
-T3_NodeDouble *T3_LinkedListDouble_GetNode(T3_LinkedListDouble *list, uint index) {
+T3_NodeDouble *T3_LinkedListDouble_GetNode(T3_LinkedListDouble *list, size_t index) {
     T3_Assert(index > list->Count - 1, "OutOfRange index!");
 
     if (index == 0) {
@@ -179,14 +179,14 @@ T3_NodeDouble *T3_LinkedListDouble_GetNode(T3_LinkedListDouble *list, uint index
 
     if (index <= list->Count / 2) {
         T3_NodeDouble *current = list->Head;
-        for (uint i = 0; i < index; ++i) {
+        for (size_t i = 0; i < index; ++i) {
             current = current->Next;
         }
         return current;
     }
 
     T3_NodeDouble *current = list->Tail;
-    for (uint i = list->Count; i > index; --i) {
+    for (size_t i = list->Count; i > index; --i) {
         current = current->Prev;
     }
     return current;
@@ -277,7 +277,7 @@ void T3_LinkedListDouble_Remove(T3_LinkedListDouble *list, T3_NodeDouble *node) 
     }
 }
 
-uint T3_LinkedList_FindIndexOf(T3_LinkedList *list, T3_Node *node) {
+size_t T3_LinkedList_FindIndexOf(T3_LinkedList *list, T3_Node *node) {
     if (node == list->Tail) {
         return list->Count - 1;
     }
@@ -286,7 +286,7 @@ uint T3_LinkedList_FindIndexOf(T3_LinkedList *list, T3_Node *node) {
     }
 
     T3_Node *current = list->Head->Next;
-    for (uint i = 0; i < list->Count - 2; ++i) {
+    for (size_t i = 0; i < list->Count - 2; ++i) {
         if (current == node) {
             return i;
         }
@@ -295,7 +295,7 @@ uint T3_LinkedList_FindIndexOf(T3_LinkedList *list, T3_Node *node) {
     return -1;
 }
 
-uint T3_LinkedListDouble_FindIndexOf(T3_LinkedListDouble *list, T3_NodeDouble *node) {
+size_t T3_LinkedListDouble_FindIndexOf(T3_LinkedListDouble *list, T3_NodeDouble *node) {
     if (node == list->Tail) {
         return list->Count - 1;
     }
@@ -305,7 +305,7 @@ uint T3_LinkedListDouble_FindIndexOf(T3_LinkedListDouble *list, T3_NodeDouble *n
     }
 
     T3_NodeDouble *current = list->Head->Next;
-    for (uint i = 0; i < list->Count - 2; ++i) {
+    for (size_t i = 0; i < list->Count - 2; ++i) {
         if (current == node) {
             return i;
         }
@@ -315,13 +315,13 @@ uint T3_LinkedListDouble_FindIndexOf(T3_LinkedListDouble *list, T3_NodeDouble *n
 }
 
 //TODO: Below functions can still optimized!
-T3_Node *T3_LinkedList_RemoveAt(T3_LinkedList *list, uint index) {
+T3_Node *T3_LinkedList_RemoveAt(T3_LinkedList *list, size_t index) {
     T3_Node *removed = T3_LinkedList_GetNode(list, index);
     T3_LinkedList_Remove(list, removed);
     return removed;
 }
 
-T3_NodeDouble *T3_LinkedListDouble_RemoveAt(T3_LinkedListDouble *list, uint index) {
+T3_NodeDouble *T3_LinkedListDouble_RemoveAt(T3_LinkedListDouble *list, size_t index) {
     T3_NodeDouble *removed = T3_LinkedListDouble_GetNode(list, index);
     T3_LinkedListDouble_Remove(list, removed);
     return removed;
@@ -337,13 +337,13 @@ void T3_LinkedListDouble_DestroyNode(T3_LinkedListDouble *list, T3_NodeDouble *n
     T3_NodeDouble_Destroy(node);
 }
 
-void T3_LinkedList_DestroyNodeAt(T3_LinkedList *list, uint index) {
+void T3_LinkedList_DestroyNodeAt(T3_LinkedList *list, size_t index) {
     T3_Node *node = T3_LinkedList_GetNode(list, index);
     T3_LinkedList_Remove(list, node);
     T3_Node_Destroy(node);
 }
 
-void T3_LinkedListDouble_DestroyNodeAt(T3_LinkedListDouble *list, uint index) {
+void T3_LinkedListDouble_DestroyNodeAt(T3_LinkedListDouble *list, size_t index) {
     T3_NodeDouble *node = T3_LinkedListDouble_GetNode(list, index);
     T3_LinkedListDouble_Remove(list, node);
     T3_NodeDouble_Destroy(node);

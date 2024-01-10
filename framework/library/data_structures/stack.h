@@ -7,7 +7,7 @@
 
 typedef struct T3_Stack {
     T3_Node *Top;
-    uint Count;
+    size_t Count;
 } T3_Stack;
 
 T3_Stack *T3_Stack_Init();

@@ -5,9 +5,9 @@
 #include "library/data_structures/queue.h"
 #include "library/data_structures/stack.h"
 
-const char *GetLogLevelString(uint logLevel);
+const char *GetLogLevelString(size_t logLevel);
 
-void LogMessage(uint logLevel, const char *filename, int lineNumber, const char *message, va_list args) {
+void LogMessage(size_t logLevel, const char *filename, int lineNumber, const char *message, va_list args) {
     printf("%s[%d]: [%s]: ",
            filename,
            lineNumber,
@@ -17,7 +17,7 @@ void LogMessage(uint logLevel, const char *filename, int lineNumber, const char 
     printf("\n");
 }
 
-const char *GetLogLevelString(uint logLevel) {
+const char *GetLogLevelString(size_t logLevel) {
     switch (logLevel) {
         case LOG_LEVEL_INFO:
             return "INFO";
@@ -30,7 +30,7 @@ const char *GetLogLevelString(uint logLevel) {
     }
 }
 
-void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, const char *message, ...) {
+void INTERNAL_T3_Log(size_t logLevel, const char *filename, int lineNumber, const char *message, ...) {
 
     if (GAME_LOGGING_LEVEL>logLevel)
         return;
@@ -43,7 +43,7 @@ void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, const 
 }
 
 #define INTERNAL_T3_Log_LinkedIn_Implementation(linkedListType, nodeType, initialNodePointerName) \
-void INTERNAL_T3_Log(uint logLevel, const char *filename, int lineNumber, linkedListType *list, ...) {  \
+void INTERNAL_T3_Log(size_t logLevel, const char *filename, int lineNumber, linkedListType *list, ...) {  \
     nodeType * current = list->initialNodePointerName;                                             \
     int i=0;                                                                                             \
     while (current!=NULL){                                                                               \
