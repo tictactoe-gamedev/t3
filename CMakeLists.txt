@@ -33,7 +33,15 @@ add_executable(t3 main.cpp
         framework/library/data_structures/queue.cpp
         framework/library/data_structures/stack.cpp
         framework/library/data_structures/list.cpp
-        framework/library/data_structures/list.h)
+        framework/library/data_structures/list.h
+        framework/library/ecs/entity.cpp
+        framework/library/ecs/entity.h
+        framework/library/ecs/component.cpp
+        framework/library/ecs/component.h
+        framework/helper/variadic_macros.h
+        framework/components/position.h
+        framework/components/position.h
+        framework/components/position.cpp)
 
 # Link SDL2 and SDL_image libraries with full paths
 target_link_libraries(t3 PRIVATE ${SDL2_INSTALL_DIR}/lib/libSDL2.so)

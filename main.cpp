@@ -14,7 +14,7 @@ void T3_GameLoop();
 void T3_Destroy();
 
 int main(int argc, char *args[]) {
-    T3_Init();    
+    T3_ComponentInitMethod();    
     T3_GameLoop();
     T3_Destroy();
 }

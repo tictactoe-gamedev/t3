@@ -26,7 +26,7 @@ INTERNAL_T3_Log(level, __FILE__, __LINE__, message, ## __VA_ARGS__)
 
 #define T3_ErrorIf(condition, message, ...) \
 if ((condition)) { \
-    INTERNAL_T3_Log(LOG_LEVEL_ERROR, __FILE__, __LINE__, message, ##__VA_ARGS__); \
+    INTERNAL_T3_Log(LOG_LEVEL_ERROR, __FILE__, __LINE__, message, ## __VA_ARGS__); \
     exit(-1); \
 }
 
@@ -37,7 +37,7 @@ if ((condition)) { \
          */
         #define T3_Assert(condition, message, ...) \
                     if ((condition)) { \
-                        INTERNAL_T3_Log(LOG_LEVEL_ERROR, __FILE__, __LINE__, message, ##__VA_ARGS__); \
+                        INTERNAL_T3_Log(LOG_LEVEL_ERROR, __FILE__, __LINE__, message, ## __VA_ARGS__); \
                         exit(-1); \
                     }
     #else
