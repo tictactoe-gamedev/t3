@@ -7,6 +7,7 @@
 #include "library/data_structures/queue.h"
 #include "config/game-config.h"
 
+typedef unsigned int uint;
 const uint LOG_LEVEL_INFO = 0;
 const uint LOG_LEVEL_WARNING = 1;
 const uint LOG_LEVEL_ERROR = 2;

@@ -4,6 +4,8 @@
 #include "SDL.h"
 #include "SDL_video.h"
 
+typedef unsigned int uint;
+
 /** 
  * Anything that should be globally reachable from the game loop should be here
  */

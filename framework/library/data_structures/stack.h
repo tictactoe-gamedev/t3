@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include "node.h"
 
-
+typedef unsigned int uint;
 typedef struct T3_Stack {
     T3_Node *Top;
     uint Count;

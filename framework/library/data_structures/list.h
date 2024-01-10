@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 
+typedef unsigned int uint;
 typedef struct T3_List {
     void **Array;
     uint Capacity;

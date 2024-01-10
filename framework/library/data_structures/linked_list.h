@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include "node.h"
 
+typedef unsigned int uint;
 typedef struct T3_LinkedList {
     T3_Node *Head;
     T3_Node *Tail;
