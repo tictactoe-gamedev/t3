@@ -10,4 +10,6 @@
 #define GAME_CONFIG_DEFAULT_BACKGROUND {0, 0, 0, 255}
 
 
+
+
 #endif //T3_GAME_CONFIG_H
