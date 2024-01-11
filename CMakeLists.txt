@@ -11,11 +11,19 @@ set(T3_FRAMEWORK_DIR "${PROJECT_SOURCE_DIR}/framework")
 # Include SDL2 headers from the installation directory
 include_directories(${SDL2_INSTALL_DIR}/include/SDL2)
 include_directories(${SDL2_IMAGE_EXTENSION_BUILD_DIR}/install/include/SDL2)
+include_directories(${SDL2_IMAGE_EXTENSION_BUILD_DIR}/include/SDL2)
 include_directories(${T3_FRAMEWORK_DIR})
 
 # Find SDL2 libraries
-find_library(SDL2_LIBRARY NAMES SDL2 HINTS "${SDL2_INSTALL_DIR}/lib")
-find_library(SDL2_IMAGE_LIBRARY NAMES SDL2_image HINTS "${SDL2_IMAGE_EXTENSION_BUILD_DIR}/.libs")
+if (WIN32)
+    # Windows-specific settings
+    find_library(SDL2_LIBRARY NAMES SDL2 HINTS "${SDL2_INSTALL_DIR}/lib")
+    find_library(SDL2_IMAGE_LIBRARY NAMES SDL2_image HINTS "${SDL2_IMAGE_EXTENSION_BUILD_DIR}/lib/SDL2")
+else()
+    # Linux-specific settings
+    find_library(SDL2_LIBRARY NAMES SDL2 HINTS "${SDL2_INSTALL_DIR}/lib")
+    find_library(SDL2_IMAGE_LIBRARY NAMES SDL2_image HINTS "${SDL2_IMAGE_EXTENSION_BUILD_DIR}/.libs")
+endif()
 
 # Add the source files to the project
 add_executable(t3 main.cpp
@@ -45,5 +53,10 @@ add_executable(t3 main.cpp
         project/example-project-1/mushroom.h)
 
 # Link SDL2 and SDL_image libraries with full paths
-target_link_libraries(t3 PRIVATE ${SDL2_INSTALL_DIR}/lib/libSDL2.so)
-target_link_libraries(t3 PRIVATE ${SDL2_IMAGE_EXTENSION_BUILD_DIR}/install/lib/libSDL2_image.so)
+if (WIN32)
+    target_link_libraries(t3 PRIVATE ${SDL2_INSTALL_DIR}/bin/SDL2.dll -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows)
+    target_link_libraries(t3 PRIVATE ${SDL2_IMAGE_EXTENSION_BUILD_DIR}/bin/SDL2_image.dll -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows)
+else()
+    target_link_libraries(t3 PRIVATE ${SDL2_INSTALL_DIR}/lib/libSDL2.so)
+    target_link_libraries(t3 PRIVATE ${SDL2_IMAGE_EXTENSION_BUILD_DIR}/install/lib/libSDL2_image.so)
+endif()

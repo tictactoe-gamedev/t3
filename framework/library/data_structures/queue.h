@@ -7,7 +7,7 @@
 typedef struct T3_Queue {
     T3_Node *Head;
     T3_Node *Tail;
-    uint Count; 
+    size_t Count;
 } T3_Queue;
 
 T3_Queue *T3_Queue_Init();
