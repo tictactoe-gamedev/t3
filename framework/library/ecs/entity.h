@@ -1,7 +1,7 @@
 #ifndef T3_ENTITY_H
 #define T3_ENTITY_H
 
-#include "library/data_structures/list.h"
+#include "library/data_structures/abstract/list.h"
 #include "helper/memory.h" 
 
 typedef struct T3_Entity {

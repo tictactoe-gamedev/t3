@@ -13,8 +13,7 @@ T3_EntityHeader(
                     scene->Height = 748;
                     scene->Width = 1496;    //this is x2 width of the window by scrolling test purpose
             });
-            
-            
+                        
         }
 )
 
