@@ -5,6 +5,7 @@
 #include "entity.h"
 
 struct T3_Comp;
+struct T3_Entity;
 
 typedef void (*T3_EntityComponentFunc)(T3_Entity *entity, T3_Comp *comp);
 

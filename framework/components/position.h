@@ -5,7 +5,7 @@
 
 T3_ComponentHeader
 (
-    T3_Component_Position,
+    T3C_Position,
     HasRegister,
     NoEnter,NoLoop,NoExit,
     HasDestroy,NoEnable,NoDisable,

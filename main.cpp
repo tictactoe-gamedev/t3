@@ -4,6 +4,8 @@
 #include "helper/logging.h"
 #include "main.h"
 #include "library/data_structures/list.h"
+#include "library/ecs/entity.h"
+#include "project/example-project-1/mushroom.h"
 
 Uint64 PreviousFrameMS = 0;
 Uint64 CurrentFrameMS = 0;
@@ -12,8 +14,13 @@ SDL_Color DefaultBackground = GAME_CONFIG_DEFAULT_BACKGROUND;
 void T3_Init();
 void T3_GameLoop();
 void T3_Destroy();
-
+ 
 int main(int argc, char *args[]) {
+
+    T3_Entity* aMushroom = T3_Entity_Mushroom("mushroom",15,23);
+   
+    T3_Log(LOG_LEVEL_INFO, "Hello %s", aMushroom->InstanceName);
+    
     T3_Init();    
     T3_GameLoop();
     T3_Destroy();

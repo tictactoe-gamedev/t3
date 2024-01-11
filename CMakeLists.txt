@@ -41,7 +41,8 @@ add_executable(t3 main.cpp
         framework/helper/variadic_macros.h
         framework/components/position.h
         framework/components/position.h
-        framework/components/position.cpp)
+        framework/components/position.cpp
+        project/example-project-1/mushroom.h)
 
 # Link SDL2 and SDL_image libraries with full paths
 target_link_libraries(t3 PRIVATE ${SDL2_INSTALL_DIR}/lib/libSDL2.so)
