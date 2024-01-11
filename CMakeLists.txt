@@ -13,6 +13,7 @@ include_directories(${SDL2_INSTALL_DIR}/include/SDL2)
 include_directories(${SDL2_IMAGE_EXTENSION_BUILD_DIR}/install/include/SDL2)
 include_directories(${SDL2_IMAGE_EXTENSION_BUILD_DIR}/include/SDL2)
 include_directories(${T3_FRAMEWORK_DIR})
+include_directories(${PROJECT_SOURCE_DIR})
 
 # Find SDL2 libraries
 if (WIN32)
@@ -50,7 +51,10 @@ add_executable(t3 main.cpp
         framework/components/position.h
         framework/components/position.h
         framework/components/position.cpp
-        project/example-project-1/mushroom.h)
+        project/example-project-1/mushroom.h
+        project/example-project-1/main_entity.h
+        framework/components/scene.h
+        framework/components/scene.cpp)
 
 # Link SDL2 and SDL_image libraries with full paths
 if (WIN32)
