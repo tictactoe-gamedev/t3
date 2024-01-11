@@ -32,17 +32,17 @@ add_executable(t3 main.cpp
         main.h
         framework/helper/logging.h
         framework/helper/logging.cpp
-        framework/library/data_structures/stack.h 
-        framework/library/data_structures/linked_list.h
-        framework/library/data_structures/linked_list.cpp
-        framework/library/data_structures/node.h
-        framework/library/data_structures/node.cpp
+        framework/library/data_structures/abstract/stack.h 
+        framework/library/data_structures/abstract/linked_list.h
+        framework/library/data_structures/abstract/linked_list.cpp
+        framework/library/data_structures/abstract/node.h
+        framework/library/data_structures/abstract/node.cpp
         framework/helper/memory.h
-        framework/library/data_structures/queue.h
-        framework/library/data_structures/queue.cpp
-        framework/library/data_structures/stack.cpp
-        framework/library/data_structures/list.cpp
-        framework/library/data_structures/list.h
+        framework/library/data_structures/abstract/queue.h
+        framework/library/data_structures/abstract/queue.cpp
+        framework/library/data_structures/abstract/stack.cpp
+        framework/library/data_structures/abstract/list.cpp
+        framework/library/data_structures/abstract/list.h
         framework/library/ecs/entity.cpp
         framework/library/ecs/entity.h
         framework/library/ecs/component.cpp

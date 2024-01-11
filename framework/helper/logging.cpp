@@ -2,8 +2,8 @@
 #include <cstdarg>
 #include "logging.h"
 #include "config/game-config.h"
-#include "library/data_structures/queue.h"
-#include "library/data_structures/stack.h"
+#include "library/data_structures/abstract/queue.h"
+#include "library/data_structures/abstract/stack.h"
 
 const char *GetLogLevelString(size_t logLevel);
 

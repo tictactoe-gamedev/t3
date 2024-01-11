@@ -2,9 +2,9 @@
 #define T3_LOGGING_H
 
 #include <cstdlib>
-#include "library/data_structures/linked_list.h"
-#include "library/data_structures/stack.h"
-#include "library/data_structures/queue.h"
+#include "library/data_structures/abstract/linked_list.h"
+#include "library/data_structures/abstract/stack.h"
+#include "library/data_structures/abstract/queue.h"
 #include "config/game-config.h"
 
 const size_t LOG_LEVEL_INFO = 0;

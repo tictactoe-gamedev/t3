@@ -3,7 +3,7 @@
 #include "config/game-config.h"
 #include "helper/logging.h"
 #include "main.h"
-#include "library/data_structures/list.h"
+#include "library/data_structures/abstract/list.h"
 #include "library/ecs/entity.h"
 #include "project/example-project-1/mushroom.h"
 
