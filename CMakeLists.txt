@@ -46,8 +46,7 @@ add_executable(t3 main.cpp
         framework/library/ecs/entity.cpp
         framework/library/ecs/entity.h
         framework/library/ecs/component.cpp
-        framework/library/ecs/component.h
-        framework/helper/variadic_macros.h
+        framework/library/ecs/component.h 
         framework/components/position.h
         framework/components/position.h
         framework/components/position.cpp
