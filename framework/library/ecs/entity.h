@@ -28,6 +28,4 @@ T3_Entity* T3_Entity_##__EntityName(const char * instanceName, ## __VA_ARGS__){ 
     __Body                                                              \
     T3_List_Add(entity->Components, T3_Comp_Init(__VariableName))
 
-
-
 #endif //T3_ENTITY_H
