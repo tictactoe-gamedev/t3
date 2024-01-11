@@ -94,7 +94,7 @@ void ComponentName##_Enter(T3_Comp* comp){                                      
 #define T3_Comp_Enter_End }
 
 #define T3_Comp_Loop_Begin(ComponentName)                                                                              \
-void ComponentName##_Loop(T3_Comp* comp, unsigned int loopID){                                                                              \
+void ComponentName##_Loop(T3_Comp* comp, unsigned int loopID){                                                         \
     ComponentName * self = (ComponentName *)comp->Data;
     //TODO: We'll put deltatime based on the loop
 

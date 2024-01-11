@@ -7,7 +7,7 @@ T3_ComponentHeader
 (
     T3_Component_Position,
     HasRegister,
-    HasEnter,HasLoop,HasExit,
+    NoEnter,NoLoop,NoExit,
     HasDestroy,NoEnable,NoDisable,
     {
         int x;
