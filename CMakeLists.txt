@@ -3,10 +3,23 @@ project(t3)
 
 set(CMAKE_CXX_STANDARD 17)
 
+# Options for operating systems
+option(LINUX "Build for Ubuntu" OFF)
+option(WIN_MINGW "Build for MinGW on Windows" ON)
+
 # Set the path to SDL2 installation directory
 set(SDL2_INSTALL_DIR "${PROJECT_SOURCE_DIR}/SDL_Build")
 set(SDL2_IMAGE_EXTENSION_BUILD_DIR "${PROJECT_SOURCE_DIR}/SDL_Image_Build")
 set(T3_FRAMEWORK_DIR "${PROJECT_SOURCE_DIR}/framework")
+
+# Set SDL library paths based on options
+if (WIN_MINGW)
+    set(SDL_LIBRARY_PATH "${SDL2_INSTALL_DIR}/lib")
+    set(SDL_IMAGE_LIBRARY_PATH "${SDL2_IMAGE_EXTENSION_BUILD_DIR}/lib/SDL2")
+else()
+    set(SDL_LIBRARY_PATH "${SDL2_INSTALL_DIR}/lib")
+    set(SDL_IMAGE_LIBRARY_PATH "${SDL2_IMAGE_EXTENSION_BUILD_DIR}/.libs")
+endif()
 
 # Include SDL2 headers from the installation directory
 include_directories(${SDL2_INSTALL_DIR}/include/SDL2)
@@ -14,15 +27,8 @@ include_directories(${SDL2_IMAGE_EXTENSION_BUILD_DIR}/install/include/SDL2)
 include_directories(${T3_FRAMEWORK_DIR})
 
 # Find SDL2 libraries
-if (WIN32)
-    # Windows-specific settings
-    find_library(SDL2_LIBRARY NAMES SDL2 HINTS "${SDL2_INSTALL_DIR}/lib")
-    find_library(SDL2_IMAGE_LIBRARY NAMES SDL2_image HINTS "${SDL2_IMAGE_EXTENSION_BUILD_DIR}/lib/SDL2")
-else()
-    # Linux-specific settings
-    find_library(SDL2_LIBRARY NAMES SDL2 HINTS "${SDL2_INSTALL_DIR}/lib")
-    find_library(SDL2_IMAGE_LIBRARY NAMES SDL2_image HINTS "${SDL2_IMAGE_EXTENSION_BUILD_DIR}/.libs")
-endif()
+find_library(SDL2_LIBRARY NAMES SDL2 HINTS "${SDL_LIBRARY_PATH}")
+find_library(SDL2_IMAGE_LIBRARY NAMES SDL2_image HINTS "${SDL_IMAGE_LIBRARY_PATH}")
 
 # Add the source files to the project
 add_executable(t3 main.cpp
@@ -42,11 +48,12 @@ add_executable(t3 main.cpp
         framework/library/data_structures/list.cpp
         framework/library/data_structures/list.h)
 
-# Link SDL2 and SDL_image libraries with full paths
-if (WIN32)
-    target_link_libraries(t3 PRIVATE ${SDL2_INSTALL_DIR}/bin/SDL2.dll -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows)
-    target_link_libraries(t3 PRIVATE ${SDL2_IMAGE_EXTENSION_BUILD_DIR}/bin/SDL2_image.dll -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows)
+# Link SDL2 and SDL_image libraries
+target_link_libraries(t3 PRIVATE ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
+
+# Link additional libraries and flags based on the operating system
+if (WIN_MINGW)
+    target_link_libraries(t3 PRIVATE -lmingw32 -lSDL2main -lSDL2 -lSDL2_image)
 else()
-    target_link_libraries(t3 PRIVATE ${SDL2_INSTALL_DIR}/lib/libSDL2.so)
-    target_link_libraries(t3 PRIVATE ${SDL2_IMAGE_EXTENSION_BUILD_DIR}/install/lib/libSDL2_image.so)
+    target_link_libraries(t3 PRIVATE -lSDL2)
 endif()
