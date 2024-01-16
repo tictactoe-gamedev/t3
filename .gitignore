@@ -68,3 +68,8 @@ dkms.conf
 # Compiled Static libraries
 *.lai 
  
+# Visual Studio Code
+.vscode/
+
+# CMake
+build/
