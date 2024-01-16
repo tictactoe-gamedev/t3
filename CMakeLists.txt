@@ -4,62 +4,62 @@ project(t3)
 set(CMAKE_CXX_STANDARD 17)
 
 # Set the path to SDL2 installation directory
-set(SDL2_INSTALL_DIR "${PROJECT_SOURCE_DIR}/SDL_Build")
-set(SDL2_IMAGE_EXTENSION_BUILD_DIR "${PROJECT_SOURCE_DIR}/SDL_Image_Build")
 set(T3_FRAMEWORK_DIR "${PROJECT_SOURCE_DIR}/framework")
 
 # Include SDL2 headers from the installation directory
-include_directories(${SDL2_INSTALL_DIR}/include/SDL2)
-include_directories(${SDL2_IMAGE_EXTENSION_BUILD_DIR}/install/include/SDL2)
-include_directories(${SDL2_IMAGE_EXTENSION_BUILD_DIR}/include/SDL2)
 include_directories(${T3_FRAMEWORK_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
 
 # Find SDL2 libraries
-if (WIN32)
-    # Windows-specific settings
-    find_library(SDL2_LIBRARY NAMES SDL2 HINTS "${SDL2_INSTALL_DIR}/lib")
-    find_library(SDL2_IMAGE_LIBRARY NAMES SDL2_image HINTS "${SDL2_IMAGE_EXTENSION_BUILD_DIR}/lib/SDL2")
-else()
-    # Linux-specific settings
-    find_library(SDL2_LIBRARY NAMES SDL2 HINTS "${SDL2_INSTALL_DIR}/lib")
-    find_library(SDL2_IMAGE_LIBRARY NAMES SDL2_image HINTS "${SDL2_IMAGE_EXTENSION_BUILD_DIR}/.libs")
-endif()
+find_package(SDL2 CONFIG REQUIRED)
+find_package(SDL2_image CONFIG REQUIRED)
+
+add_library(t3-framework
+    framework/config/game-config.h
+    framework/helper/logging.h
+    framework/helper/logging.cpp
+    framework/library/data_structures/abstract/stack.h 
+    framework/library/data_structures/abstract/linked_list.h
+    framework/library/data_structures/abstract/linked_list.cpp
+    framework/library/data_structures/abstract/node.h
+    framework/library/data_structures/abstract/node.cpp
+    framework/helper/memory.h
+    framework/library/data_structures/abstract/queue.h
+    framework/library/data_structures/abstract/queue.cpp
+    framework/library/data_structures/abstract/stack.cpp
+    framework/library/data_structures/abstract/list.cpp
+    framework/library/data_structures/abstract/list.h
+    framework/library/ecs/entity.cpp
+    framework/library/ecs/entity.h
+    framework/library/ecs/component.cpp
+    framework/library/ecs/component.h 
+    framework/components/position.h
+    framework/components/position.h
+    framework/components/position.cpp
+    framework/components/scene.h
+    framework/components/scene.cpp
+)
 
 # Add the source files to the project
 add_executable(t3 main.cpp
-        framework/config/game-config.h
-        main.h
-        framework/helper/logging.h
-        framework/helper/logging.cpp
-        framework/library/data_structures/abstract/stack.h 
-        framework/library/data_structures/abstract/linked_list.h
-        framework/library/data_structures/abstract/linked_list.cpp
-        framework/library/data_structures/abstract/node.h
-        framework/library/data_structures/abstract/node.cpp
-        framework/helper/memory.h
-        framework/library/data_structures/abstract/queue.h
-        framework/library/data_structures/abstract/queue.cpp
-        framework/library/data_structures/abstract/stack.cpp
-        framework/library/data_structures/abstract/list.cpp
-        framework/library/data_structures/abstract/list.h
-        framework/library/ecs/entity.cpp
-        framework/library/ecs/entity.h
-        framework/library/ecs/component.cpp
-        framework/library/ecs/component.h 
-        framework/components/position.h
-        framework/components/position.h
-        framework/components/position.cpp
-        project/example-project-1/mushroom.h
-        project/example-project-1/main_entity.h
-        framework/components/scene.h
-        framework/components/scene.cpp)
+    main.h
+    project/example-project-1/mushroom.h
+    project/example-project-1/main_entity.h
+)
 
-# Link SDL2 and SDL_image libraries with full paths
-if (WIN32)
-    target_link_libraries(t3 PRIVATE ${SDL2_INSTALL_DIR}/bin/SDL2.dll -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows)
-    target_link_libraries(t3 PRIVATE ${SDL2_IMAGE_EXTENSION_BUILD_DIR}/bin/SDL2_image.dll -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows)
-else()
-    target_link_libraries(t3 PRIVATE ${SDL2_INSTALL_DIR}/lib/libSDL2.so)
-    target_link_libraries(t3 PRIVATE ${SDL2_IMAGE_EXTENSION_BUILD_DIR}/install/lib/libSDL2_image.so)
-endif()
+# Link SDL2 and SDL_image libraries using CMake targets
+target_link_libraries(
+    t3-framework
+    PUBLIC
+    # SDL2
+    $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
+    $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+    # SDL2 Image
+    $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
+)
+
+target_link_libraries(
+    t3
+    PRIVATE
+    t3-framework
+)
