@@ -1,5 +1,5 @@
-#include "SDL.h"
-#include "SDL_image.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "config/game-config.h"
 #include "helper/logging.h"
 #include "main.h"
@@ -27,6 +27,8 @@ int main(int argc, char *args[]) {
     T3_Init();
     T3_GameLoop();
     T3_Destroy();
+
+    return 0;
 }
 
 void T3_Init() {
