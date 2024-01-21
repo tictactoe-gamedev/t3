@@ -314,16 +314,89 @@ size_t T3_LinkedListDouble_FindIndexOf(T3_LinkedListDouble *list, T3_NodeDouble 
     return -1;
 }
 
-//TODO: Below functions can still optimized!
+//TODO: Check below optimizations
 T3_Node *T3_LinkedList_RemoveAt(T3_LinkedList *list, size_t index) {
-    T3_Node *removed = T3_LinkedList_GetNode(list, index);
-    T3_LinkedList_Remove(list, removed);
+    T3_Assert(list == NULL, "Invalid list")
+    T3_Assert(index >= list->Count, "Invalid index inserted")
+
+    T3_Node *removed = NULL;
+
+    if(index == 0){
+        removed = list->Head;
+        list->Head = removed->Next;
+
+        if(list->Count == 1){
+            list->Tail = NULL;
+        }
+    } else {
+        T3_Node *prev = NULL;
+        T3_Node *current = list->Head;
+
+        for(size_t i = 0; i < index && current != NULL; ++i){
+            prev = current;
+            current = current->Next;
+        }
+
+        if(prev != NULL && current != NULL){
+            removed = current;
+            prev->Next = current->Next;
+
+            if(index == list->Count - 1){
+                list->Tail = prev;
+            }
+        }
+    }
+
+    if (removed != NULL){
+        list->Count--;
+        removed->Next = NULL;
+    }
+
     return removed;
 }
 
 T3_NodeDouble *T3_LinkedListDouble_RemoveAt(T3_LinkedListDouble *list, size_t index) {
-    T3_NodeDouble *removed = T3_LinkedListDouble_GetNode(list, index);
-    T3_LinkedListDouble_Remove(list, removed);
+    T3_Assert(list == NULL, "Invalid list")
+    T3_Assert(index >= list->Count, "Invalid index inserted")
+
+    T3_NodeDouble *removed;
+
+    if(index == 0){
+        removed = list->Head;
+        list->Head = removed->Next;
+
+        if(list->Count == 1){
+            list->Tail = NULL;
+        } else {
+            list->Head->Prev = NULL;
+        }
+    } else {
+        T3_NodeDouble  *prev = NULL;
+        T3_NodeDouble  *current = list->Head;
+
+        for(size_t i = 0; i < index && current != NULL; ++i){
+            prev = current;
+            current = current->Next;
+        }
+
+        if(prev != NULL && current != NULL){
+            removed = current;
+            prev->Next = current->Next;
+
+            if(index == list->Count - 1){
+                list->Tail = prev;
+            } else {
+                current->Next->Prev = prev;
+            }
+        }
+    }
+
+    if(removed != NULL){
+        list->Count--;
+        removed->Next = NULL;
+        removed->Prev = NULL;
+    }
+
     return removed;
 }
 
