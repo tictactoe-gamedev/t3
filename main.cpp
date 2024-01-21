@@ -7,6 +7,11 @@
 #include "library/ecs/entity.h"
 #include "project/example-project-1/mushroom.h"
 
+//TEST
+#include <stdio.h>
+#include "helper/randomisation.h"
+//TEST END
+
 T3_Entity *MainEntity = NULL;
 Uint64 PreviousFrameMS = 0;
 Uint64 CurrentFrameMS = 0;
@@ -23,6 +28,8 @@ int main(int argc, char *args[]) {
     T3_Entity *aMushroom = T3_Entity_Mushroom("mushroom", 15, 23);
 
     T3_Log(LOG_LEVEL_INFO, "Hello %s", aMushroom->InstanceName);
+
+
 
     T3_Init();
     T3_GameLoop();
