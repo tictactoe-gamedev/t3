@@ -18,8 +18,8 @@ T3_NodeDouble* T3_NodeDouble_Init(void* data);
 void T3_Node_Destroy(T3_Node* node);
 void T3_NodeDouble_Destroy(T3_NodeDouble* node);
 
-#define T3_Node_Overload_Primitive(nodeType,primitiveType)\
-nodeType * nodeType##_Init(primitiveType value)
+#define T3_Node_Overload_Primitive(__nodeType,__primitiveType)\
+__nodeType * __nodeType##_Init(__primitiveType value)
 
 T3_Node_Overload_Primitive(T3_Node,int);
 T3_Node_Overload_Primitive(T3_NodeDouble,int);

@@ -2,10 +2,10 @@
 #include "helper/memory.h"
 #include <cstdlib>
 
-#define T3_Node_Overload_Implementation_Primitive(nodeType,primitiveType)\
-nodeType * nodeType##_Init(primitiveType value){                         \
-    T3_MallocSafe(nodeType, node);                                       \
-    primitiveType * val = T3_Malloc(primitiveType);                      \
+#define T3_Node_Overload_Implementation_Primitive(__nodeType,__primitiveType)\
+__nodeType * __nodeType##_Init(__primitiveType value){                         \
+    T3_MallocSafe(__nodeType, node);                                       \
+    __primitiveType * val = T3_Malloc(__primitiveType);                      \
     * val = value;                                                       \
     node->Data = val;                                                    \
     node->Ptr1 = NULL;                                                   \
