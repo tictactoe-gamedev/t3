@@ -47,30 +47,30 @@ typedef struct T3_Comp {
 #define Enabled(x) x
 
 
-#define T3_ComponentHeader(ComponentName, Register, Enter, Loop, Exit, Destroy, Enable, Disable, Body) \
-typedef struct ComponentName Body ComponentName;                                                       \
-Register(void ComponentName##_Register(T3_Entity* entity, T3_Comp* comp);)                             \
-Enter(void ComponentName##_Enter(T3_Comp* comp);)                                                      \
-Exit(void ComponentName##_Exit(T3_Comp* comp);)                                                        \
-Enable(void ComponentName##_Enable(T3_Comp* comp);)                                                    \
-Disable(void ComponentName##_Disable(T3_Comp* comp);)                                                  \
-Destroy(void ComponentName##_Destroy(T3_Comp* comp);)                                                  \
-Loop(void ComponentName##_Loop(T3_Comp* comp, unsigned int loopID);)                                   \
-T3_Comp* T3_Comp_Init(ComponentName * self);                                                           \
+#define T3_ComponentHeader(__ComponentName, __Register, __Enter, __Loop, __Exit, __Destroy, __Enable, __Disable, __Body) \
+typedef struct __ComponentName __Body __ComponentName;                                                       \
+__Register(void __ComponentName##_Register(T3_Entity* entity, T3_Comp* comp);)                             \
+__Enter(void __ComponentName##_Enter(T3_Comp* comp);)                                                      \
+__Exit(void __ComponentName##_Exit(T3_Comp* comp);)                                                        \
+__Enable(void __ComponentName##_Enable(T3_Comp* comp);)                                                    \
+__Disable(void __ComponentName##_Disable(T3_Comp* comp);)                                                  \
+__Destroy(void __ComponentName##_Destroy(T3_Comp* comp);)                                                  \
+__Loop(void __ComponentName##_Loop(T3_Comp* comp, unsigned int loopID);)                                   \
+T3_Comp* T3_Comp_Init(__ComponentName * self);                                                           \
 
 /** 
  * Triggers when you initialize a T3_Comp with give type
  */
-#define T3_Comp_Init_Begin(ComponentName, __Register, __Enter, __Loop, __Exit, __Destroy, __Enable, __Disable)          \
-T3_Comp* T3_Comp_Init(ComponentName * self){                                                                            \
+#define T3_Comp_Init_Begin(__ComponentName, __Register, __Enter, __Loop, __Exit, __Destroy, __Enable, __Disable)          \
+T3_Comp* T3_Comp_Init(__ComponentName * self){                                                                            \
     T3_MallocSafe(T3_Comp, comp);                                                                                       \
-    __Register(comp->Register = ComponentName##_Register;)                                                              \
-    __Enter(comp->Enter = ComponentName##_Enter;)                                                                       \
-    __Loop(comp->Loop = ComponentName##_Loop;)                                                                          \
-    __Exit(comp->Exit = ComponentName##_Exit;)                                                                          \
-    __Destroy(comp->Destroy = ComponentName##_Destroy;)                                                                 \
-    __Enable(comp->Enable = ComponentName##_Enable;)                                                                    \
-    __Disable(comp->Loop = ComponentName##_Disable;)                                                                    \
+    __Register(comp->Register = __ComponentName##_Register;)                                                              \
+    __Enter(comp->Enter = __ComponentName##_Enter;)                                                                       \
+    __Loop(comp->Loop = __ComponentName##_Loop;)                                                                          \
+    __Exit(comp->Exit = __ComponentName##_Exit;)                                                                          \
+    __Destroy(comp->Destroy = __ComponentName##_Destroy;)                                                                 \
+    __Enable(comp->Enable = __ComponentName##_Enable;)                                                                    \
+    __Disable(comp->Loop = __ComponentName##_Disable;)                                                                    \
     
 #define T3_Comp_Init_End comp->Data = self; return comp;}
 
@@ -78,9 +78,9 @@ T3_Comp* T3_Comp_Init(ComponentName * self){                                    
  * This is triggered right before attaching a component to an entity
  * You don't need to manually add component to entity. It's handled right before the function completed
  */
-#define T3_Comp_Register_Begin(ComponentName)                                                                           \
-void ComponentName##_Register(T3_Entity* entity, T3_Comp* comp){                                                        \
-ComponentName * self = (ComponentName *)comp->Data;
+#define T3_Comp_Register_Begin(__ComponentName)                                                                           \
+void __ComponentName##_Register(T3_Entity* entity, T3_Comp* comp){                                                        \
+__ComponentName * self = (__ComponentName *)comp->Data;
 
 #define T3_Comp_Register_End T3_List_AddSafe(entity->Components, comp); }
 
@@ -88,9 +88,9 @@ ComponentName * self = (ComponentName *)comp->Data;
  * Triggers when component processed in the game loop first time 
  * (or after Exit -> Enter again)
  */
-#define T3_Comp_Enter_Begin(ComponentName)                                                                              \
-void ComponentName##_Enter(T3_Comp* comp){                                                                              \
-    ComponentName * self = (ComponentName *)comp->Data;                                                                                  
+#define T3_Comp_Enter_Begin(__ComponentName)                                                                              \
+void __ComponentName##_Enter(T3_Comp* comp){                                                                              \
+    __ComponentName * self = (__ComponentName *)comp->Data;
                                                                                                                         
 #define T3_Comp_Enter_End }
 
@@ -101,9 +101,9 @@ void ComponentName##_Loop(T3_Comp* comp, unsigned int loopID){                  
 
 #define T3_Comp_Loop_End }
 
-#define T3_Comp_Exit_Begin(ComponentName)                                                                              \
-void ComponentName##_Exit(T3_Comp* comp){                                                                              \
-    ComponentName * self = (ComponentName *)comp->Data;
+#define T3_Comp_Exit_Begin(__ComponentName)                                                                              \
+void __ComponentName##_Exit(T3_Comp* comp){                                                                              \
+    __ComponentName * self = (__ComponentName *)comp->Data;
 
 #define T3_Comp_Exit_End }
 
@@ -111,9 +111,9 @@ void ComponentName##_Exit(T3_Comp* comp){                                       
  * Attention, Destroy has no default way to free memory. You should handle freeing 
  * (or any kind of disposal)
  */
-#define T3_Comp_Destroy_Begin(ComponentName)                                                                           \
-void ComponentName##_Destroy(T3_Comp* comp){                                                                           \
-    ComponentName * self = (ComponentName *)comp->Data;
+#define T3_Comp_Destroy_Begin(__ComponentName)                                                                           \
+void __ComponentName##_Destroy(T3_Comp* comp){                                                                           \
+    __ComponentName * self = (__ComponentName *)comp->Data;
 
 #define T3_Comp_Destroy_End  }
 

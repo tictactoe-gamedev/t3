@@ -42,9 +42,9 @@ void INTERNAL_T3_Log(size_t logLevel, const char *filename, int lineNumber, cons
 
 }
 
-#define INTERNAL_T3_Log_LinkedIn_Implementation(linkedListType, nodeType, initialNodePointerName) \
-void INTERNAL_T3_Log(size_t logLevel, const char *filename, int lineNumber, linkedListType *list, ...) {  \
-    nodeType * current = list->initialNodePointerName;                                             \
+#define INTERNAL_T3_Log_LinkedIn_Implementation(__linkedListType, __nodeType, __initialNodePointerName) \
+void INTERNAL_T3_Log(size_t logLevel, const char *filename, int lineNumber, __linkedListType *list, ...) {  \
+    __nodeType * current = list->__initialNodePointerName;                                             \
     int i=0;                                                                                             \
     while (current!=NULL){                                                                               \
         T3_Log(logLevel,"[%d] Value: %d",i,*(int*)current->Data);                                        \

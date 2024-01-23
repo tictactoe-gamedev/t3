@@ -21,12 +21,12 @@ void INTERNAL_T3_Log(size_t logLevel, const char *filename, int lineNumber, T3_S
 
 void INTERNAL_T3_Log(size_t logLevel, const char *filename, int lineNumber, T3_Queue *queue, ...);
 
-#define T3_Log(level, message, ...) \
-INTERNAL_T3_Log(level, __FILE__, __LINE__, message, ## __VA_ARGS__)
+#define T3_Log(__level, __message, ...) \
+INTERNAL_T3_Log(__level, __FILE__, __LINE__, __message, ## __VA_ARGS__)
 
-#define T3_ErrorIf(condition, message, ...) \
-if ((condition)) { \
-    INTERNAL_T3_Log(LOG_LEVEL_ERROR, __FILE__, __LINE__, message, ## __VA_ARGS__); \
+#define T3_ErrorIf(__condition, __message, ...) \
+if ((__condition)) { \
+    INTERNAL_T3_Log(LOG_LEVEL_ERROR, __FILE__, __LINE__, __message, ## __VA_ARGS__); \
     exit(-1); \
 }
 
@@ -35,19 +35,19 @@ if ((condition)) { \
         /**
          * If condition is TRUE, it'll halt the execution
          */
-        #define T3_Assert(condition, message, ...) \
-                    if ((condition)) { \
-                        INTERNAL_T3_Log(LOG_LEVEL_ERROR, __FILE__, __LINE__, message, ## __VA_ARGS__); \
+        #define T3_Assert(__condition, __message, ...) \
+                    if ((__condition)) { \
+                        INTERNAL_T3_Log(LOG_LEVEL_ERROR, __FILE__, __LINE__, __message, ## __VA_ARGS__); \
                         exit(-1); \
                     }
     #else
          /**
          * If condition is TRUE, it'll halt the execution
          */
-        #define T3_Assert(condition, message, ...) ((void)0)
+        #define T3_Assert(__condition, __message, ...) ((void)0)
     #endif
 #else
-#define T3_Assert(condition, message, ...) ((void)0)
+#define T3_Assert(__condition, __message, ...) ((void)0)
 #endif
 
 #endif //T3_LOGGING_H
