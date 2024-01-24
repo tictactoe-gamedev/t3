@@ -1,3 +1,4 @@
+#include <ctime>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "config/game-config.h"
@@ -43,6 +44,8 @@ void T3_Init() {
                                   GAME_CONFIG_SCREEN_WIDTH,
                                   GAME_CONFIG_SCREEN_HEIGHT,
                                   SDL_WINDOW_SHOWN);
+
+    srand(time(NULL));
 
     T3_ErrorIf(MainWindow == NULL, "%s", SDL_GetError())
 
