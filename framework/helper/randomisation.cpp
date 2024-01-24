@@ -4,10 +4,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-void T3_Init_Random(){
-    return srand(time(NULL));
-}
-
 bool T3_Random_Bool(){
     return rand() % 2 == 0;
 }
