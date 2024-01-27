@@ -26,18 +26,18 @@ Allocates `sizeof(type)` memory and cast it to `type*`
 ```
 T3_MallocSafe(type, variableName) 
 ```
-Initialize a variable with given type and name. Also check if malloc failed or not. 
+Initialize a variable with given type and name. Also check if malloc failed or not.
 
 **Usage:**   
 `T3_MallocSafe(MyStruct, myStructPtr)`
 
 >**Wrong Usage:**    
-> MyStruct* myStructPtr = T3_MallocSafe(MyStruct, myStructPtr);   
+> MyStruct* myStructPtr = T3_MallocSafe(MyStruct, myStructPtr);
 
 >**Correct Usage:**    
 > T3_MallocSafe(MyStruct, myStructPtr)
 
 >**Tip:**    
-> If you need a more obvious approach, you can use 
-> [T3_Malloc](#t3_malloc) and [T3_Assert](logging.md#t3_assert) 
+> If you need a more obvious approach, you can use
+> [T3_Malloc](#t3_malloc) and [T3_Assert](logging.md#t3_assert)
 > with a null check.

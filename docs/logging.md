@@ -11,7 +11,7 @@ Handles logging & assertion. There's 3 predefined log levels in t3:
 * [Macros](#macros--functions)
     * [T3_Log](#t3_log)
     * [T3_Assert](#t3_assert)
-    
+
 ## Macros
 ***
 ### T3_Log
@@ -21,15 +21,15 @@ T3_Log(level, message, ...)
 ```
 * **... :** put any formatted text variable as you'd do in a printf
 
-Logs a message on console which includes filename and line of execution and log type. 
+Logs a message on console which includes filename and line of execution and log type.
 
 **Usage:**   
 `T3_Log(LOG_LEVEL_INFO, "My age is %d", 6);`
 `T3_Log(LOG_LEVEL_INFO, "Function xyz called");`
 
 >**Tip:**    
-> **GAME_LOGGING_LEVEL** on console, **config/game-config.h** decides the 
-> minimum logging level. So if it is set to LOG_LEVEL_ERROR,  you can't see warnings 
+> **GAME_LOGGING_LEVEL** on console, **config/game-config.h** decides the
+> minimum logging level. So if it is set to LOG_LEVEL_ERROR,  you can't see warnings
 > and infos. Setting it to error would be a good practice for production release.
 
 ### T3_Assert
