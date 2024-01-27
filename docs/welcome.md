@@ -5,17 +5,17 @@
 * [Installation Instructions](#installation-instructions)
 
 ## Introduction
-t3 is a Game Development Framework for people who want to build games with 
-C and C++. Its goal is to enable you to develop games **easily**,but with a 
+t3 is a Game Development Framework for people who want to build games with
+C and C++. Its goal is to enable you to develop games **easily**,but with a
 **lower level control** compared to engines. Actually, it's first purpose
-is improve your game development skills. 
+is improve your game development skills.
 
 ## Who is t3 for?
-* You are ready to get your hands dirty. 
-* You need something simple and modular. 
+* You are ready to get your hands dirty.
+* You need something simple and modular.
 * You want a framework that doesn't need vodoo magic and ancient knowledge.
 * You don't want to be forced to learn some companies strict rules to do things. This will be your 'thing'.
-* You need damn clear documentation. 
+* You need damn clear documentation.
 
 ## Linux Installation Instructions
 * Clone the repository.
