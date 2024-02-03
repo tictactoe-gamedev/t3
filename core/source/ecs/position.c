@@ -6,7 +6,7 @@ T3_Component *T3C_Position_Init(float x, float y) {
     data->x = x;
     data->y = y;
 
-    T3_Component *component = T3_Component_Init();
+    T3_Component *component = T3_Component_Init(true);
     component->Data = data;
     component->OnDestroy = T3C_Position_OnDestroy;
     return component;

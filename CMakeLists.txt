@@ -49,6 +49,7 @@ add_executable(t3 main.c
         core/source/globals.c
         core/source/ecs/component.c
         core/source/ecs/scene.c
+        core/source/ecs/game-loop.c
 )
 
 # Link SDL2 and SDL_image libraries with full paths

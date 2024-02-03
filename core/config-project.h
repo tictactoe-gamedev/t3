@@ -1,7 +1,7 @@
 #ifndef T3_CONFIG_PROJECT_H
 #define T3_CONFIG_PROJECT_H
 
-#include "ecs.h"
+struct T3_Entity;
 
 #define DEVELOPMENT 1
 #define PRODUCTION 2

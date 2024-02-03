@@ -6,8 +6,8 @@
 typedef unsigned int uint;
 typedef int bool;
 
-#define true 1;
-#define false 0;
+#define true 1
+#define false 0
 
 typedef struct T3_Vector2 {
     float x;

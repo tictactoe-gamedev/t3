@@ -1,9 +1,10 @@
+#include "main.h"
 #include <time.h>
 #include "SDL.h"
 #include "SDL_image.h"
-#include "main.h"
 #include "core/helpers.h"
 #include "core/globals.h"
+#include "core/ecs.h"
 
 Uint64 PreviousFrameMS = 0;
 Uint64 CurrentFrameMS = 0;
@@ -22,7 +23,8 @@ int main(int argc, char *args[]) {
 }
 
 void T3_Init() {
-    globals = GetGlobals();
+    globals = T3_Globals_Get();
+
     srand(time(NULL));
 
     MainWindow = NULL;
@@ -49,7 +51,10 @@ void T3_Init() {
     SDL_SetRenderDrawColor(MainRenderer,
                            T3_HELPER_SDL_COLOR_TO_PARAM_RGBA(globals->DefaultBackground));
 
+    T3_Ecs_GameLoop_Init();
+    
     CONFIG_ENTRY_POINT_FUNCTION_NAME();
+
 }
 
 void T3_GameLoop() {
@@ -70,7 +75,9 @@ void T3_GameLoop() {
                 quit = true;
             }
         }
-
+        
+        T3_Ecs_GameLoop_Step();
+        
         SDL_RenderPresent(MainRenderer);
         PreviousFrameMS = CurrentFrameMS;
     }
