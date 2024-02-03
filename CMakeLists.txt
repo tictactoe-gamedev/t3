@@ -43,12 +43,12 @@ add_executable(t3 main.c
         core/source/adt/stack.c
         core/source/helpers/randomisation.c
         core/ecs.h
-        core/source/ecs/position.c
+        core/source/ecs/components/position.c
         core/source/ecs/entity.c
         project-root/start.c
         core/source/globals.c
         core/source/ecs/component.c
-        core/source/ecs/scene.c
+        core/source/ecs/components/scene.c
         core/source/ecs/game-loop.c
 )
 
