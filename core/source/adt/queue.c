@@ -24,7 +24,7 @@ void T3_Queue_Enqueue(T3_Queue *queue, T3_Node *node) {
 }
 
 T3_Node *T3_Queue_Dequeue(T3_Queue *queue) {
-    T3_HELPER_ASSERT(queue->Count == 0, "Nothing to dequeue!");
+    T3_HELPER_ASSERT(queue->Count != 0, "Nothing to dequeue!");
 
     T3_Node *current = queue->Head;
     queue->Head = queue->Head->Next;

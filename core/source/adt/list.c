@@ -126,7 +126,7 @@ void T3_List_CleanCache(T3_List *list) {
             (size_t *) realloc(list->_removedIndices, sizeof(size_t) * list->_removedIndicesCapacity);
     list->_removedIndicesSize = 0;
 }
-
+//TODO: We need a better iterator!
 void *T3_List_Get(T3_List *list, size_t index) {
     return list->Array[GetRealIndex(list, index)];
 }

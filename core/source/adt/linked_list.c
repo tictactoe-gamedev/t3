@@ -50,8 +50,8 @@ void T3_LinkedList_AddToTail(T3_LinkedList *list, T3_Node *node) {
 }
 
 void T3_LinkedList_AddToIndex(T3_LinkedList *list, T3_Node *node, size_t index) {
-    T3_HELPER_ASSERT(index > list->Count, "OutOfRange index!");
-    T3_HELPER_ASSERT(index == 0 || index == list->Count, "Adding to head or tail. Use AddNode instead!");
+    T3_HELPER_ASSERT(index < list->Count, "OutOfRange index!");
+    T3_HELPER_ASSERT(!(index == 0 || index == list->Count), "Adding to head or tail. Use AddNode instead!");
 
     T3_Node *found = T3_LinkedList_GetNode(list, index - 1);
     node->Next = found->Next;
@@ -61,7 +61,7 @@ void T3_LinkedList_AddToIndex(T3_LinkedList *list, T3_Node *node, size_t index) 
 }
 
 T3_Node *T3_LinkedList_GetNode(T3_LinkedList *list, size_t index) {
-    T3_HELPER_ASSERT(index > list->Count - 1, "OutOfRange index!");
+    T3_HELPER_ASSERT(index < list->Count, "OutOfRange index!");
 
     if (index == 0) {
         return list->Head;
@@ -80,7 +80,7 @@ T3_Node *T3_LinkedList_GetNode(T3_LinkedList *list, size_t index) {
 }
 
 void T3_LinkedList_Remove(T3_LinkedList *list, T3_Node *node) {
-    T3_HELPER_ASSERT(list->Count == 0, "Nothing to remove");
+    T3_HELPER_ASSERT(list->Count != 0, "Nothing to remove");
 
     T3_Node *current = list->Head;
 
@@ -276,8 +276,8 @@ void T3_LinkedListDouble_AddToTail(T3_LinkedListDouble *list, T3_NodeDouble *nod
  * @param index 
  */
 void T3_LinkedListDouble_AddToIndex(T3_LinkedListDouble *list, T3_NodeDouble *node, size_t index) {
-    T3_HELPER_ASSERT(index > list->Count, "OutOfRange index!");
-    T3_HELPER_ASSERT(index == 0 || index == list->Count, "Adding to head or tail. Use AddNode instead!");
+    T3_HELPER_ASSERT(index < list->Count, "OutOfRange index!");
+    T3_HELPER_ASSERT(!(index == 0 || index == list->Count), "Adding to head or tail. Use AddNode instead!");
 
     T3_NodeDouble *found = T3_LinkedListDouble_GetNode(list, index - 1);
     node->Next = found->Next;
@@ -290,7 +290,7 @@ void T3_LinkedListDouble_AddToIndex(T3_LinkedListDouble *list, T3_NodeDouble *no
 
 
 T3_NodeDouble *T3_LinkedListDouble_GetNode(T3_LinkedListDouble *list, size_t index) {
-    T3_HELPER_ASSERT(index > list->Count - 1, "OutOfRange index!");
+    T3_HELPER_ASSERT(index < list->Count, "OutOfRange index!");
 
     if (index == 0) {
         return list->Head;
@@ -320,7 +320,7 @@ T3_NodeDouble *T3_LinkedListDouble_GetNode(T3_LinkedListDouble *list, size_t ind
 
 
 void T3_LinkedListDouble_Remove(T3_LinkedListDouble *list, T3_NodeDouble *node) {
-    T3_HELPER_ASSERT(list->Count == 0, "Nothing to remove");
+    T3_HELPER_ASSERT(list->Count != 0, "Nothing to remove");
 
     T3_NodeDouble *current = list->Head;
 
