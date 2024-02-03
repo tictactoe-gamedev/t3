@@ -53,4 +53,11 @@ float T3_Helper_Random_Float(float min, float max);
 
 #define T3_HELPER_SDL_COLOR_TO_PARAM_RGB(__color) __color.r, __color.g, __color.b
 
+/** -------------------------------- FLAGS ----------------------------------- */
+
+#define T3_HELPER_FLAG_SET_OPTION(__flag, __option)    __flag |= __option
+#define T3_HELPER_FLAG_CLEAR_OPTION(__flag, __option)    __flag &= ~__option
+#define T3_HELPER_FLAG_TOGGLE_OPTION(__flag, __option)    __flag ^= __option
+#define T3_HELPER_FLAG_CHECK_OPTION(__flag, __options)    ((__flag) & (__options))
+
 #endif //T3_HELPERS_H
