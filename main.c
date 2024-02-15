@@ -1,14 +1,18 @@
-#include "main.h"
 #include <time.h>
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_video.h"
 #include "core/helpers.h"
 #include "core/globals.h"
 #include "core/ecs.h"
 
+float DeltaTimeInSeconds = 0;
 Uint64 PreviousFrameMS = 0;
 Uint64 CurrentFrameMS = 0;
 T3_Globals *globals;
+
+SDL_Window* MainWindow = NULL;
+SDL_Renderer* MainRenderer = NULL;
 
 void T3_Init();
 
@@ -48,6 +52,7 @@ void T3_Init() {
             IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_WEBP) == 0,
             "Couldn't load image libraries.");
 
+    globals->MainRenderer = MainRenderer;
     SDL_SetRenderDrawColor(MainRenderer,
                            T3_HELPER_SDL_COLOR_TO_PARAM_RGBA(globals->DefaultBackground));
 
