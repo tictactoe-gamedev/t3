@@ -10,6 +10,7 @@ T3_Component *T3_Component_Init(bool isEnabled) {
     component->OnEnable = NULL;
     component->OnEnter = NULL;
     component->OnExit = NULL;
+    component->OnLoop = NULL;
     component->Owner = NULL;
     component->Data = NULL;
     component->IsEnabled = isEnabled;
