@@ -4,7 +4,6 @@
 T3_ECS_GameLoop *__gameLoop;
 
 void T3_Ecs_GameLoop_Init() {
-
     T3_HELPER_MALLOC_SAFE(T3_ECS_GameLoop, gameloop);
     __gameLoop = gameloop;
     __gameLoop->OnExit = T3_Queue_Init();
@@ -37,10 +36,6 @@ void T3_Ecs_GameLoop_Step() {
         T3_Node *node = (T3_Node *) T3_Queue_Dequeue(queue);
         T3_Component *component = (T3_Component *) node->Data;
         component->OnEnter(component);
-
-        if (component->OnLoop != NULL) {
-            T3_List_Add(__gameLoop->OnLoop, component);
-        }
     }
 
     uint i;

@@ -50,13 +50,23 @@ add_executable(t3 main.c
         core/source/ecs/component.c
         core/source/ecs/components/scene.c
         core/source/ecs/game-loop.c
+        core/source/ecs/components/camera.c
+        core/t3-math.h
+        core/source/vector2.c
+        core/source/ecs/components/texture.c 
+        core/source/ecs/components/sprite.c
+        core/source/ecs/components/texture.c
+        core/source/t3-types.c
+
 )
 
 # Link SDL2 and SDL_image libraries with full paths
 if (WIN32)
     target_link_libraries(t3 PRIVATE ${SDL2_INSTALL_DIR}/bin/SDL2.dll -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows)
     target_link_libraries(t3 PRIVATE ${SDL2_IMAGE_EXTENSION_BUILD_DIR}/bin/SDL2_image.dll -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -mwindows)
+    target_link_libraries(t3 PRIVATE libm)
 else ()
     target_link_libraries(t3 PRIVATE ${SDL2_INSTALL_DIR}/lib/libSDL2.so)
     target_link_libraries(t3 PRIVATE ${SDL2_IMAGE_EXTENSION_BUILD_DIR}/install/lib/libSDL2_image.so)
+    target_link_libraries(t3 PRIVATE -lm)
 endif ()

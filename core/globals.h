@@ -1,7 +1,7 @@
 #ifndef T3_GLOBALS_H
 #define T3_GLOBALS_H
 
-#include "SDL_pixels.h"
+#include "SDL.h"
 #include "abstract-data-types.h"
 #include "core/config-project.h"
 
@@ -11,6 +11,7 @@ typedef struct T3_Globals {
     SDL_Color DefaultBackground;
     SDL_Color Black;
     uint InitialEntityCapacity;
+    SDL_Renderer* MainRenderer;
 } T3_Globals;
 
 T3_Globals *T3_Globals_Get();
