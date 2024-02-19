@@ -25,10 +25,15 @@
 /*----- LINKER -----*/
 #define LINKER                                              LINK("-lSDL2")                                              \
                                                             LINK("-lSDL2_image")                                        \
-                                                            LINK("-lm")                                                 \
+                                                                                                                        
+#ifdef __linux__
+#define LINKER_PLATFORM                                     LINK("-lm")
+#else
+#define LINKER_PLATFORM                                     
+#endif
 
 /*----- SOURCES -----*/
-#define SOURCE_FILES                                        SRC(ENGINE_ROOT "/main.c") \
+#define SOURCE_FILES                                        SRC(ENGINE_ROOT "/main.c")                                  \
                                                             SRC(T3_CORE_SOURCE "/t3-types.c")                           \
                                                             SRC(T3_CORE_SOURCE "/vector2.c")                            \
                                                             SRC(T3_CORE_SOURCE "/globals.c")                            \
@@ -56,18 +61,24 @@
 
 int main(int argc, char *args[]) {
 
+    const char *sources = SOURCE_FILES;
+
     /** Comment any options you don't want to apply */
     const char *cmd = "clang "
                       INCLUDE_DIRECTORIES
                       " "
-                      LINKER
+                      LINKER " " LINKER_PLATFORM
                       " -o " EXECUTABLE_NAME
                       " " SOURCE_FILES;
 
     int compilationStatus = system(cmd);
 
     if (compilationStatus == 0) {
-        system("./t3");
+#ifdef __linux__
+        system("./" EXECUTABLE_NAME);
+#else 
+        system(EXECUTABLE_NAME ".exe");
+#endif
     }
 
     return 0;
