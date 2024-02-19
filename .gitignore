@@ -71,5 +71,6 @@ dkms.conf
 # Visual Studio Code
 .vscode/
 
-# CMake
+# CMake or Build Tools
 build/
+/compile_commands.json
