@@ -1,12 +1,16 @@
 # t3
-An open source toy game framework build by tictactoe game developer community
+An open source toy game framework build by [tictactoe game developer community](https://discord.gg/68Av3VXYsr).
 
 ### prerequisites
-* a compiler which can "Hello World" in c
+* LLVM clang compiler for your preferred platform. (You can run with others tbh. But you should compile & build with your own way.)
+* SDL 2.28 + and SDL_Image extension 2.8.1 + versions installed on your system. Here is a good tutorial: [Lazy Foo's SDL Tutorials](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/index.php)
 
 ### how to install
-* You should build [SDL-release-2.28.5](https://github.com/libsdl-org/SDL/releases/tag/release-2.28.5) first
-* If you're having trouble with installing SDL, read the tutorial from here: [Lazy Foo's SDL Tutorials](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/index.php)
+* If you have the prerequisites, go to `t3-build.c` file. Set your `ENGINE_ROOT` path there.
+* Make sure `INCLUDE_DIRECTORIES` macro has correct paths for your environment.
+* Make sure `LINKER` macro is appropriate for your environment.
+* Go to your cmd / terminal / etc and inside project root type `cd`.  type `clang -o t3-build t3-build.c`
+* run t3-build with .`/t3-build` or `t3-build.exe` . Your project build will be inside `ENGINE_ROOT/Build`
 
 ### documentation
 * Yes, we have one at [here](docs/welcome.md)

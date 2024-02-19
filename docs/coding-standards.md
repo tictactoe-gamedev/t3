@@ -3,9 +3,9 @@
 ### General Naming Approach
 Always start from the widest scope, so others can look for it easily.    
 A good example is creating components. Each component in T3 starts with
-`T3_Component_` and the rest is the components own name like `Camera` .
+`T3C_` and the rest is the components own name like `Camera` .
 So, any dev looking for available components can easily search starting 
-with `T3_Component` to find `T3_Component_Camera`
+with `T3C_` to find `T3C_Camera`
 
 ### Method Names
 Methods should be named in this way `Domain_(Struct or Module)_ThingItDoes`    
@@ -32,11 +32,10 @@ Macros should be all upper case with underscore.
 
 ### File/Folder structure
 If something will be a part of the core, you should put its source file
-into `core/source` and its header to `core/header` . If you have some common
+into `core/source` and its header to `core/` . If you have some common
 domain, create a directory for them. Let's say you'll implement abstract data
 types for core. You have a source for linked_list, list, binary_tree, then you
-can create a directory like `core/source/data_structures`. But, if you think they
+can create a directory like `core/source/adt`. But, if you think they
 have somewhat related things in that level, then they should have a **single header**
-so we can avoid complexity. A header file like `data_structures.h` should include
+,so we can avoid complexity. A header file like `data_structures.h` should include
 any exposed method for any kind of data structure.
-

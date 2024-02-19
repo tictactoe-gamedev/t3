@@ -1,51 +1,65 @@
 # Logging
-**Header:** `#include "helper/logging.h"`
+**Header:** `#include "core/helpers.h"`
 
 Handles logging & assertion. There's 3 predefined log levels in t3:
 
-`LOG_LEVEL_INFO `   
-`LOG_LEVEL_WARNING`  
-`LOG_LEVEL_ERROR`
+`T3_Log_Level::Info`   
+`T3_Log_Level::Warning`   
+`T3_Log_Level::Error`  
 
 ## Table Of Contents
 * [Macros](#macros--functions)
-    * [T3_Log](#t3_log)
-    * [T3_Assert](#t3_assert)
+    * [T3_HELPER_LOG](#t3_helper_log)
+    * [T3_HELPER_ERROR_IF](#t3_helper_error_if)
 
 ## Macros
 ***
-### T3_Log
+### T3_HELPER_LOG
 [[ Top ^ ]](#table-of-contents)
 ```
-T3_Log(level, message, ...)
+T3_HELPER_LOG(level, formatString, ...)
 ```
 * **... :** put any formatted text variable as you'd do in a printf
 
 Logs a message on console which includes filename and line of execution and log type.
 
 **Usage:**   
-`T3_Log(LOG_LEVEL_INFO, "My age is %d", 6);`
-`T3_Log(LOG_LEVEL_INFO, "Function xyz called");`
+`T3_HELPER_LOG(Info, "My age is %d", 6);`   
+`T3_HELPER_LOG(Warning, "Function xyz called");`
 
 >**Tip:**    
-> **GAME_LOGGING_LEVEL** on console, **config/game-config.h** decides the
-> minimum logging level. So if it is set to LOG_LEVEL_ERROR,  you can't see warnings
-> and infos. Setting it to error would be a good practice for production release.
+> **CONFIG_MINIMUM_LOG_LEVEL** on **core/config-project.h** decides the
+> minimum logging level. So if it is set to `Error`,  you can't see `Warning`s
+> and `Info` messages. Setting it to error would be a good practice for production releases.
 
-### T3_Assert
+### T3_HELPER_ERROR_IF
 [[ Top ^ ]](#table-of-contents)
 ```
-T3_Assert(condition, message, ...)
+T3_HELPER_ERROR_IF(condition, formatString, ...)
 ```
 * **... :** put any formatted text variable as you'd do in a printf
 
-Halts the execution of program if the condition is `true` and logs the message.
+If the condition is `true` it'll break the program with an error.
 
 **Usage:**   
-`T3_Assert(myInt==3, "Something wrong. MyInt is %d", myInt);`
+`T3_HELPER_ERROR_IF(a<7, "Value cannot be less than 7! Current:%d", a);`   
+
+>**Tip:**    
+>Difference between an `T3_HELPER_ASSERT` and `T3_HELPER_ERROR_IF` is that `T3_HELPER_ERROR_IF` works on production builds while `T3_HELPER_ASSERT` works only on development mode. 
+> 
+
+
+### T3_HELPER_ASSERT
+[[ Top ^ ]](#table-of-contents)
+```
+T3_HELPER_ASSERT(condition, formatString, ...)
+```
+* **... :** put any formatted text variable as you'd do in a printf
+
+Halts the execution of program if the condition is `false` and logs the message.
+
+**Usage:**   
+`T3_HELPER_ASSERT(something!=NULL, "something is Null!");`
 
 >**Warning:**    
 > Asserts only run on **development builds**.
-
->**Tip:**    
-> A common usage of T3_Assert is null checks.
