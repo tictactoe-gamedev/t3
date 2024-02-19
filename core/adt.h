@@ -1,7 +1,7 @@
-#ifndef T3_ABSTRACT_DATA_TYPES_H
-#define T3_ABSTRACT_DATA_TYPES_H
+#ifndef T3_ADT_H
+#define T3_ADT_H
 
-#include "core/t3-types.h"
+#include "t3-types.h"
 
 typedef struct T3_Node T3_Node;
 typedef struct T3_NodeDouble T3_NodeDouble;
@@ -198,4 +198,4 @@ void T3_Stack_Log_Int(T3_Stack *queue);
 
 void T3_Stack_Test();
 
-#endif //T3_ABSTRACT_DATA_TYPES_H
+#endif //T3_ADT_H

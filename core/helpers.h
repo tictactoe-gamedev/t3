@@ -1,9 +1,9 @@
 #ifndef T3_HELPERS_H
 #define T3_HELPERS_H
 
+#include <stdlib.h>
 #include "t3-types.h"
 #include "config-project.h"
-#include "stdlib.h"
 
 /** ------------------------------- LOGGING ----------------------------------- */
 

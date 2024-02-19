@@ -1,4 +1,4 @@
-#include "core/helpers.h"
+#include "helpers.h"
 
 bool T3_Helper_Random_Bool() {
     return rand() % 2 == 0;

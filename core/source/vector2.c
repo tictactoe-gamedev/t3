@@ -1,4 +1,4 @@
-#include "core/t3-math.h"
+#include "t3-math.h"
 
 void T3_Vector2_Equals(T3_Vector2 *a, T3_Vector2 *b) {
     a->x = b->x;

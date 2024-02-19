@@ -1,10 +1,10 @@
 #ifndef T3_ECS_H
 #define T3_ECS_H
 
-#include "SDL.h"
-#include "abstract-data-types.h"
+#include <SDL.h>
 #include "globals.h"
 #include "t3-math.h"
+#include "adt.h"
 
 typedef struct T3_Entity T3_Entity;
 typedef struct T3_Component T3_Component;
