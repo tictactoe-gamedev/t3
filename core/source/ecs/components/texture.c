@@ -1,6 +1,6 @@
-#include "core/ecs.h"
-#include "core/helpers.h"
-#include "SDL2/SDL_image.h"
+#include "helpers.h"
+#include "ecs.h"
+#include <SDL2/SDL_image.h>
 
 void T3C_Texture_OnDestroy(T3_Component *self);
 

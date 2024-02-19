@@ -1,5 +1,5 @@
-#include "core/ecs.h"
-#include "core/helpers.h"
+#include "helpers.h"
+#include "ecs.h"
 
 T3_Component *T3_Component_Init(bool isEnabled) {
     T3_HELPER_MALLOC_SAFE(T3_Component, component);

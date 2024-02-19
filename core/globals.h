@@ -1,8 +1,8 @@
 #ifndef T3_GLOBALS_H
 #define T3_GLOBALS_H
 
-#include "SDL2/SDL.h"
-#include "abstract-data-types.h"
+#include <SDL2/SDL.h>
+#include "adt.h"
 #include "core/config-project.h"
 
 typedef struct T3_Globals {

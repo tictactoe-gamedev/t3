@@ -1,5 +1,5 @@
-#include "core/ecs.h"
-#include "core/helpers.h"
+#include "helpers.h"
+#include "ecs.h"
 
 T3_ECS_GameLoop *__gameLoopRef;
 

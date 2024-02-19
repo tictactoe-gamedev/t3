@@ -1,7 +1,7 @@
 #ifndef T3_T3_MATH_H
 #define T3_T3_MATH_H
 
-#include "math.h"
+#include <math.h>
 
 typedef struct T3_Vector2 {
     float x;

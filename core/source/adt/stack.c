@@ -1,5 +1,5 @@
-#include "core/abstract-data-types.h"
-#include "core/helpers.h"
+#include "helpers.h"
+#include "adt.h"
 
 T3_Stack *T3_Stack_Init() {
     T3_HELPER_MALLOC_SAFE(T3_Stack, stack);

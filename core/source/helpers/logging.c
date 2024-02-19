@@ -1,8 +1,8 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h> 
-#include "core/config-project.h"  
-#include "core/helpers.h"
+#include "helpers.h"
+#include "config-project.h"  
 
 const char *GetLogLevelString(T3_Log_Level logLevel);
 
