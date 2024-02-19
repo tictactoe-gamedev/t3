@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 /*----- HELPERS -----*/
 #define INCLUDE_DIRECTORY(arg)  " -I "arg
@@ -6,7 +7,11 @@
 #define SRC(arg) arg " "
 
 /*----- BASE CONFIG -----*/
+#if __linux__
 #define EXECUTABLE_NAME                                     "t3"
+#else
+#define EXECUTABLE_NAME                                     "t3.exe"
+#endif
 
 /*----- PATHS -----*/
 #define ENGINE_ROOT                                         "/media/kemal/TB1/Projects/CLionProjects/t3"
@@ -18,19 +23,33 @@
 #define T3_HELPERS                                          T3_CORE_SOURCE "/helpers"
 #define T3_COMPONENTS                                       T3_ECS "/components"
 
+
+#if __linux__
+#define SDL_INCLUDE_DIRECTORY                               "/usr/include/SDL2"
+#define SDL_IMAGE_INCLUDE_DIRECTORY                         "/usr/include/SDL2"
+#else
+#define SDL_INCLUDE_DIRECTORY                               "C:/SDL2/include"
+#define SDL_INCLUDE_DIRECTORY                               "C:/SDL2_Image/include"
+#endif
+
 /*----- INCLUDES -----*/
 #define INCLUDE_DIRECTORIES                                 INCLUDE_DIRECTORY(ENGINE_ROOT)                              \
                                                             INCLUDE_DIRECTORY(T3_CORE)                                  \
+                                                            INCLUDE_DIRECTORY(SDL_INCLUDE_DIRECTORY)                    \
+                                                            INCLUDE_DIRECTORY(SDL_IMAGE_INCLUDE_DIRECTORY)              \
+                                                                                                                        \
 
-/*----- LINKER -----*/
+#if __linux__
 #define LINKER                                              LINK("-lSDL2")                                              \
                                                             LINK("-lSDL2_image")                                        \
-                                                                                                                        
-#ifdef __linux__
-#define LINKER_PLATFORM                                     LINK("-lm")
+                                                            LINK("-lm")                                                 \
+
 #else
-#define LINKER_PLATFORM                                     
+#define LINKER                                              LINK("-L C:/SDL2/lib/x64 -lSDL2")                           \
+                                                            LINK("-L C:/SDL2_Image/lib/x64 -lSDL2_image")               \
+                                                                                                                        
 #endif
+
 
 /*----- SOURCES -----*/
 #define SOURCE_FILES                                        SRC(ENGINE_ROOT "/main.c")                                  \
@@ -61,25 +80,59 @@
 
 int main(int argc, char *args[]) {
 
-    const char *sources = SOURCE_FILES;
-
     /** Comment any options you don't want to apply */
-    const char *cmd = "clang "
+    const char *cmd = "clang -MJ compile_commands.json"
                       INCLUDE_DIRECTORIES
                       " "
-                      LINKER " " LINKER_PLATFORM
-                      " -o " EXECUTABLE_NAME
+                      LINKER
+                      " -o build/" EXECUTABLE_NAME
                       " " SOURCE_FILES;
 
     int compilationStatus = system(cmd);
 
     if (compilationStatus == 0) {
 #ifdef __linux__
-        system("./" EXECUTABLE_NAME);
-#else 
-        system(EXECUTABLE_NAME ".exe");
+        system("./build/" EXECUTABLE_NAME);
+#else
+        system(".\\build\\" EXECUTABLE_NAME);
 #endif
     }
+
+    /**
+     *  compile_commands.json helps us to use IDEs without CMAKE or any other build tool.
+     *  compile_commands.json produced by clang has an extra , at the end and no [ ] so we're editing it. 
+     */
+     
+    FILE *inputFile = fopen("compile_commands.json", "r");
+    FILE *outputFile = fopen("compile_commands_tmp.json", "w+");
+
+    fputc('[', outputFile);
+
+
+    char current = fgetc(inputFile);
+    int waiting = 0;
+    while (current != EOF) {
+        if (current == '}') {
+            waiting = 1;
+            fputc(current, outputFile);
+        } else if (current == ',' && waiting == 1) {
+            //skip without putting char   
+        } else if (current == '{' && waiting == 1) {
+            fputc(',',outputFile);
+            fputc(current, outputFile);
+            waiting=0;
+        }else{
+            fputc(current, outputFile);
+        }
+
+        current = fgetc(inputFile);
+    }
+
+    fputc(']', outputFile);
+    fclose(inputFile);
+    remove("compile_commands.json");
+    rename("compile_commands_tmp.json","compile_commands.json");
+    fclose(outputFile);
 
     return 0;
 }
