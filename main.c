@@ -1,7 +1,7 @@
 #include <time.h>
-#include "SDL.h"
-#include "SDL_image.h"
-#include "SDL_video.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
+#include "SDL2/SDL_video.h"
 #include "core/helpers.h"
 #include "core/globals.h"
 #include "core/ecs.h"
@@ -94,5 +94,4 @@ void T3_Destroy() {
     IMG_Quit();
     SDL_Quit();
 }
-
 

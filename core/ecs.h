@@ -1,7 +1,7 @@
 #ifndef T3_ECS_H
 #define T3_ECS_H
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 #include "abstract-data-types.h"
 #include "globals.h"
 #include "t3-math.h"

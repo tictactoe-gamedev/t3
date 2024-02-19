@@ -1,4 +1,4 @@
-#include "t3-types.h"
+#include "core/t3-types.h"
 
 const char * T3_TypeOf(T3C_Type typeID){
     switch (typeID) {

@@ -1,7 +1,7 @@
 #ifndef T3_GLOBALS_H
 #define T3_GLOBALS_H
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 #include "abstract-data-types.h"
 #include "core/config-project.h"
 

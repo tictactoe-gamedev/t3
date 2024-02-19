@@ -1,5 +1,5 @@
-#include "ecs.h"
-#include "helpers.h"
+#include "core/ecs.h"
+#include "core/helpers.h"
 
 void T3C_Camera_OnDestroy(T3_Component *self);
 
