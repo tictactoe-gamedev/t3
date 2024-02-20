@@ -4,11 +4,12 @@
 void T3C_Position_OnDestroy(T3_Component *self);
 
 T3_Component *T3C_Position_Init(float x, float y) {
+    T3_Component *component;
     T3_HELPER_MALLOC_SAFE(T3C_Position, pos);
     pos->x = x;
     pos->y = y;
 
-    T3_Component *component = T3_Component_Init(true);
+    component = T3_Component_Init(true);
     component->Type = T3C_TYPE_POSITION;
     component->Data = pos;
     component->OnDestroy = T3C_Position_OnDestroy;

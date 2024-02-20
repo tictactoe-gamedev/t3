@@ -138,6 +138,9 @@ void T3_LinkedListDouble_Test();
 /** Initialize a list with initialCapacity and initialCapacity/2 cache for removed items */
 T3_List *T3_List_Init(size_t initialCapacity);
 
+/** Initialize a list with some pre initialized elements */
+T3_List *T3_List_Init_With_Elements(size_t initialCapacity, size_t elementsCount, ...);
+
 /** Checks if there's a capacity overflow. If so, increase the capacity x 2 */
 void T3_List_AddSafe(T3_List *list, void *element);
 
@@ -198,4 +201,4 @@ void T3_Stack_Log_Int(T3_Stack *queue);
 
 void T3_Stack_Test();
 
-#endif //T3_ADT_H
+#endif 

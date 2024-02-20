@@ -19,4 +19,4 @@ typedef int T3C_Type;
 
 const char * T3_TypeOf(T3C_Type typeID);
 
-#endif //T3_T3_TYPES_H
+#endif

@@ -11,12 +11,16 @@ void T3_Vector2_EqualsXY(T3_Vector2 *a, float x, float y) {
 }
 
 T3_Vector2 T3_Vector2_Subtract(T3_Vector2 a, T3_Vector2 b) {
-    T3_Vector2 result = {a.x - b.x, a.y - b.y};
+    T3_Vector2 result;
+    result.x = a.x-b.x;
+    result.y = a.y-b.x;
     return result;
 }
 
 T3_Vector2 T3_Vector2_Add(T3_Vector2 a, T3_Vector2 b) {
-    T3_Vector2 result = {a.x + b.x, a.y + b.y};
+    T3_Vector2 result;
+    result.x = a.x+b.x;
+    result.y = a.y+b.x;
     return result;
 }
 
@@ -44,7 +48,7 @@ T3_Vector2 T3_Vector2_MultiplyBy(T3_Vector2 a, float multiplier) {
     return a;
 }
 
-T3_Vector2 T3_Vector2_Zero(){
+T3_Vector2 T3_Vector2_Zero(void){
     T3_Vector2 zero = {0,0};
     return zero;
 }

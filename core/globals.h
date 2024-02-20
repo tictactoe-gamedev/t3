@@ -16,4 +16,4 @@ typedef struct T3_Globals {
 
 T3_Globals *T3_Globals_Get();
 
-#endif //T3_GLOBALS_H
+#endif

@@ -11,14 +11,14 @@ Uint64 PreviousFrameMS = 0;
 Uint64 CurrentFrameMS = 0;
 T3_Globals *globals;
 
-SDL_Window* MainWindow = NULL;
-SDL_Renderer* MainRenderer = NULL;
+SDL_Window *MainWindow = NULL;
+SDL_Renderer *MainRenderer = NULL;
 
-void T3_Init();
+void T3_Init(void);
 
-void T3_GameLoop();
+void T3_GameLoop(void);
 
-void T3_Destroy();
+void T3_Destroy(void);
 
 int main(int argc, char *args[]) {
     T3_Init();
@@ -26,15 +26,16 @@ int main(int argc, char *args[]) {
     T3_Destroy();
 }
 
-void T3_Init() {
+void T3_Init(void) {
+    SDL_Surface *screenSurface;
     globals = T3_Globals_Get();
 
     srand(time(NULL));
 
     MainWindow = NULL;
-    SDL_Surface *screenSurface = NULL;
+    screenSurface = NULL;
 
-    T3_HELPER_ERROR_IF(SDL_Init(SDL_INIT_VIDEO) < 0, "%s \n", SDL_GetError());
+    T3_Helper_Error_If(SDL_Init(SDL_INIT_VIDEO) < 0, __FILE__, __LINE__, "%s \n", SDL_GetError());
 
     MainWindow = SDL_CreateWindow(globals->Title,
                                   SDL_WINDOWPOS_UNDEFINED,
@@ -43,13 +44,13 @@ void T3_Init() {
                                   globals->Resolution.Height,
                                   SDL_WINDOW_SHOWN);
 
-    T3_HELPER_ERROR_IF(MainWindow == NULL, "%s", SDL_GetError());
+    T3_Helper_Error_If(MainWindow == NULL, __FILE__, __LINE__, "%s", SDL_GetError());
 
 
     MainRenderer = SDL_CreateRenderer(MainWindow, -1, SDL_RENDERER_ACCELERATED);
-    T3_HELPER_ERROR_IF(MainRenderer == NULL, "%s", SDL_GetError());
-    T3_HELPER_ERROR_IF(
-            IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_WEBP) == 0,
+    T3_Helper_Error_If(MainRenderer == NULL, __FILE__, __LINE__, "%s", SDL_GetError());
+    T3_Helper_Error_If(
+            IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_WEBP) == 0, __FILE__, __LINE__,
             "Couldn't load image libraries.");
 
     globals->MainRenderer = MainRenderer;
@@ -57,12 +58,12 @@ void T3_Init() {
                            T3_HELPER_SDL_COLOR_TO_PARAM_RGBA(globals->DefaultBackground));
 
     T3_Ecs_GameLoop_Init();
-    
+
     CONFIG_ENTRY_POINT_FUNCTION_NAME();
 
 }
 
-void T3_GameLoop() {
+void T3_GameLoop(void) {
     SDL_Event e;
     bool quit = false;
 
@@ -80,15 +81,15 @@ void T3_GameLoop() {
                 quit = true;
             }
         }
-        
+
         T3_Ecs_GameLoop_Step();
-        
+
         SDL_RenderPresent(MainRenderer);
         PreviousFrameMS = CurrentFrameMS;
     }
 }
 
-void T3_Destroy() {
+void T3_Destroy(void) {
     SDL_DestroyRenderer(MainRenderer);
     SDL_DestroyWindow(MainWindow);
     IMG_Quit();

@@ -1,7 +1,7 @@
 #include "helpers.h"
 #include "adt.h"
 
-T3_Stack *T3_Stack_Init() {
+T3_Stack *T3_Stack_Init(void) {
     T3_HELPER_MALLOC_SAFE(T3_Stack, stack);
     stack->Top = NULL;
     stack->Count = 0;
@@ -37,18 +37,19 @@ void T3_Stack_Log_Int(T3_Stack *queue) {
     int i = 0;
     T3_Node *node = queue->Top;
     while (node != NULL) {
-        T3_HELPER_LOG(Info, "[%d]: [%d]", i, *(int *) node->Data);
+        T3_Helper_Log(Info, __FILE__, __LINE__, "[%d]: [%d]", i, *(int *) node->Data);
         node = node->Next;
         i++;
     }
 #endif
 }
 
-void T3_Stack_Test() {
+void T3_Stack_Test(void) {
 #if CONFIG_BUILD_TYPE == DEVELOPMENT
+    T3_Node *node;
     T3_Stack *stack = T3_Stack_Init();
     T3_Stack_Push(stack, T3_Node_Init_Int(1));
-    T3_Node *node = T3_Stack_Pop(stack);
+    node = T3_Stack_Pop(stack);
     T3_Stack_Log_Int(stack);
     T3_Stack_Push(stack, T3_Node_Init_Int(2));
     T3_Stack_Push(stack, T3_Node_Init_Int(3));

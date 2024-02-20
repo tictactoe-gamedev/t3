@@ -24,9 +24,10 @@ void T3_Queue_Enqueue(T3_Queue *queue, T3_Node *node) {
 }
 
 T3_Node *T3_Queue_Dequeue(T3_Queue *queue) {
-    T3_HELPER_ASSERT(queue->Count != 0, "Nothing to dequeue!");
+    T3_Node *current;
+    T3_Helper_Assert(queue->Count != 0, "Nothing to dequeue!");
 
-    T3_Node *current = queue->Head;
+    current = queue->Head;
     queue->Head = queue->Head->Next;
     if (queue->Count == 2) {
         queue->Tail = NULL;
@@ -51,28 +52,24 @@ void T3_Queue_Log_Int(T3_Queue *queue) {
     int i = 0;
     T3_Node *node = queue->Head;
     while (node != NULL) {
-        T3_HELPER_LOG(Info, "[%d]: [%d]", i, *(int *) node->Data);
+        T3_Helper_Log(Info, __FILE__, __LINE__, "[%d]: [%d]", i, *(int *) node->Data);
         node = node->Next;
         i++;
     }
 #endif
 }
 
-void T3_Queue_Test() {
+void T3_Queue_Test(void) {
 #if CONFIG_BUILD_TYPE == DEVELOPMENT
-
+    T3_Node *node;
     T3_Queue *queue = T3_Queue_Init();
     T3_Queue_Enqueue(queue, T3_Node_Init_Int(1));
     T3_Queue_Enqueue(queue, T3_Node_Init_Int(2));
     T3_Queue_Enqueue(queue, T3_Node_Init_Int(3));
     T3_Queue_Log_Int(queue);
-    T3_Node *node = T3_Queue_Dequeue(queue);
+    node = T3_Queue_Dequeue(queue);
     T3_Queue_Log_Int(queue);
     T3_Queue_Destroy(queue);
 
 #endif
 }
-
-
-
-

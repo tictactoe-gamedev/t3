@@ -5,6 +5,8 @@
 #define INCLUDE_DIRECTORY(arg)  " -I "arg
 #define LINK(arg)  arg " "
 #define SRC(arg) arg " "
+#define FLAG_ENABLED(flag) flag " "
+#define FLAG_DISABLED(flag)
 
 /*----- BASE CONFIG -----*/
 #if __linux__
@@ -74,14 +76,15 @@
                                                             SRC(PROJECT_ROOT "/start.c")                                \
 
 
-#define OPT_RUN_STATIC_ANALYZER                             "--analyze "
-#define OPT_STATIC_ANALYZER_OUTPUT_FORMAT                   "--analyzer-output html "    //(html|plist|plist-multi-file|plist-html|sarif|sarif-html|text)
+#define COMPILER_FLAGS                                      FLAG_ENABLED("-std=c89")                                      \
+                                                            FLAG_ENABLED("-pedantic-errors")                              \
+                                                            FLAG_ENABLED("-MJ compile_commands.json")                     
 
 
 int main(int argc, char *args[]) {
 
     /** Comment any options you don't want to apply */
-    const char *cmd = "clang -MJ compile_commands.json"
+    const char *cmd = "clang " COMPILER_FLAGS " "
                       INCLUDE_DIRECTORIES
                       " "
                       LINKER

@@ -128,6 +128,8 @@ T3_Component *T3C_Camera_Init();
 /** ------------------------------- TEXTURE COMPONENT----------------------------------- */
 T3_Component *T3C_Texture_Init();
 
+T3_Component *T3C_Texture_Init_With_Load(SDL_Renderer *renderer, const char *path);
+
 void T3C_Texture_Load(SDL_Renderer *renderer, T3C_Texture *texture, const char *path);
 
 void T3C_Texture_SetSize(T3C_Texture *texture, int width, int height);
@@ -138,4 +140,6 @@ T3_Component *T3C_Sprite_Init(T3C_Texture *texture, SDL_Rect rect, T3_Vector2 an
 /** ------------------------------- SPRITE RENDERER COMPONENT----------------------------------- */
 T3_Component *T3C_SpriteRenderer_Init();
 
-#endif //T3_ECS_H
+T3_Component *T3C_SpriteRenderer_Init_With_Camera(T3C_Camera *camera);
+
+#endif 
