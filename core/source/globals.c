@@ -8,6 +8,6 @@ T3_Globals INTERNAL_globals = {
     250
 };
 
-T3_Globals * T3_Globals_Get(){
+T3_Globals * T3_Globals_Get(void){
     return &INTERNAL_globals;
 }

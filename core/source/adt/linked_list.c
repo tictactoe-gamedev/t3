@@ -51,6 +51,7 @@ void T3_LinkedList_AddToTail(T3_LinkedList *list, T3_Node *node) {
 
 void T3_LinkedList_AddToIndex(T3_LinkedList *list, T3_Node *node, size_t index) {
     T3_Node *found;
+    
     T3_Helper_Assert(index < list->Count, __FILE__, __LINE__, "OutOfRange index!");
     T3_Helper_Assert(!(index == 0 || index == list->Count), __FILE__, __LINE__,
                      "Adding to head or tail. Use AddNode instead!");
@@ -63,8 +64,8 @@ void T3_LinkedList_AddToIndex(T3_LinkedList *list, T3_Node *node, size_t index) 
 }
 
 T3_Node *T3_LinkedList_GetNode(T3_LinkedList *list, size_t index) {
-    T3_Node *current = list->Head;
     int i;
+    T3_Node *current = list->Head;
     T3_Helper_Assert(index < list->Count, __FILE__, __LINE__, "OutOfRange index!");
 
     if (index == 0) {

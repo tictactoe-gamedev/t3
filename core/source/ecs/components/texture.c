@@ -30,27 +30,25 @@ T3_Component *T3C_Texture_Init(void) {
 T3_Component *T3C_Texture_Init_With_Load(SDL_Renderer *renderer, const char *path) {
     T3_Component *component;
     T3C_Texture *texture = T3_Helper_Malloc_Safe(sizeof *texture, T3_FILE_LINE);
-
     texture->Path = path;
-    texture->Texture = IMG_LoadTexture(renderer, path);
-    T3_Helper_Error_If(texture->Texture == NULL, __FILE__, __LINE__, "Couldn't load the image %s", SDL_GetError());
-
-    texture->OriginalHeight = 0;
-    texture->OriginalWidth = 0;
-
-    texture->Rect.x = 0;
-    texture->Rect.y = 0;
+    texture->Texture = IMG_LoadTexture(renderer, path);;
 
     SDL_QueryTexture(texture->Texture, NULL, NULL, &texture->OriginalWidth, &texture->OriginalHeight);
-    texture->Rect.w = texture->OriginalWidth;
-    texture->Rect.h = texture->OriginalHeight;
-
+    
+    texture->Rect.x = 0;
+    texture->Rect.y = 0;
+    
     component = T3_Component_Init(true);
 
     component->Type = T3C_TYPE_TEXTURE;
     component->Data = texture;
     component->OnDestroy = T3C_Texture_OnDestroy;
 
+    T3_Helper_Error_If(texture->Texture == NULL, __FILE__, __LINE__, "Couldn't load the image %s", SDL_GetError());
+    
+    texture->Rect.w = texture->OriginalWidth;
+    texture->Rect.h = texture->OriginalHeight;
+    
     return component;
 }
 

@@ -9,7 +9,7 @@ void T3C_SpriteRenderer_OnLoop(T3_Component *component);
 
 T3_Component *T3C_Sprite_Init(T3C_Texture *texture, SDL_Rect rect, T3_Vector2 anchorPoint) {
     T3_Component *component;
-    T3C_Sprite  * sprite = T3_Helper_Malloc_Safe(sizeof *sprite, T3_FILE_LINE);
+    T3C_Sprite *sprite = T3_Helper_Malloc_Safe(sizeof *sprite, T3_FILE_LINE);
     sprite->SourceTexture = texture;
     sprite->Rect = rect;
     sprite->AnchorPoint = anchorPoint;
@@ -28,7 +28,7 @@ void T3C_Sprite_OnDestroy(T3_Component *component) {
 
 T3_Component *T3C_SpriteRenderer_Init(void) {
     T3_Component *component;
-    T3C_SpriteRenderer * spriteRenderer = T3_Helper_Malloc_Safe(sizeof *spriteRenderer,T3_FILE_LINE);
+    T3C_SpriteRenderer *spriteRenderer = T3_Helper_Malloc_Safe(sizeof *spriteRenderer, T3_FILE_LINE);
     spriteRenderer->Position = NULL;
     spriteRenderer->Sprite = NULL;
     spriteRenderer->Camera = NULL;
@@ -75,36 +75,31 @@ void T3C_SpriteRenderer_OnAddComponent(T3_Component *component) {
 
 void T3C_SpriteRenderer_OnLoop(T3_Component *component) {
     T3C_SpriteRenderer *renderer = (T3C_SpriteRenderer *) component->Data;
-    T3C_Sprite *sprite;
-    SDL_Rect spriteRect;
-    SDL_Texture *sourceText;
+    T3C_Sprite *sprite = renderer->Sprite;
+    SDL_Rect spriteRect = sprite->Rect;
+    SDL_Texture *sourceText = sprite->SourceTexture->Texture;
     T3_Vector2 pivotPoint;
     SDL_Point pivotConverted;
-    T3_Vector2 pixelPosition;
     SDL_Rect clipped;
+    T3_Vector2 pixelPosition;
+
+    pivotPoint.x = sprite->AnchorPoint.x * spriteRect.w;
+    pivotPoint.y = sprite->AnchorPoint.y * spriteRect.h;
+
+    pivotConverted.x = pivotPoint.x;
+    pivotConverted.y = pivotPoint.y;
 
     if (renderer->Camera == NULL) {
         return;
     }
 
-    sprite = renderer->Sprite;
-    spriteRect = sprite->Rect;
-    sourceText = sprite->SourceTexture->Texture;
-    pivotPoint.x = sprite->AnchorPoint.x * spriteRect.w;
-    pivotPoint.y = sprite->AnchorPoint.y * spriteRect.h;
-    pivotConverted.x = pivotPoint.x;
-    pivotConverted.y = pivotPoint.y;
-
-
     pixelPosition = T3C_Position_ToPixel(renderer->Position, renderer->Camera);
-
+    
     pixelPosition = T3_Vector2_Subtract(pixelPosition, pivotPoint);
-
     clipped.x = pixelPosition.x;
     clipped.y = pixelPosition.y;
     clipped.w = spriteRect.w;
     clipped.h = spriteRect.h;
-    
     SDL_RenderCopyEx(T3_Globals_Get()->MainRenderer, sourceText, &spriteRect, &clipped, 0, &pivotConverted,
                      renderer->Flip);
 }

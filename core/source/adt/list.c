@@ -16,8 +16,9 @@ T3_List *T3_List_Init(size_t initialCapacity) {
 }
 
 T3_List *T3_List_Init_With_Elements(size_t initialCapacity, size_t elementsCount, ...) {
-    va_list args;
     int i;
+    va_list args;
+    
     T3_List *list = T3_Helper_Malloc_Safe(sizeof *list, T3_FILE_LINE);
     list->Capacity = initialCapacity;
     list->Size = 0;
