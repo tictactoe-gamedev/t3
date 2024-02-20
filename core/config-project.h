@@ -18,7 +18,7 @@ typedef struct {
     int Height;
 } T3_Config_Resolution;
 
-#define CONFIG_ENTRY_POINT_METHOD_SIGNATURE(__methodName) void  __methodName()
+#define CONFIG_ENTRY_POINT_METHOD_SIGNATURE(__methodName) void  __methodName(void)
 
 /** Entry point for game. That must return the root entity */
 CONFIG_ENTRY_POINT_METHOD_SIGNATURE(CONFIG_ENTRY_POINT_FUNCTION_NAME);

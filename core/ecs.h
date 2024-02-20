@@ -82,9 +82,9 @@ typedef struct T3C_SpriteRenderer {
 } T3C_SpriteRenderer;
 
 /** ------------------------------- GAME LOOP --------------------------------- */
-void T3_Ecs_GameLoop_Init();
+void T3_Ecs_GameLoop_Init(void);
 
-void T3_Ecs_GameLoop_Step();
+void T3_Ecs_GameLoop_Step(void);
 
 /** ------------------------------- ENTITY  ----------------------------------- */
 void T3_Entity_SetGameLoop(T3_ECS_GameLoop *loop);
@@ -123,10 +123,10 @@ T3_Vector2 T3C_Position_ToPixel(T3C_Position *position, T3C_Camera *camera);
 T3_Component *T3C_Scene_Init(const char *name, int width, int height);
 
 /** ------------------------------- CAMERA COMPONENT----------------------------------- */
-T3_Component *T3C_Camera_Init();
+T3_Component *T3C_Camera_Init(void);
 
 /** ------------------------------- TEXTURE COMPONENT----------------------------------- */
-T3_Component *T3C_Texture_Init();
+T3_Component *T3C_Texture_Init(void);
 
 T3_Component *T3C_Texture_Init_With_Load(SDL_Renderer *renderer, const char *path);
 
@@ -138,7 +138,7 @@ void T3C_Texture_SetSize(T3C_Texture *texture, int width, int height);
 T3_Component *T3C_Sprite_Init(T3C_Texture *texture, SDL_Rect rect, T3_Vector2 anchorPoint);
 
 /** ------------------------------- SPRITE RENDERER COMPONENT----------------------------------- */
-T3_Component *T3C_SpriteRenderer_Init();
+T3_Component *T3C_SpriteRenderer_Init(void);
 
 T3_Component *T3C_SpriteRenderer_Init_With_Camera(T3C_Camera *camera);
 
