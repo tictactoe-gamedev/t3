@@ -2,7 +2,7 @@
 #include "adt.h"
 
 T3_Stack *T3_Stack_Init(void) {
-    T3_HELPER_MALLOC_SAFE(T3_Stack, stack);
+    T3_Stack *stack = T3_Helper_Malloc_Safe(sizeof *stack, T3_FILE_LINE);
     stack->Top = NULL;
     stack->Count = 0;
     return stack;

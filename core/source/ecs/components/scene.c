@@ -3,7 +3,7 @@
 
 T3_Component *T3C_Scene_Init(const char *name, int width, int height) {
     T3_Component *component;
-    T3_HELPER_MALLOC_SAFE(T3C_Scene, scene);
+    T3C_Scene * scene = T3_Helper_Malloc_Safe(sizeof *scene, T3_FILE_LINE);
     
     scene->Name = name;
     scene->Width = width;

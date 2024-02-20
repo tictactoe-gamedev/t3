@@ -71,7 +71,7 @@ void T3_NodeDouble_Destroy(T3_NodeDouble *node);
 
 /** ------------------------------- LINKED LIST ----------------------------------- */
 
-T3_LinkedList *T3_LinkedList_Init();
+T3_LinkedList *T3_LinkedList_Init(void);
 
 /** Add node without considering if its head, tail or between. Secure but relatively slow */
 void T3_LinkedList_AddNode(T3_LinkedList *list, T3_Node *node, size_t index);
@@ -99,11 +99,11 @@ void T3_LinkedList_DestroyNodeAt(T3_LinkedList *list, size_t index);
 
 void T3_LinkedList_Log_Int(T3_LinkedList *list);
 
-void T3_LinkedList_Test();
+void T3_LinkedList_Test(void);
 
 /** ------------------------------- LINKED LIST DOUBLE ----------------------------------- */
 
-T3_LinkedListDouble *T3_LinkedListDouble_Init();
+T3_LinkedListDouble *T3_LinkedListDouble_Init(void);
 
 /** Add node without considering if its head, tail or between. Secure but relatively slow */
 void T3_LinkedListDouble_AddNode(T3_LinkedListDouble *list, T3_NodeDouble *node, size_t index);
@@ -131,7 +131,7 @@ void T3_LinkedListDouble_DestroyNodeAt(T3_LinkedListDouble *list, size_t index);
 
 void T3_LinkedListDouble_Log_Int(T3_LinkedListDouble *list);
 
-void T3_LinkedListDouble_Test();
+void T3_LinkedListDouble_Test(void);
 
 /** ------------------------------- LIST ----------------------------------- */
 
@@ -171,11 +171,11 @@ void T3_List_CleanCache(T3_List *list);
 
 void T3_List_Destroy(T3_List *list);
 
-void T3_List_Test();
+void T3_List_Test(void);
 
 /** ------------------------------- QUEUE ----------------------------------- */
 
-T3_Queue *T3_Queue_Init();
+T3_Queue *T3_Queue_Init(void);
 
 void T3_Queue_Enqueue(T3_Queue *queue, T3_Node *node);
 
@@ -185,11 +185,11 @@ void T3_Queue_Destroy(T3_Queue *queue);
 
 void T3_Queue_Log_Int(T3_Queue *queue);
 
-void T3_Queue_Test();
+void T3_Queue_Test(void);
 
 /** ------------------------------- STACK ----------------------------------- */
 
-T3_Stack *T3_Stack_Init();
+T3_Stack *T3_Stack_Init(void);
 
 void T3_Stack_Push(T3_Stack *stack, T3_Node *node);
 
@@ -199,6 +199,6 @@ void T3_Stack_Destroy(T3_Stack *stack);
 
 void T3_Stack_Log_Int(T3_Stack *queue);
 
-void T3_Stack_Test();
+void T3_Stack_Test(void);
 
 #endif 

@@ -9,7 +9,7 @@ void T3C_SpriteRenderer_OnLoop(T3_Component *component);
 
 T3_Component *T3C_Sprite_Init(T3C_Texture *texture, SDL_Rect rect, T3_Vector2 anchorPoint) {
     T3_Component *component;
-    T3_HELPER_MALLOC_SAFE(T3C_Sprite, sprite);
+    T3C_Sprite  * sprite = T3_Helper_Malloc_Safe(sizeof *sprite, T3_FILE_LINE);
     sprite->SourceTexture = texture;
     sprite->Rect = rect;
     sprite->AnchorPoint = anchorPoint;
@@ -28,7 +28,7 @@ void T3C_Sprite_OnDestroy(T3_Component *component) {
 
 T3_Component *T3C_SpriteRenderer_Init(void) {
     T3_Component *component;
-    T3_HELPER_MALLOC_SAFE(T3C_SpriteRenderer, spriteRenderer);
+    T3C_SpriteRenderer * spriteRenderer = T3_Helper_Malloc_Safe(sizeof *spriteRenderer,T3_FILE_LINE);
     spriteRenderer->Position = NULL;
     spriteRenderer->Sprite = NULL;
     spriteRenderer->Camera = NULL;
@@ -45,7 +45,7 @@ T3_Component *T3C_SpriteRenderer_Init(void) {
 
 T3_Component *T3C_SpriteRenderer_Init_With_Camera(T3C_Camera *camera) {
     T3_Component *component;
-    T3_HELPER_MALLOC_SAFE(T3C_SpriteRenderer, spriteRenderer);
+    T3C_SpriteRenderer *spriteRenderer = T3_Helper_Malloc_Safe(sizeof *spriteRenderer, T3_FILE_LINE);
     spriteRenderer->Position = NULL;
     spriteRenderer->Sprite = NULL;
     spriteRenderer->Camera = camera;

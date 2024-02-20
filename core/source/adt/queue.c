@@ -1,8 +1,8 @@
 #include "helpers.h"
 #include "adt.h"
 
-T3_Queue *T3_Queue_Init() {
-    T3_HELPER_MALLOC_SAFE(T3_Queue, queue);
+T3_Queue *T3_Queue_Init(void) {
+    T3_Queue *queue = T3_Helper_Malloc_Safe(sizeof *queue, T3_FILE_LINE);
     queue->Head = NULL;
     queue->Tail = NULL;
     queue->Count = 0;
@@ -25,7 +25,7 @@ void T3_Queue_Enqueue(T3_Queue *queue, T3_Node *node) {
 
 T3_Node *T3_Queue_Dequeue(T3_Queue *queue) {
     T3_Node *current;
-    T3_Helper_Assert(queue->Count != 0, "Nothing to dequeue!");
+    T3_Helper_Assert(queue->Count != 0,__FILE__, __LINE__, "Nothing to dequeue!");
 
     current = queue->Head;
     queue->Head = queue->Head->Next;

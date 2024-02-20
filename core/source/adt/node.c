@@ -2,14 +2,14 @@
 #include "adt.h"
 
 T3_Node *T3_Node_Init(void *data) {
-    T3_HELPER_MALLOC_SAFE(T3_Node, node);
+    T3_Node *node = T3_Helper_Malloc_Safe(sizeof *node, T3_FILE_LINE);
     node->Data = data;
     node->Next = NULL;
     return node;
 }
 
 T3_NodeDouble *T3_NodeDouble_Init(void *data) {
-    T3_HELPER_MALLOC_SAFE(T3_NodeDouble, nodeDouble);
+    T3_NodeDouble *nodeDouble = T3_Helper_Malloc_Safe(sizeof *nodeDouble, T3_FILE_LINE);
     nodeDouble->Data = data;
     nodeDouble->Next = NULL;
     nodeDouble->Prev = NULL;
@@ -27,25 +27,25 @@ void T3_NodeDouble_Destroy(T3_NodeDouble *node) {
 }
 
 T3_Node *T3_Node_Init_Int(int data) {
-    T3_HELPER_MALLOC_SAFE(int, value);
+    int *value = T3_Helper_Malloc_Safe(sizeof *value, T3_FILE_LINE);
     *value = data;
     return T3_Node_Init(value);
 }
 
 T3_Node *T3_Node_Init_Float(float data) {
-    T3_HELPER_MALLOC_SAFE(float, value);
+    float *value = T3_Helper_Malloc_Safe(sizeof *value, T3_FILE_LINE);
     *value = data;
     return T3_Node_Init(value);
 }
 
 T3_NodeDouble *T3_NodeDouble_Init_Int(int data) {
-    T3_HELPER_MALLOC_SAFE(int, value);
+    int *value = T3_Helper_Malloc_Safe(sizeof *value, T3_FILE_LINE);
     *value = data;
     return T3_NodeDouble_Init(value);
 }
 
 T3_NodeDouble *T3_NodeDouble_Init_Float(float data) {
-    T3_HELPER_MALLOC_SAFE(float, value);
+    float *value = T3_Helper_Malloc_Safe(sizeof *value, T3_FILE_LINE);
     *value = data;
     return T3_NodeDouble_Init(value);
 }

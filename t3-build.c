@@ -60,6 +60,7 @@
                                                             SRC(T3_CORE_SOURCE "/globals.c")                            \
                                                             SRC(T3_HELPERS "/logging.c")                                \
                                                             SRC(T3_HELPERS "/randomisation.c")                          \
+                                                            SRC(T3_HELPERS "/t3-memory.c")                                 \
                                                             SRC(T3_ADT "/linked_list.c")                                \
                                                             SRC(T3_ADT "/node.c")                                       \
                                                             SRC(T3_ADT "/list.c")                                       \

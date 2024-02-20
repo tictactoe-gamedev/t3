@@ -2,7 +2,7 @@
 #include "adt.h"
 
 T3_LinkedList *T3_LinkedList_Init(void) {
-    T3_HELPER_MALLOC_SAFE(T3_LinkedList, list);
+    T3_LinkedList  * list = malloc(sizeof *list);
     list->Head = NULL;
     list->Tail = NULL;
     list->Count = 0;
@@ -51,8 +51,9 @@ void T3_LinkedList_AddToTail(T3_LinkedList *list, T3_Node *node) {
 
 void T3_LinkedList_AddToIndex(T3_LinkedList *list, T3_Node *node, size_t index) {
     T3_Node *found;
-    T3_Helper_Assert(index < list->Count, "OutOfRange index!");
-    T3_Helper_Assert(!(index == 0 || index == list->Count), "Adding to head or tail. Use AddNode instead!");
+    T3_Helper_Assert(index < list->Count, __FILE__, __LINE__, "OutOfRange index!");
+    T3_Helper_Assert(!(index == 0 || index == list->Count), __FILE__, __LINE__,
+                     "Adding to head or tail. Use AddNode instead!");
 
     found = T3_LinkedList_GetNode(list, index - 1);
     node->Next = found->Next;
@@ -64,7 +65,7 @@ void T3_LinkedList_AddToIndex(T3_LinkedList *list, T3_Node *node, size_t index) 
 T3_Node *T3_LinkedList_GetNode(T3_LinkedList *list, size_t index) {
     T3_Node *current = list->Head;
     int i;
-    T3_Helper_Assert(index < list->Count, "OutOfRange index!");
+    T3_Helper_Assert(index < list->Count, __FILE__, __LINE__, "OutOfRange index!");
 
     if (index == 0) {
         return current;
@@ -83,7 +84,7 @@ T3_Node *T3_LinkedList_GetNode(T3_LinkedList *list, size_t index) {
 void T3_LinkedList_Remove(T3_LinkedList *list, T3_Node *node) {
     int i;
     T3_Node *current = list->Head;
-    T3_Helper_Assert(list->Count != 0, "Nothing to remove");
+    T3_Helper_Assert(list->Count != 0, __FILE__, __LINE__ , "Nothing to remove");
 
     if (current == node) {
         if (list->Count == 1) {
@@ -181,7 +182,7 @@ void T3_LinkedList_Log_Int(T3_LinkedList *list) {
     int i = 0;
     T3_Node *node = list->Head;
     while (node != NULL) {
-        T3_Helper_Log(Info, __FILE__, __LINE__, "[%d]: [%d]", i, *(int *) node->Data);
+        T3_Helper_Log(Info, T3_FILE_LINE, "[%d]: [%d]", i, *(int *) node->Data);
         node = node->Next;
         i++;
     }
@@ -202,7 +203,7 @@ void T3_LinkedList_Test(void) {
     T3_LinkedList_RemoveAt(list, 0);
     node = T3_LinkedList_GetNode(list, 0);
     index = T3_LinkedList_FindIndexOf(list, node);
-    T3_Helper_Log(Info, __FILE__, __LINE__, "Found Index: %d", index);
+    T3_Helper_Log(Info, T3_FILE_LINE, "Found Index: %d", index);
 
     T3_LinkedList_AddToTail(list, T3_Node_Init_Int(23));
     T3_LinkedList_Log_Int(list);
@@ -216,8 +217,8 @@ void T3_LinkedList_Test(void) {
 #endif
 }
 
-T3_LinkedListDouble *T3_LinkedListDouble_Init() {
-    T3_HELPER_MALLOC_SAFE(T3_LinkedListDouble, list);
+T3_LinkedListDouble *T3_LinkedListDouble_Init(void) {
+    T3_LinkedListDouble *list = T3_Helper_Malloc_Safe(sizeof *list ,T3_FILE_LINE);
     list->Head = NULL;
     list->Tail = NULL;
     list->Count = 0;
@@ -282,8 +283,8 @@ void T3_LinkedListDouble_AddToTail(T3_LinkedListDouble *list, T3_NodeDouble *nod
  */
 void T3_LinkedListDouble_AddToIndex(T3_LinkedListDouble *list, T3_NodeDouble *node, size_t index) {
     T3_NodeDouble *found;
-    T3_Helper_Assert(index < list->Count, "OutOfRange index!");
-    T3_Helper_Assert(!(index == 0 || index == list->Count), "Adding to head or tail. Use AddNode instead!");
+    T3_Helper_Assert(index < list->Count, __FILE__, __LINE__, "OutOfRange index!");
+    T3_Helper_Assert(!(index == 0 || index == list->Count), __FILE__, __LINE__, "Adding to head or tail. Use AddNode instead!");
 
     found = T3_LinkedListDouble_GetNode(list, index - 1);
     node->Next = found->Next;
@@ -298,7 +299,7 @@ void T3_LinkedListDouble_AddToIndex(T3_LinkedListDouble *list, T3_NodeDouble *no
 T3_NodeDouble *T3_LinkedListDouble_GetNode(T3_LinkedListDouble *list, size_t index) {
     T3_NodeDouble *current;
     size_t i;
-    T3_Helper_Assert(index < list->Count, "OutOfRange index!");
+    T3_Helper_Assert(index < list->Count,__FILE__, __LINE__, "OutOfRange index!");
 
     if (index == 0) {
         return list->Head;
@@ -330,7 +331,7 @@ void T3_LinkedListDouble_Remove(T3_LinkedListDouble *list, T3_NodeDouble *node) 
     T3_NodeDouble *current;
     size_t i;
 
-    T3_Helper_Assert(list->Count != 0, "Nothing to remove");
+    T3_Helper_Assert(list->Count != 0,__FILE__, __LINE__, "Nothing to remove");
 
     current = list->Head;
 

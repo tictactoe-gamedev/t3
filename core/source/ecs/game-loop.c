@@ -4,8 +4,8 @@
 T3_ECS_GameLoop *internal_gameLoop;
 
 void T3_Ecs_GameLoop_Init(void) {
-    T3_HELPER_MALLOC_SAFE(T3_ECS_GameLoop, gameloop);
-    internal_gameLoop = gameloop;
+    T3_ECS_GameLoop *gameLoop = T3_Helper_Malloc_Safe(sizeof *gameLoop, T3_FILE_LINE);
+    internal_gameLoop = gameLoop;
     internal_gameLoop->OnExit = T3_Queue_Init();
     internal_gameLoop->OnEnter = T3_Queue_Init();
     internal_gameLoop->OnEnable = T3_Queue_Init();
@@ -14,7 +14,7 @@ void T3_Ecs_GameLoop_Init(void) {
     internal_gameLoop->OnAddComponent = T3_Queue_Init();
     internal_gameLoop->OnRemoveComponent = T3_Queue_Init();
     internal_gameLoop->OnLoop = T3_List_Init(T3_Globals_Get()->InitialEntityCapacity);
-    T3_Entity_SetGameLoop(gameloop);
+    T3_Entity_SetGameLoop(gameLoop);
 }
 
 void T3_Ecs_GameLoop_Step(void) {

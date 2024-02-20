@@ -9,13 +9,13 @@ int T3_Helper_Random_Sign(void) {
 }
 
 int T3_Helper_Random_Int(int min, int max) {
-    T3_Helper_Assert(min <= max, "Min value cannot be lower than Max!");
+    T3_Helper_Assert(min <= max, __FILE__, __LINE__, "Min value cannot be lower than Max!");
     return min + rand() % (max - min + 1);
 }
 
 float T3_Helper_Random_Float(float min, float max) {
     float random_float_0_to_1;
-    T3_Helper_Assert(min <= max, "Min value cannot be lower than Max.");
+    T3_Helper_Assert(min <= max, __FILE__, __LINE__, "Min value cannot be lower than Max.");
 
     /*Generate a random float between 0 and 1 with specified precision*/
     random_float_0_to_1 = ((float) rand() / (float) RAND_MAX);

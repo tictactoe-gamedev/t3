@@ -5,6 +5,8 @@
 #include "t3-types.h"
 #include "config-project.h"
 
+#define T3_FILE_LINE __FILE__, __LINE__
+
 /** ------------------------------- LOGGING ----------------------------------- */
 
 typedef enum {
@@ -15,15 +17,11 @@ void T3_Helper_Log(T3_Log_Level level, const char *filename, int lineNumber, con
 
 void T3_Helper_Error_If(bool condition, const char *filename, int lineNumber, const char *format, ...);
 
-void T3_Helper_Assert(bool condition, const char *format, ...);
+void T3_Helper_Assert(bool condition, const char *filename, int lineNumber, const char *format, ...);
 
 /** ------------------------------- MEMORY ----------------------------------- */
 
-#define T3_HELPER_MALLOC(type) (type *) malloc(sizeof(type))
-#define T3_HELPER_MALLOC_SAFE(type, variableName)                                                  \
-type * variableName = (type *) malloc(sizeof(type));                                               \
-T3_Helper_Error_If(variableName==NULL,__FILE__, __LINE__, "Malloc failed for ", variableName)
-
+void *T3_Helper_Malloc_Safe(size_t size, const char *filename, int lineNumber);
 
 /** ------------------------------- RANDOMISATION ----------------------------------- */
 

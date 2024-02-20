@@ -6,7 +6,7 @@ void T3C_Texture_OnDestroy(T3_Component *self);
 
 T3_Component *T3C_Texture_Init(void) {
     T3_Component *component;
-    T3_HELPER_MALLOC_SAFE(T3C_Texture, texture);
+    T3C_Texture *texture = T3_Helper_Malloc_Safe(sizeof *texture, T3_FILE_LINE);
     texture->Path = NULL;
     texture->Texture = NULL;
 
@@ -26,9 +26,10 @@ T3_Component *T3C_Texture_Init(void) {
 
     return component;
 }
-T3_Component *T3C_Texture_Init_With_Load(SDL_Renderer *renderer,const char *path){
+
+T3_Component *T3C_Texture_Init_With_Load(SDL_Renderer *renderer, const char *path) {
     T3_Component *component;
-    T3_HELPER_MALLOC_SAFE(T3C_Texture, texture);
+    T3C_Texture *texture = T3_Helper_Malloc_Safe(sizeof *texture, T3_FILE_LINE);
 
     texture->Path = path;
     texture->Texture = IMG_LoadTexture(renderer, path);
@@ -39,17 +40,17 @@ T3_Component *T3C_Texture_Init_With_Load(SDL_Renderer *renderer,const char *path
 
     texture->Rect.x = 0;
     texture->Rect.y = 0;
-    
+
     SDL_QueryTexture(texture->Texture, NULL, NULL, &texture->OriginalWidth, &texture->OriginalHeight);
     texture->Rect.w = texture->OriginalWidth;
     texture->Rect.h = texture->OriginalHeight;
-    
+
     component = T3_Component_Init(true);
 
     component->Type = T3C_TYPE_TEXTURE;
     component->Data = texture;
     component->OnDestroy = T3C_Texture_OnDestroy;
-    
+
     return component;
 }
 

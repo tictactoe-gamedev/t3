@@ -7,7 +7,7 @@ void T3C_Camera_OnAddComponent(T3_Component *self);
 
 T3_Component *T3C_Camera_Init(void) {
     T3_Component *component;
-    T3_HELPER_MALLOC_SAFE(T3C_Camera, camera);
+    T3C_Camera *camera = T3_Helper_Malloc_Safe(sizeof *camera, T3_FILE_LINE);
     camera->PixelPosition.x = T3_Globals_Get()->Resolution.Width / 2;
     camera->PixelPosition.y = T3_Globals_Get()->Resolution.Height / 2;
     camera->ScenePosition = NULL;
