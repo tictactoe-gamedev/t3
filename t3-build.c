@@ -58,6 +58,7 @@
                                                             SRC(T3_CORE_SOURCE "/t3-types.c")                           \
                                                             SRC(T3_CORE_SOURCE "/vector2.c")                            \
                                                             SRC(T3_CORE_SOURCE "/globals.c")                            \
+                                                            SRC(T3_CORE_SOURCE "/input.c")                            \
                                                             SRC(T3_HELPERS "/logging.c")                                \
                                                             SRC(T3_HELPERS "/randomisation.c")                          \
                                                             SRC(T3_HELPERS "/t3-memory.c")                              \
