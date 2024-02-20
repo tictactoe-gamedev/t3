@@ -7,9 +7,7 @@ struct T3_Entity;
 #define PRODUCTION 2
 #define CONFIG_BUILD_TYPE DEVELOPMENT
 
-#define CONFIG_MINIMUM_LOG_LEVEL Info
-//#define CONFIG_MINIMUM_LOG_LEVEL Warning
-//#define CONFIG_MINIMUM_LOG_LEVEL Error
+#define CONFIG_MINIMUM_LOG_LEVEL Info       /*Other options Warning, Error */
 
 #define CONFIG_ENTRY_POINT_FUNCTION_NAME Main
 
@@ -20,10 +18,10 @@ typedef struct {
     int Height;
 } T3_Config_Resolution;
 
-#define CONFIG_ENTRY_POINT_METHOD_SIGNATURE(__methodName) void  __methodName()
+#define CONFIG_ENTRY_POINT_METHOD_SIGNATURE(__methodName) void  __methodName(void)
 
 /** Entry point for game. That must return the root entity */
 CONFIG_ENTRY_POINT_METHOD_SIGNATURE(CONFIG_ENTRY_POINT_FUNCTION_NAME);
 
 
-#endif //T3_CONFIG_PROJECT_H
+#endif 

@@ -22,6 +22,6 @@ T3_Vector2 T3_Vector2_Normalize(T3_Vector2 a);
 
 T3_Vector2 T3_Vector2_MultiplyBy(T3_Vector2 a, float multiplier);
 
-T3_Vector2 T3_Vector2_Zero();
+T3_Vector2 T3_Vector2_Zero(void);
 
-#endif //T3_T3_MATH_H
+#endif 

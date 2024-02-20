@@ -4,7 +4,8 @@
 T3_ECS_GameLoop *__gameLoopRef;
 
 T3_Entity *T3_Entity_Init(const char *name, T3_Entity *parent, T3_List *children, T3_List *components, bool isEnabled) {
-    T3_HELPER_MALLOC_SAFE(T3_Entity, entity);
+    uint componentCount;
+    T3_Entity * entity = T3_Helper_Malloc_Safe(sizeof *entity, T3_FILE_LINE);
     entity->Name = name;
     entity->Parent = parent;
     entity->Children = children;
@@ -12,7 +13,7 @@ T3_Entity *T3_Entity_Init(const char *name, T3_Entity *parent, T3_List *children
     entity->IsEnabled = isEnabled;
     entity->IsInLoop = false;
 
-    uint componentCount = components->Size;
+    componentCount = components->Size;
 
     if (componentCount > 0) {
         uint i;
@@ -31,7 +32,7 @@ T3_Entity *T3_Entity_Init(const char *name, T3_Entity *parent, T3_List *children
 }
 
 void T3_Entity_AddComponent(T3_Entity *entity, T3_Component *component) {
-    T3_HELPER_ASSERT(component->Owner == NULL, "Component has already owned by an entity!");
+    T3_Helper_Assert(component->Owner == NULL,__FILE__, __LINE__, "Component has already owned by an entity!");
 
     T3_List_Add(entity->Components, component);
     component->Owner = entity;
@@ -41,7 +42,7 @@ void T3_Entity_AddComponent(T3_Entity *entity, T3_Component *component) {
 }
 
 void T3_Entity_AddComponentSafe(T3_Entity *entity, T3_Component *component) {
-    T3_HELPER_ASSERT(component->Owner == NULL, "Component has already owned by an entity!");
+    T3_Helper_Assert(component->Owner == NULL, __FILE__, __LINE__,"Component has already owned by an entity!");
 
     T3_List_AddSafe(entity->Components, component);
     component->Owner = entity;
@@ -51,11 +52,12 @@ void T3_Entity_AddComponentSafe(T3_Entity *entity, T3_Component *component) {
 }
 
 void T3_Entity_EnterGameLoop(T3_Entity *entity) {
-    T3_HELPER_ASSERT(entity->IsInLoop == false, "Entity is already in loop?");
+    uint i;
+    T3_Helper_Assert(entity->IsInLoop == false,__FILE__, __LINE__, "Entity is already in loop?");
 
     entity->IsInLoop = true;
 
-    uint i;
+    
     for (i = 0; i < entity->Components->Size; ++i) {
         T3_Component *component = T3_Entity_GetComponentAt(entity, i);
 
@@ -71,9 +73,9 @@ void T3_Entity_EnterGameLoop(T3_Entity *entity) {
 }
 
 void T3_Entity_ExitGameLoop(T3_Entity *entity) {
-    T3_HELPER_ASSERT(entity->IsInLoop == true, "Entity is already out of the loop?");
-
     uint i;
+    T3_Helper_Assert(entity->IsInLoop == true,__FILE__, __LINE__, "Entity is already out of the loop?");
+    
     for (i = 0; i < entity->Components->Size; ++i) {
         T3_Component *component = T3_Entity_GetComponentAt(entity, i);
 
@@ -143,10 +145,10 @@ T3_Component *T3_Entity_GetComponent(T3_Entity *entity, T3C_Type componentType) 
 }
 
 void T3_Entity_Enabled(T3_Entity *entity, bool isEnabled) {
+    uint i;
+
     if (entity->IsEnabled == isEnabled)
         return;
-
-    uint i;
 
     entity->IsEnabled = isEnabled;
 

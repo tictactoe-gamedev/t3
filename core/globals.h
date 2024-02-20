@@ -14,6 +14,6 @@ typedef struct T3_Globals {
     SDL_Renderer* MainRenderer;
 } T3_Globals;
 
-T3_Globals *T3_Globals_Get();
+T3_Globals *T3_Globals_Get(void);
 
-#endif //T3_GLOBALS_H
+#endif

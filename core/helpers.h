@@ -5,44 +5,29 @@
 #include "t3-types.h"
 #include "config-project.h"
 
+#define T3_FILE_LINE __FILE__, __LINE__
+
 /** ------------------------------- LOGGING ----------------------------------- */
 
 typedef enum {
     Info, Warning, Error
 } T3_Log_Level;
 
-void INTERNAL_T3_Helper_Log_Message(T3_Log_Level level, const char *filename, int lineNumber, const char *format, ...);
+void T3_Helper_Log(T3_Log_Level level, const char *filename, int lineNumber, const char *format, ...);
 
-/** Logs a message. Options for logLevel is Info, Warning, Error **/
-#define T3_HELPER_LOG(logLevel, formatString, ...)  INTERNAL_T3_Helper_Log_Message(logLevel, __FILE__, __LINE__, formatString, ## __VA_ARGS__)
+void T3_Helper_Error_If(bool condition, const char *filename, int lineNumber, const char *format, ...);
 
-/** Halts the execution if condition is true */
-#define T3_HELPER_ERROR_IF(condition, formatString, ...) \
-if(condition)                                     \
-    INTERNAL_T3_Helper_Log_Message(Error, __FILE__, __LINE__, formatString, ## __VA_ARGS__)
-
-#if CONFIG_BUILD_TYPE == DEVELOPMENT
-/** Halts the execution if condition is false and CONFIG_BUILD_TYPE is DEVELOPMENT */
-#define T3_HELPER_ASSERT(condition, formatString, ...) T3_HELPER_ERROR_IF(!(condition), formatString, ##__VA_ARGS__)
-#else
-/** Halts the execution if condition is false and CONFIG_BUILD_TYPE is DEVELOPMENT */
-#define T3_HELPER_ASSERT(condition, formatString, ...)
-#endif
-
+void T3_Helper_Assert(bool condition, const char *filename, int lineNumber, const char *format, ...);
 
 /** ------------------------------- MEMORY ----------------------------------- */
 
-#define T3_HELPER_MALLOC(type) (type *) malloc(sizeof(type))
-#define T3_HELPER_MALLOC_SAFE(type, variableName)                                                  \
-type * variableName = (type *) malloc(sizeof(type));                                               \
-T3_HELPER_ERROR_IF(variableName==NULL,"Malloc failed for ", variableName)
-
+void *T3_Helper_Malloc_Safe(size_t size, const char *filename, int lineNumber);
 
 /** ------------------------------- RANDOMISATION ----------------------------------- */
 
-bool T3_Helper_Random_Bool();
+bool T3_Helper_Random_Bool(void);
 
-int T3_Helper_Random_Sign();
+int T3_Helper_Random_Sign(void);
 
 int T3_Helper_Random_Int(int min, int max);
 
@@ -60,4 +45,4 @@ float T3_Helper_Random_Float(float min, float max);
 #define T3_HELPER_FLAG_TOGGLE_OPTION(__flag, __option)    __flag ^= __option
 #define T3_HELPER_FLAG_CHECK_OPTION(__flag, __options)    ((__flag) & (__options))
 
-#endif //T3_HELPERS_H
+#endif
