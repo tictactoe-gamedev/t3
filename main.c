@@ -2,9 +2,10 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_video.h>
-#include "core/helpers.h"
-#include "core/globals.h"
-#include "core/ecs.h"
+#include "helpers.h"
+#include "globals.h"
+#include "ecs.h"
+#include "t3-input.h"
 
 float DeltaTimeInSeconds = 0;
 Uint64 PreviousFrameMS = 0;
@@ -58,7 +59,7 @@ void T3_Init(void) {
                            T3_HELPER_SDL_COLOR_TO_PARAM_RGBA(globals->DefaultBackground));
 
     T3_Ecs_GameLoop_Init();
-
+    T3_InputSystem_Init();
     CONFIG_ENTRY_POINT_FUNCTION_NAME();
 
 }
@@ -66,7 +67,7 @@ void T3_Init(void) {
 void T3_GameLoop(void) {
     SDL_Event e;
     bool quit = false;
-
+    
     while (!quit) {
         CurrentFrameMS = SDL_GetTicks64();
         DeltaTimeInSeconds = (CurrentFrameMS - PreviousFrameMS) / 1000.0;
@@ -75,11 +76,9 @@ void T3_GameLoop(void) {
                                T3_HELPER_SDL_COLOR_TO_PARAM_RGBA(globals->DefaultBackground));
 
         SDL_RenderClear(MainRenderer);
-
-        while (SDL_PollEvent(&e)) {
-            if (e.type == SDL_QUIT) {
-                quit = true;
-            }
+        T3_InputSystem_Feed(&e);
+        if (e.type == SDL_QUIT) {
+            quit = true; 
         }
 
         T3_Ecs_GameLoop_Step();
