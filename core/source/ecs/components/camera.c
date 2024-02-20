@@ -33,3 +33,24 @@ void T3C_Camera_OnAddComponent(T3_Component *self) {
     T3_Helper_Error_If(positionComp == NULL, __FILE__, __LINE__, "Can't add a camera without a position component!");
     camera->ScenePosition = (T3C_Position *) positionComp->Data;
 }
+
+T3_Entity *T3E_Camera_Init(const char *entityName,
+                           float posX,
+                           float posY,
+                           uint initialChildrenCapacity,
+                           uint extraComponentCapacity,
+                           bool isEnabled,
+                           T3_Entity* parent) {
+
+    return T3_Entity_Init(
+            entityName,
+            parent,
+            initialChildrenCapacity > 0 ? T3_List_Init(initialChildrenCapacity) : NULL,
+            T3_List_Init_With_Elements(
+                    2 + extraComponentCapacity,
+                    2,
+                    T3C_Position_Init(posX, posY),
+                    T3C_Camera_Init()
+            ),
+            isEnabled);
+}

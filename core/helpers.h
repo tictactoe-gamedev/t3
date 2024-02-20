@@ -2,6 +2,7 @@
 #define T3_HELPERS_H
 
 #include <stdlib.h>
+#include <SDL_rect.h>
 #include "t3-types.h"
 #include "config-project.h"
 
@@ -44,5 +45,9 @@ float T3_Helper_Random_Float(float min, float max);
 #define T3_HELPER_FLAG_CLEAR_OPTION(__flag, __option)    __flag &= ~__option
 #define T3_HELPER_FLAG_TOGGLE_OPTION(__flag, __option)    __flag ^= __option
 #define T3_HELPER_FLAG_CHECK_OPTION(__flag, __options)    ((__flag) & (__options))
+
+/** -------------------------------- SDL_RECT ----------------------------------- */
+SDL_Rect T3_Helper_SDL_Rect_Init(int x, int y, int w, int h);
+
 
 #endif

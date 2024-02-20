@@ -1,5 +1,13 @@
 #include "t3-math.h"
 
+T3_Vector2 T3_Vector2_Init(float x, float y)
+{
+    T3_Vector2 vector2;
+    vector2.x=x;
+    vector2.y=y;
+    return vector2;
+}
+
 void T3_Vector2_Equals(T3_Vector2 *a, T3_Vector2 *b) {
     a->x = b->x;
     a->y = b->y;

@@ -7,12 +7,12 @@ void T3C_SpriteRenderer_OnAddComponent(T3_Component *component);
 
 void T3C_SpriteRenderer_OnLoop(T3_Component *component);
 
-T3_Component *T3C_Sprite_Init(T3C_Texture *texture, SDL_Rect rect, T3_Vector2 anchorPoint) {
+T3_Component *T3C_Sprite_Init(T3C_Texture *texture, SDL_Rect rect, float anchorX, float anchorY) {
     T3_Component *component;
     T3C_Sprite *sprite = T3_Helper_Malloc_Safe(sizeof *sprite, T3_FILE_LINE);
     sprite->SourceTexture = texture;
     sprite->Rect = rect;
-    sprite->AnchorPoint = anchorPoint;
+    sprite->AnchorPoint = T3_Vector2_Init(anchorX, anchorY);
 
     component = T3_Component_Init(true);
     component->Type = T3C_TYPE_SPRITE;
@@ -94,7 +94,7 @@ void T3C_SpriteRenderer_OnLoop(T3_Component *component) {
     }
 
     pixelPosition = T3C_Position_ToPixel(renderer->Position, renderer->Camera);
-    
+
     pixelPosition = T3_Vector2_Subtract(pixelPosition, pivotPoint);
     clipped.x = pixelPosition.x;
     clipped.y = pixelPosition.y;
@@ -102,4 +102,31 @@ void T3C_SpriteRenderer_OnLoop(T3_Component *component) {
     clipped.h = spriteRect.h;
     SDL_RenderCopyEx(T3_Globals_Get()->MainRenderer, sourceText, &spriteRect, &clipped, 0, &pivotConverted,
                      renderer->Flip);
+}
+
+T3_Entity *T3E_Sprite_Init(const char *entityName,
+                           SDL_Renderer *renderer,
+                           T3C_Camera *renderCamera,
+                           float posX, float posY,
+                           const char *imagePath,
+                           SDL_Rect spriteRect,
+                           float anchorX, float anchorY,
+                           uint initialChildrenCapacity,
+                           uint extraComponentCapacity,
+                           bool isEnabled,
+                           T3_Entity *parent) {
+
+    T3_Component *texture = T3C_Texture_Init_With_Load(renderer, imagePath);
+    T3_Component *sprite = T3C_Sprite_Init(texture->Data, spriteRect, anchorX, anchorY);
+    T3_Component *spriteRenderer = T3C_SpriteRenderer_Init_With_Camera(renderCamera);
+    T3_Component *position = T3C_Position_Init(posX, posY);
+
+    return T3_Entity_Init(entityName,
+                          parent,
+                          T3_List_Init(initialChildrenCapacity),
+                          T3_List_Init_With_Elements(
+                                  4 + extraComponentCapacity,
+                                  4,
+                                  position, texture, sprite, spriteRenderer),
+                          isEnabled);
 }
