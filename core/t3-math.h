@@ -10,8 +10,6 @@ typedef struct T3_Vector2 {
 
 T3_Vector2 T3_Vector2_Init(float x, float y);
 
-void T3_Vector2_Equals(T3_Vector2 *a, T3_Vector2 *b);
-
 void T3_Vector2_EqualsXY(T3_Vector2 *a, float x, float y);
 
 T3_Vector2 T3_Vector2_Subtract(T3_Vector2 a, T3_Vector2 b);

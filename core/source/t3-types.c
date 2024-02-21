@@ -2,8 +2,7 @@
 
 const char * T3_TypeOf(T3C_Type typeID){
     switch (typeID) {
-        case 0: return "Bool(int)";
-        case 1: return "Bool(int)";
+        case 0: case 1: return "Bool(int)";
         case 2: return "T3C_TYPE_POSITION";
         case 3: return "T3C_TYPE_SCENE";
         case 4: return "T3C_TYPE_CAMERA";

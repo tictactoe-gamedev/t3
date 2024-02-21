@@ -58,7 +58,7 @@
                                                             SRC(T3_CORE_SOURCE "/t3-types.c")                           \
                                                             SRC(T3_CORE_SOURCE "/vector2.c")                            \
                                                             SRC(T3_CORE_SOURCE "/globals.c")                            \
-                                                            SRC(T3_CORE_SOURCE "/input.c")                            \
+                                                            SRC(T3_CORE_SOURCE "/t3-input.c")                           \
                                                             SRC(T3_HELPERS "/logging.c")                                \
                                                             SRC(T3_HELPERS "/randomisation.c")                          \
                                                             SRC(T3_HELPERS "/t3-memory.c")                              \
@@ -81,7 +81,7 @@
 
 #define COMPILER_FLAGS                                      FLAG_ENABLED("-std=c89")                                      \
                                                             FLAG_ENABLED("-pedantic-errors")                              \
-                                                            FLAG_ENABLED("-MJ compile_commands.json")                     
+                                                            FLAG_ENABLED("-MJ compile_commands.json")
 
 
 int main(int argc, char *args[]) {
@@ -108,7 +108,7 @@ int main(int argc, char *args[]) {
      *  compile_commands.json helps us to use IDEs without CMAKE or any other build tool.
      *  compile_commands.json produced by clang has an extra , at the end and no [ ] so we're editing it. 
      */
-     
+
     FILE *inputFile = fopen("compile_commands.json", "r");
     FILE *outputFile = fopen("compile_commands_tmp.json", "w+");
 
@@ -124,10 +124,10 @@ int main(int argc, char *args[]) {
         } else if (current == ',' && waiting == 1) {
             //skip without putting char   
         } else if (current == '{' && waiting == 1) {
-            fputc(',',outputFile);
+            fputc(',', outputFile);
             fputc(current, outputFile);
-            waiting=0;
-        }else{
+            waiting = 0;
+        } else {
             fputc(current, outputFile);
         }
 
@@ -137,7 +137,7 @@ int main(int argc, char *args[]) {
     fputc(']', outputFile);
     fclose(inputFile);
     remove("compile_commands.json");
-    rename("compile_commands_tmp.json","compile_commands.json");
+    rename("compile_commands_tmp.json", "compile_commands.json");
     fclose(outputFile);
 
     return 0;

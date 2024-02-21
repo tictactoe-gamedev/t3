@@ -8,11 +8,6 @@ T3_Vector2 T3_Vector2_Init(float x, float y)
     return vector2;
 }
 
-void T3_Vector2_Equals(T3_Vector2 *a, T3_Vector2 *b) {
-    a->x = b->x;
-    a->y = b->y;
-}
-
 void T3_Vector2_EqualsXY(T3_Vector2 *a, float x, float y) {
     a->x = x;
     a->y = y;
