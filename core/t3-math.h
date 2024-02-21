@@ -24,4 +24,17 @@ T3_Vector2 T3_Vector2_MultiplyBy(T3_Vector2 a, float multiplier);
 
 T3_Vector2 T3_Vector2_Zero(void);
 
+T3_Vector2 T3_Radians_ToVector2(float radians);
+
+float T3_Vector2_ToRadians(T3_Vector2 vector);
+
+float T3_Degrees_ToRadians(float degrees);
+
+float T3_Radians_ToDegrees(float radians);
+
+float T3_Vector2_ToDegrees(T3_Vector2 vector);
+
+T3_Vector2 T3_Degrees_ToVector2(float degrees);
+
+
 #endif 

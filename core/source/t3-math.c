@@ -1,4 +1,5 @@
 #include "t3-math.h"
+#include "t3-types.h"
 
 T3_Vector2 T3_Vector2_Init(float x, float y)
 {
@@ -55,3 +56,31 @@ T3_Vector2 T3_Vector2_Zero(void) {
     T3_Vector2 zero = {0, 0};
     return zero;
 }
+
+T3_Vector2 T3_Radians_ToVector2(float radians) {
+    return T3_Vector2_Init(cos(radians), sin(radians));
+}
+
+float T3_Vector2_ToRadians(T3_Vector2 vector) {
+    return atan2(vector.y, vector.x);
+}
+
+float T3_Degrees_ToRadians(float degrees) {
+    return degrees * T3_PI / 180.0;
+}
+
+float T3_Radians_ToDegrees(float radians) {
+    return radians * 180.0 / T3_PI;
+}
+
+float T3_Vector2_ToDegrees(T3_Vector2 vector) {
+    return atan2(vector.y,vector.x) * 180.0 / T3_PI;
+}
+
+T3_Vector2 T3_Degrees_ToVector2(float degrees) {
+    degrees = degrees * T3_PI / 180.0;
+    return T3_Vector2_Init(cos(degrees), sin(degrees));
+}
+
+
+

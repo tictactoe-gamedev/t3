@@ -48,6 +48,7 @@ typedef struct T3_ECS_GameLoop {
 } T3_ECS_GameLoop;
 
 typedef T3_Vector2 T3C_Position;
+typedef float T3C_Rotation;
 
 typedef struct T3C_Scene {
     const char *Name;
@@ -150,6 +151,21 @@ T3_Component *T3_Component_Init(bool isEnabled);
 T3_Component *T3C_Position_Init(float x, float y);
 
 T3_Vector2 T3C_Position_ToPixel(T3C_Position *position, T3C_Camera *camera);
+
+/** ------------------------------- ROTATION COMPONENT----------------------------------- */
+
+T3_Component *T3C_Rotation_Init(float radians);
+T3_Vector2 T3C_Rotation_As_Vector2(T3C_Rotation* rotation);
+float T3C_Rotation_As_Radians(T3C_Rotation* rotation);
+float T3C_Rotation_As_Degrees(T3C_Rotation* rotation);
+void T3C_Rotation_Set_Radians(T3C_Rotation* rotation, float radians);
+void T3C_Rotation_Set_Degrees(T3C_Rotation* rotation, float degrees);
+void T3C_Rotation_Set_Vector2(T3C_Rotation* rotation, T3_Vector2 vector);
+void T3C_Rotation_Rotate_Radians(T3C_Rotation* rotation, float radians);
+void T3C_Rotation_Rotate_Degrees(T3C_Rotation* rotation, float degrees);
+void T3C_Rotation_Rotate_Vector2(T3C_Rotation* rotation, T3_Vector2 vector);
+void T3C_Rotation_RotateAround_Point(T3C_Position* position, T3_Vector2 point, float radians);
+void T3C_Rotation_OrbitAround_Point(T3C_Position* position, T3C_Rotation* rotation, T3_Vector2 point, float radians);
 
 /** ------------------------------- SCENE COMPONENT----------------------------------- */
 

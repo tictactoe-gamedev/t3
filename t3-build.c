@@ -56,7 +56,7 @@
 /*----- SOURCES -----*/
 #define SOURCE_FILES                                        SRC(ENGINE_ROOT "/main.c")                                  \
                                                             SRC(T3_CORE_SOURCE "/t3-types.c")                           \
-                                                            SRC(T3_CORE_SOURCE "/vector2.c")                            \
+                                                            SRC(T3_CORE_SOURCE "/t3-math.c")                            \
                                                             SRC(T3_CORE_SOURCE "/globals.c")                            \
                                                             SRC(T3_CORE_SOURCE "/t3-input.c")                           \
                                                             SRC(T3_HELPERS "/logging.c")                                \
@@ -72,6 +72,7 @@
                                                             SRC(T3_ECS "/component.c")                                  \
                                                             SRC(T3_ECS "/game-loop.c")                                  \
                                                             SRC(T3_COMPONENTS "/position.c")                            \
+                                                            SRC(T3_COMPONENTS "/rotation.c")                            \
                                                             SRC(T3_COMPONENTS "/scene.c")                               \
                                                             SRC(T3_COMPONENTS "/camera.c")                              \
                                                             SRC(T3_COMPONENTS "/texture.c")                             \
