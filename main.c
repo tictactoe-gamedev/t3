@@ -6,6 +6,7 @@
 #include "globals.h"
 #include "ecs.h"
 #include "t3-input.h"
+#include "valgrind/callgrind.h"
 
 float DeltaTimeInSeconds = 0;
 Uint64 PreviousFrameMS = 0;

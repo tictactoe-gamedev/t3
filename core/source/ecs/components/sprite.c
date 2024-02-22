@@ -15,7 +15,7 @@ T3_Component *T3C_Sprite_Init(T3C_Texture *texture, SDL_Rect rect, float anchorX
     sprite->AnchorPoint = T3_Vector2_Init(anchorX, anchorY);
 
     component = T3_Component_Init(true);
-    component->Type = T3C_TYPE_SPRITE;
+    component->Type = Sprite;
     component->Data = sprite;
     component->OnDestroy = T3C_Sprite_OnDestroy;
     return component;
@@ -35,7 +35,7 @@ T3_Component *T3C_SpriteRenderer_Init(void) {
     spriteRenderer->Flip = SDL_FLIP_NONE;
 
     component = T3_Component_Init(true);
-    component->Type = T3C_TYPE_SPRITE_RENDERER;
+    component->Type = SpriteRenderer;
     component->Data = spriteRenderer;
     component->OnDestroy = T3C_Sprite_OnDestroy;
     component->OnAddComponent = T3C_SpriteRenderer_OnAddComponent;
@@ -52,7 +52,7 @@ T3_Component *T3C_SpriteRenderer_Init_With_Camera(T3C_Camera *camera) {
     spriteRenderer->Flip = SDL_FLIP_NONE;
 
     component = T3_Component_Init(true);
-    component->Type = T3C_TYPE_SPRITE_RENDERER;
+    component->Type = SpriteRenderer;
     component->Data = spriteRenderer;
     component->OnDestroy = T3C_Sprite_OnDestroy;
     component->OnAddComponent = T3C_SpriteRenderer_OnAddComponent;
@@ -61,8 +61,8 @@ T3_Component *T3C_SpriteRenderer_Init_With_Camera(T3C_Camera *camera) {
 }
 
 void T3C_SpriteRenderer_OnAddComponent(T3_Component *component) {
-    T3_Component *positionComponent = T3_Entity_GetComponent(component->Owner, T3C_TYPE_POSITION);
-    T3_Component *spriteComponent = T3_Entity_GetComponent(component->Owner, T3C_TYPE_SPRITE);
+    T3_Component *positionComponent = T3_Entity_GetComponent(component->Owner, Position);
+    T3_Component *spriteComponent = T3_Entity_GetComponent(component->Owner, Sprite);
     T3C_SpriteRenderer *renderer = (T3C_SpriteRenderer *) component->Data;
     T3_Helper_Error_If(positionComponent == NULL, __FILE__, __LINE__,
                        "Can't add sprite renderer. No position component on entity!");

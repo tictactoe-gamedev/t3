@@ -9,7 +9,7 @@ T3_Component *T3C_Rotation_Init(float radians) {
     *rot = radians;
 
     component = T3_Component_Init(true);
-    component->Type = T3C_TYPE_ROTATION;
+    component->Type = Rotation;
     component->Data = rot;
     component->OnDestroy = T3C_Rotation_OnDestroy;
     return component;

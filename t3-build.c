@@ -80,10 +80,25 @@
                                                             SRC(PROJECT_ROOT "/start.c")                                \
 
 
-#define COMPILER_FLAGS                                      FLAG_ENABLED("-std=c89")                                      \
-                                                            FLAG_ENABLED("-pedantic-errors")                              \
-                                                            FLAG_ENABLED("-MJ compile_commands.json")
+#define COMPILER_FLAGS                                      FLAG_ENABLED("-std=c89")                                    \
+                                                            FLAG_ENABLED("-pedantic-errors")                            \
+                                                            FLAG_ENABLED("-MJ compile_commands.json")                   \
+                                                            FLAG_ENABLED("-Wall")                                       \
+                                                            FLAG_ENABLED("-g")                                          \
+                                                            FLAG_ENABLED("-O0")                                         \
 
+#define RUN_FLAGS                                           FLAG_ENABLED("valgrind ")          \
+                                                            FLAG_DISABLED("--memcheck:leak-check=full")                           \
+                                                            FLAG_DISABLED("--tool=cachegrind")                           \
+                                                            FLAG_ENABLED("--tool=callgrind")                            \
+                                                            FLAG_ENABLED("--dump-instr=yes")                            \
+                                                            FLAG_ENABLED("--simulate-cache=yes")                            \
+                                                            FLAG_ENABLED("--collect-jumps=yes")                            \
+                                                            FLAG_DISABLED("--tool=helgrind")                             \
+                                                            FLAG_DISABLED("--tool=drd")                                  \
+                                                            FLAG_DISABLED("--tool=massif")                               \
+                                                            FLAG_DISABLED("--tool=dhat")                                 \
+                                                            FLAG_DISABLED("--tool=lackey")                               \
 
 int main(int argc, char *args[]) {
 
@@ -99,7 +114,7 @@ int main(int argc, char *args[]) {
 
     if (compilationStatus == 0) {
 #ifdef __linux__
-        system("./build/" EXECUTABLE_NAME);
+        system(RUN_FLAGS "./build/" EXECUTABLE_NAME);
 #else
         system(".\\build\\" EXECUTABLE_NAME);
 #endif

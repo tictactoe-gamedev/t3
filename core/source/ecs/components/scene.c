@@ -10,7 +10,7 @@ T3_Component *T3C_Scene_Init(const char *name, uint width, uint height) {
     scene->Height = height;
 
     component = T3_Component_Init(true);
-    component->Type = T3C_TYPE_SCENE;
+    component->Type = Scene;
     component->Data = scene;
     return component;
 }

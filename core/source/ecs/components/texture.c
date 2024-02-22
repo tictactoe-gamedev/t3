@@ -20,7 +20,7 @@ T3_Component *T3C_Texture_Init(void) {
 
     component = T3_Component_Init(true);
 
-    component->Type = T3C_TYPE_TEXTURE;
+    component->Type = Texture;
     component->Data = texture;
     component->OnDestroy = T3C_Texture_OnDestroy;
 
@@ -40,7 +40,7 @@ T3_Component *T3C_Texture_Init_With_Load(SDL_Renderer *renderer, const char *pat
     
     component = T3_Component_Init(true);
 
-    component->Type = T3C_TYPE_TEXTURE;
+    component->Type = Texture;
     component->Data = texture;
     component->OnDestroy = T3C_Texture_OnDestroy;
 

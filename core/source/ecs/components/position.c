@@ -10,7 +10,7 @@ T3_Component *T3C_Position_Init(float x, float y) {
     pos->y = y;
 
     component = T3_Component_Init(true);
-    component->Type = T3C_TYPE_POSITION;
+    component->Type = Position;
     component->Data = pos;
     component->OnDestroy = T3C_Position_OnDestroy;
     return component;

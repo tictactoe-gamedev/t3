@@ -13,7 +13,7 @@ T3_Component *T3C_Camera_Init(void) {
     camera->ScenePosition = NULL;
 
     component = T3_Component_Init(true);
-    component->Type = T3C_TYPE_CAMERA;
+    component->Type = Camera;
     component->OnAddComponent = T3C_Camera_OnAddComponent;
     component->OnDestroy = T3C_Camera_OnDestroy;
     component->Data = camera;
@@ -27,7 +27,7 @@ void T3C_Camera_OnDestroy(T3_Component *self) {
 }
 
 void T3C_Camera_OnAddComponent(T3_Component *self) {
-    T3_Component *positionComp = T3_Entity_GetComponent(self->Owner, T3C_TYPE_POSITION);
+    T3_Component *positionComp = T3_Entity_GetComponent(self->Owner, Position);
     T3C_Camera *camera = (T3C_Camera *) self->Data;
 
     T3_Helper_Error_If(positionComp == NULL, __FILE__, __LINE__, "Can't add a camera without a position component!");
