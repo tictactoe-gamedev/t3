@@ -27,7 +27,7 @@ void Main(void) {
     exampleSprite = T3E_Sprite_Init(
             "exampleSprite",
             globals->MainRenderer,
-            T3_Entity_GetComponent(mainCamera, Camera)->Data,
+            (T3C_Camera *)T3_Entity_GetComponent(mainCamera, Camera),
             0, 0,
             "project-root/tileset.png",
             T3_Helper_SDL_Rect_Init(0, 0, 100, 100),

@@ -5,7 +5,6 @@
 void T3C_Texture_OnDestroy(T3_Component *self);
 
 T3_Component *T3C_Texture_Init(void) {
-    T3_Component *component;
     T3C_Texture *texture = T3_Helper_Malloc_Safe(sizeof *texture, T3_FILE_LINE);
     texture->Path = NULL;
     texture->Texture = NULL;
@@ -18,17 +17,15 @@ T3_Component *T3C_Texture_Init(void) {
     texture->Rect.w = 0;
     texture->Rect.h = 0;
 
-    component = T3_Component_Init(true);
+    T3_Component_Default (&texture->component,true);
 
-    component->Type = Texture;
-    component->Data = texture;
-    component->OnDestroy = T3C_Texture_OnDestroy;
+    texture->component.Type = Texture;
+    texture->component.OnDestroy = T3C_Texture_OnDestroy;
 
-    return component;
+    return &texture->component;
 }
 
 T3_Component *T3C_Texture_Init_With_Load(SDL_Renderer *renderer, const char *path) {
-    T3_Component *component;
     T3C_Texture *texture = T3_Helper_Malloc_Safe(sizeof *texture, T3_FILE_LINE);
     texture->Path = path;
     texture->Texture = IMG_LoadTexture(renderer, path);;
@@ -37,31 +34,29 @@ T3_Component *T3C_Texture_Init_With_Load(SDL_Renderer *renderer, const char *pat
     
     texture->Rect.x = 0;
     texture->Rect.y = 0;
-    
-    component = T3_Component_Init(true);
 
-    component->Type = Texture;
-    component->Data = texture;
-    component->OnDestroy = T3C_Texture_OnDestroy;
+    T3_Component_Default (&texture->component,true);
+
+    texture->component.Type = Texture;
+    texture->component.OnDestroy = T3C_Texture_OnDestroy;
 
     T3_Helper_Error_If(texture->Texture == NULL, __FILE__, __LINE__, "Couldn't load the image %s", SDL_GetError());
     
     texture->Rect.w = texture->OriginalWidth;
     texture->Rect.h = texture->OriginalHeight;
     
-    return component;
+    return &texture->component;
 }
 
 
 void T3C_Texture_OnDestroy(T3_Component *self) {
-    T3C_Texture *texture = (T3C_Texture *) self->Data;
+    T3C_Texture *texture = (T3C_Texture *) self;
 
     if (texture->Texture != NULL) {
         SDL_DestroyTexture(texture->Texture);
     }
 
     free(texture);
-    free(self);
 }
 
 void T3C_Texture_Load(SDL_Renderer *renderer, T3C_Texture *texture, const char *path) {

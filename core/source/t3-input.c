@@ -77,5 +77,5 @@ T3_Vector2 T3_InputSystem_GetMouseScenePosition(T3C_Camera *camera, int screenWi
     T3_Vector2 diff = T3_Vector2_Init(screenWidth/2.0f, screenHeight/2.0f);
     T3_Vector2 result = T3_Vector2_Subtract(mouseCurrentPixel,diff);
     result.y = -result.y;
-    return T3_Vector2_Add(*camera->ScenePosition,result);
+    return T3_Vector2_Add(camera->ScenePosition->pos,result);
 }

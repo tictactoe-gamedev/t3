@@ -22,7 +22,6 @@ struct T3_Entity {
 
 struct T3_Component {
     T3C_Type Type;
-    void *Data;
     T3_Entity *Owner;
     T3_ComponentFunction OnAddComponent;
     T3_ComponentFunction OnRemoveComponent;
@@ -47,21 +46,31 @@ typedef struct T3_ECS_GameLoop {
     T3_List *OnLoop;
 } T3_ECS_GameLoop;
 
-typedef T3_Vector2 T3C_Position;
-typedef float T3C_Rotation;
+typedef struct T3C_Position{
+    T3_Component component;
+    T3_Vector2 pos;
+}T3C_Position;
+
+typedef struct T3C_Rotation{
+    T3_Component component;
+    float radians;
+}T3C_Rotation;
 
 typedef struct T3C_Scene {
+    T3_Component component;
     const char *Name;
     uint Width;
     uint Height;
 } T3C_Scene;
 
 typedef struct T3C_Camera {
+    T3_Component component;
     T3C_Position *ScenePosition;
     T3_Vector2 PixelPosition;
 } T3C_Camera;
 
 typedef struct T3C_Texture {
+    T3_Component component;
     const char *Path;
     SDL_Texture *Texture;
     SDL_Rect Rect;
@@ -70,12 +79,14 @@ typedef struct T3C_Texture {
 } T3C_Texture;
 
 typedef struct T3C_Sprite {
+    T3_Component component;
     T3C_Texture *SourceTexture;
     SDL_Rect Rect;
     T3_Vector2 AnchorPoint;
 } T3C_Sprite;
 
 typedef struct T3C_SpriteRenderer {
+    T3_Component component;
     T3C_Camera *Camera;
     T3C_Position *Position;
     T3C_Sprite *Sprite;
@@ -133,7 +144,7 @@ T3_Entity *T3E_Sprite_Init (const char *entityName,
                             T3_Entity *parent);
 
 /** ------------------------------- COMPONENT  ----------------------------------- */
-
+void T3_Component_Default(T3_Component *component, bool isEnabled);
 T3_Component *T3_Component_Init (bool isEnabled);
 
 /** ------------------------------- POSITION COMPONENT----------------------------------- */
