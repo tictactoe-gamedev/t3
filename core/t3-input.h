@@ -24,25 +24,15 @@ typedef struct T3_InputSystem {
 } T3_InputSystem;
 
 void T3_InputSystem_Init(void);
-
 void T3_InputSystem_Feed(SDL_Event *e);
-
 bool T3_InputSystem_GetKeyDown(SDL_Scancode keycode);
-
 bool T3_InputSystem_GetKeyUp(SDL_Scancode keycode);
-
 bool T3_InputSystem_GetKeyHold(SDL_Scancode keycode);
-
 bool T3_InputSystem_GetMouseUp(T3_Input_Mouse_Button button);
-
 bool T3_InputSystem_GetMouseDown(T3_Input_Mouse_Button button);
-
 bool T3_InputSystem_GetMouseHold(T3_Input_Mouse_Button button);
-
 T3_Vector2 T3_InputSystem_GetMousePixelPosition(void);
-
 T3_Vector2 T3_InputSystem_GetMouseScenePosition(T3C_Camera *camera, int screenWidth, int screenHeight);
-
 T3_Vector2 T3_InputSystem_GetMouseDeltaPosition(void);
 
 #endif 

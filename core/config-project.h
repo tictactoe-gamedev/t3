@@ -7,8 +7,7 @@ struct T3_Entity;
 #define PRODUCTION 2
 #define CONFIG_BUILD_TYPE DEVELOPMENT
 
-#define CONFIG_MINIMUM_LOG_LEVEL Info       /*Other options Warning, Error */
-
+#define CONFIG_MINIMUM_LOG_LEVEL Info       /**Other options Warning, Error */
 #define CONFIG_ENTRY_POINT_FUNCTION_NAME Main
 
 /** EDITING THE REST OF THIS HEADER IS NOT ADVISED */
@@ -22,6 +21,5 @@ typedef struct {
 
 /** Entry point for game. That must return the root entity */
 CONFIG_ENTRY_POINT_METHOD_SIGNATURE(CONFIG_ENTRY_POINT_FUNCTION_NAME);
-
 
 #endif 
