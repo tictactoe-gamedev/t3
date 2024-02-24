@@ -1,5 +1,5 @@
-#include "helpers.h"
-#include "adt.h"
+#include "t3-helpers.h"
+#include "t3-abstract-data-types.h"
 
 T3_Stack *T3_Stack_Init(void) {
     T3_Stack *stack = T3_Helper_Malloc_Safe(sizeof *stack, T3_FILE_LINE);

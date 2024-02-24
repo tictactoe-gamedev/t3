@@ -2,7 +2,7 @@
 #define T3_T3_INPUT_H
 
 #include "t3-math.h"
-#include "ecs.h"
+#include "t3-ecs.h"
 #include <SDL_events.h>
 #include <SDL_keycode.h>
 

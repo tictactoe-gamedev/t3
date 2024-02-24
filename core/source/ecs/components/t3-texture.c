@@ -1,12 +1,12 @@
-#include "helpers.h"
-#include "ecs.h"
+#include "t3-helpers.h"
+#include "t3-ecs.h"
 #include <SDL_image.h>
 
 void T3C_Texture_OnDestroy(T3_Component *self);
+void T3C_Texture_Loop(T3_Component *self){}
 
 T3_Component *T3C_Texture_Init(void) {
     T3C_Texture *texture = T3_Helper_Malloc_Safe(sizeof *texture, T3_FILE_LINE);
-    texture->Path = NULL;
     texture->Texture = NULL;
 
     texture->OriginalHeight = 0;
@@ -20,16 +20,17 @@ T3_Component *T3C_Texture_Init(void) {
     T3_Component_Default (&texture->component,true);
 
     texture->component.Type = Texture;
-    texture->component.OnDestroy = T3C_Texture_OnDestroy;
+    T3_Helper_Binary_Set_Flag (&texture->component.EventFlags, OnDestroy);
+    texture->component.GameLoopFunction = T3C_Texture_Loop;
 
     return &texture->component;
 }
 
 T3_Component *T3C_Texture_Init_With_Load(SDL_Renderer *renderer, const char *path) {
     T3C_Texture *texture = T3_Helper_Malloc_Safe(sizeof *texture, T3_FILE_LINE);
-    texture->Path = path;
+    T3_Char_Assign_Unsafe (texture->Path, path, 0, 203);
     texture->Texture = IMG_LoadTexture(renderer, path);;
-
+    
     SDL_QueryTexture(texture->Texture, NULL, NULL, &texture->OriginalWidth, &texture->OriginalHeight);
     
     texture->Rect.x = 0;
@@ -38,10 +39,9 @@ T3_Component *T3C_Texture_Init_With_Load(SDL_Renderer *renderer, const char *pat
     T3_Component_Default (&texture->component,true);
 
     texture->component.Type = Texture;
-    texture->component.OnDestroy = T3C_Texture_OnDestroy;
-
+    T3_Helper_Binary_Set_Flag (&texture->component.EventFlags, OnDestroy);
     T3_Helper_Error_If(texture->Texture == NULL, __FILE__, __LINE__, "Couldn't load the image %s", SDL_GetError());
-    
+    texture->component.GameLoopFunction = T3C_Texture_Loop;
     texture->Rect.w = texture->OriginalWidth;
     texture->Rect.h = texture->OriginalHeight;
     
@@ -61,7 +61,7 @@ void T3C_Texture_OnDestroy(T3_Component *self) {
 
 void T3C_Texture_Load(SDL_Renderer *renderer, T3C_Texture *texture, const char *path) {
     texture->Texture = IMG_LoadTexture(renderer, path);
-    texture->Path = path;
+    T3_Char_Assign_Unsafe (texture->Path, path, 0, 203);
     T3_Helper_Error_If(texture->Texture == NULL, __FILE__, __LINE__, "Couldn't load the image %s", SDL_GetError());
     SDL_QueryTexture(texture->Texture, NULL, NULL, &texture->OriginalWidth, &texture->OriginalHeight);
     texture->Rect.w = texture->OriginalWidth;

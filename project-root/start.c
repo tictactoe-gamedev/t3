@@ -1,6 +1,6 @@
-#include "ecs.h"
-#include "helpers.h"
-#include "globals.h"
+#include "t3-ecs.h"
+#include "t3-helpers.h"
+#include "t3-globals.h"
 
 void Main(void) {
     T3_Globals *globals = T3_Globals_Get();

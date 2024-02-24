@@ -1,5 +1,5 @@
-#include "helpers.h"
-#include "adt.h"
+#include "t3-helpers.h"
+#include "t3-abstract-data-types.h"
 
 T3_LinkedList *T3_LinkedList_Init(void) {
     T3_LinkedList  * list = malloc(sizeof *list);
@@ -20,7 +20,7 @@ void T3_LinkedList_AddNode(T3_LinkedList *list, T3_Node *node, size_t index) {
 }
 
 void T3_LinkedList_AddToHead(T3_LinkedList *list, T3_Node *node) {
-    uint listCount = list->Count;
+    uint32 listCount = list->Count;
 
     if (listCount == 0) {
         list->Head = node;
@@ -241,7 +241,7 @@ void T3_LinkedListDouble_AddNode(T3_LinkedListDouble *list, T3_NodeDouble *node,
 
 
 void T3_LinkedListDouble_AddToHead(T3_LinkedListDouble *list, T3_NodeDouble *node) {
-    uint listCount = list->Count;
+    uint32 listCount = list->Count;
 
     if (listCount == 0) {
         list->Head = node;

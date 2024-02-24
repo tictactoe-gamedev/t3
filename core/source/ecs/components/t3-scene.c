@@ -1,24 +1,26 @@
-#include "helpers.h"
-#include "ecs.h"
+#include "t3-helpers.h"
+#include "t3-ecs.h"
 
-T3_Component *T3C_Scene_Init (const char *name, uint width, uint height) {
+void T3_Scene_Loop (T3_Component *self){}
+
+T3_Component *T3C_Scene_Init (const char *name20, uint16 width, uint16 height) {
 
     T3C_Scene *scene = T3_Helper_Malloc_Safe (sizeof *scene, T3_FILE_LINE);
     T3_Component_Default (&scene->component, true);
-    scene->Name = name;
+    T3_Char_Assign_Unsafe (scene->Name, name20, 0, 19);
     scene->Width = width;
     scene->Height = height;
-
+    scene->component.GameLoopFunction = T3_Scene_Loop;
     scene->component.Type = Scene;
     return &scene->component;
 }
 
 T3_Entity *T3E_Scene_Init (const char *entityName,
                            const char *sceneName,
-                           uint width,
-                           uint height,
-                           uint initialChildrenCapacity,
-                           uint extraComponentCapacity,
+                           uint32 width,
+                           uint32 height,
+                           uint32 initialChildrenCapacity,
+                           uint32 extraComponentCapacity,
                            bool isEnabled,
                            T3_Entity *parent) {
 

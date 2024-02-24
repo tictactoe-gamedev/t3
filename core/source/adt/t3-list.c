@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "helpers.h"
-#include "adt.h"
+#include "t3-helpers.h"
+#include "t3-abstract-data-types.h"
 
 size_t GetRealIndex(T3_List *list, size_t index);
 

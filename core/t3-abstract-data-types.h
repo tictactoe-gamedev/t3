@@ -1,5 +1,5 @@
-#ifndef T3_ADT_H
-#define T3_ADT_H
+#ifndef T3_T3_ABSTRACT_DATA_TYPES_H
+#define T3_T3_ABSTRACT_DATA_TYPES_H
 
 #include "t3-types.h"
 
@@ -20,13 +20,13 @@ struct T3_NodeDouble {
 typedef struct T3_LinkedList {
     T3_Node *Head;
     T3_Node *Tail;
-    uint Count;
+    uint32 Count;
 } T3_LinkedList;
 
 typedef struct T3_LinkedListDouble {
     T3_NodeDouble *Head;
     T3_NodeDouble *Tail;
-    uint Count;
+    uint32 Count;
 } T3_LinkedListDouble;
 
 typedef struct T3_List {

@@ -2,9 +2,9 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_video.h>
-#include "helpers.h"
-#include "globals.h"
-#include "ecs.h"
+#include "t3-helpers.h"
+#include "t3-globals.h"
+#include "t3-ecs.h"
 #include "t3-input.h"
 #include "valgrind/callgrind.h"
 
@@ -63,6 +63,10 @@ void T3_Init(void) {
     T3_InputSystem_Init();
     CONFIG_ENTRY_POINT_FUNCTION_NAME();
 
+    T3_Helper_Log (Info,T3_FILE_LINE,
+                   "Scene: %d \n entity pointer: %d \n, const char* : %d\n bool: %d\n",
+                   sizeof (T3C_SpriteRenderer), sizeof (T3_Entity*), sizeof (const char*), sizeof (bool));
+    
 }
 
 void T3_GameLoop(void) {

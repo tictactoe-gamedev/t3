@@ -1,5 +1,5 @@
-#include "helpers.h"
-#include "adt.h"
+#include "t3-helpers.h"
+#include "t3-abstract-data-types.h"
 
 T3_Node *T3_Node_Init(void *data) {
     T3_Node *node = T3_Helper_Malloc_Safe(sizeof *node, T3_FILE_LINE);

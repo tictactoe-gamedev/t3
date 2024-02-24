@@ -1,4 +1,4 @@
-#include "globals.h"
+#include "t3-globals.h"
 
 T3_Globals INTERNAL_globals = {
     "My Game",

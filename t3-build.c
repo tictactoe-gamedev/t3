@@ -57,26 +57,28 @@
 #define SOURCE_FILES                                        SRC(ENGINE_ROOT "/main.c")                                  \
                                                             SRC(T3_CORE_SOURCE "/t3-types.c")                           \
                                                             SRC(T3_CORE_SOURCE "/t3-math.c")                            \
-                                                            SRC(T3_CORE_SOURCE "/globals.c")                            \
+                                                            SRC(T3_CORE_SOURCE "/t3-globals.c")                            \
                                                             SRC(T3_CORE_SOURCE "/t3-input.c")                           \
-                                                            SRC(T3_HELPERS "/logging.c")                                \
-                                                            SRC(T3_HELPERS "/randomisation.c")                          \
+                                                            SRC(T3_HELPERS "/t3-logging.c")                                \
+                                                            SRC(T3_HELPERS "/t3-binary.c")                                \
+                                                            SRC(T3_HELPERS "/t3-char.c")                                \
+                                                            SRC(T3_HELPERS "/t3-randomisation.c")                          \
                                                             SRC(T3_HELPERS "/t3-memory.c")                              \
-                                                            SRC(T3_HELPERS "/sdl-rect-helper.c")                        \
-                                                            SRC(T3_ADT "/linked_list.c")                                \
-                                                            SRC(T3_ADT "/node.c")                                       \
-                                                            SRC(T3_ADT "/list.c")                                       \
-                                                            SRC(T3_ADT "/queue.c")                                      \
-                                                            SRC(T3_ADT "/stack.c")                                      \
-                                                            SRC(T3_ECS "/entity.c")                                     \
-                                                            SRC(T3_ECS "/component.c")                                  \
-                                                            SRC(T3_ECS "/game-loop.c")                                  \
-                                                            SRC(T3_COMPONENTS "/position.c")                            \
-                                                            SRC(T3_COMPONENTS "/rotation.c")                            \
-                                                            SRC(T3_COMPONENTS "/scene.c")                               \
-                                                            SRC(T3_COMPONENTS "/camera.c")                              \
-                                                            SRC(T3_COMPONENTS "/texture.c")                             \
-                                                            SRC(T3_COMPONENTS "/sprite.c")                              \
+                                                            SRC(T3_HELPERS "/t3-sdl-rect-helper.c")                        \
+                                                            SRC(T3_ADT "/t3-linked_list.c")                                \
+                                                            SRC(T3_ADT "/t3-node.c")                                       \
+                                                            SRC(T3_ADT "/t3-list.c")                                       \
+                                                            SRC(T3_ADT "/t3-queue.c")                                      \
+                                                            SRC(T3_ADT "/t3-stack.c")                                      \
+                                                            SRC(T3_ECS "/t3-entity.c")                                     \
+                                                            SRC(T3_ECS "/t3-component.c")                                  \
+                                                            SRC(T3_ECS "/t3-game-loop.c")                                  \
+                                                            SRC(T3_COMPONENTS "/t3-position.c")                            \
+                                                            SRC(T3_COMPONENTS "/t3-rotation.c")                            \
+                                                            SRC(T3_COMPONENTS "/t3-scene.c")                               \
+                                                            SRC(T3_COMPONENTS "/t3-camera.c")                              \
+                                                            SRC(T3_COMPONENTS "/t3-texture.c")                             \
+                                                            SRC(T3_COMPONENTS "/t3-sprite.c")                              \
                                                             SRC(PROJECT_ROOT "/start.c")                                \
 
 
@@ -100,7 +102,8 @@
                                                             FLAG_DISABLED("--tool=dhat")                                 \
                                                             FLAG_DISABLED("--tool=lackey")                               \
 
-int main(int argc, char *args[]) {
+
+int main (int argc, char *args[]) {
 
     /** Comment any options you don't want to apply */
     const char *cmd = "clang " COMPILER_FLAGS " "
@@ -110,11 +113,11 @@ int main(int argc, char *args[]) {
                       " -o build/" EXECUTABLE_NAME
                       " " SOURCE_FILES;
 
-    int compilationStatus = system(cmd);
+    int compilationStatus = system (cmd);
 
     if (compilationStatus == 0) {
 #ifdef __linux__
-        system(RUN_FLAGS "./build/" EXECUTABLE_NAME);
+        system (RUN_FLAGS "./build/" EXECUTABLE_NAME);
 #else
         system(".\\build\\" EXECUTABLE_NAME);
 #endif
@@ -125,36 +128,36 @@ int main(int argc, char *args[]) {
      *  compile_commands.json produced by clang has an extra , at the end and no [ ] so we're editing it. 
      */
 
-    FILE *inputFile = fopen("compile_commands.json", "r");
-    FILE *outputFile = fopen("compile_commands_tmp.json", "w+");
+    FILE *inputFile = fopen ("compile_commands.json", "r");
+    FILE *outputFile = fopen ("compile_commands_tmp.json", "w+");
 
-    fputc('[', outputFile);
+    fputc ('[', outputFile);
 
 
-    char current = fgetc(inputFile);
+    char current = fgetc (inputFile);
     int waiting = 0;
     while (current != EOF) {
         if (current == '}') {
             waiting = 1;
-            fputc(current, outputFile);
+            fputc (current, outputFile);
         } else if (current == ',' && waiting == 1) {
             //skip without putting char   
         } else if (current == '{' && waiting == 1) {
-            fputc(',', outputFile);
-            fputc(current, outputFile);
+            fputc (',', outputFile);
+            fputc (current, outputFile);
             waiting = 0;
         } else {
-            fputc(current, outputFile);
+            fputc (current, outputFile);
         }
 
-        current = fgetc(inputFile);
+        current = fgetc (inputFile);
     }
 
-    fputc(']', outputFile);
-    fclose(inputFile);
-    remove("compile_commands.json");
-    rename("compile_commands_tmp.json", "compile_commands.json");
-    fclose(outputFile);
+    fputc (']', outputFile);
+    fclose (inputFile);
+    remove ("compile_commands.json");
+    rename ("compile_commands_tmp.json", "compile_commands.json");
+    fclose (outputFile);
 
     return 0;
 }
