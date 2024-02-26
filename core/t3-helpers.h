@@ -35,7 +35,6 @@ float T3_Helper_Random_Float (float min, float max);
 #define T3_HELPER_SDL_COLOR_TO_PARAM_RGB(__color) __color.r, __color.g, __color.b
 
 /** -------------------------------- BINARY ----------------------------------- */
-
 void T3_Helper_Binary_Set_Flag(uint16* value, uint16 flag);
 void T3_Helper_Binary_Clear_Flag(uint16* value, uint16 flag);
 void T3_Helper_Binary_Toggle_Flag(uint16* value, uint16 flag);

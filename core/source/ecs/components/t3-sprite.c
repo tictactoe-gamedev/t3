@@ -1,12 +1,6 @@
 #include "t3-helpers.h"
 #include "t3-ecs.h"
 
-void T3C_Sprite_OnDestroy(T3_Component *component);
-
-void T3C_SpriteRenderer_OnAddComponent(T3_Component *component);
-
-void T3C_SpriteRenderer_OnLoop(T3_Component *component);
-
 void T3C_SpriteRenderer_Loop(T3_Component *self);
 
 void T3C_Sprite_Loop(T3_Component *self);
@@ -65,24 +59,22 @@ T3_Component *T3C_SpriteRenderer_Init_With_Camera(T3C_Camera *camera) {
 }
 
 void T3C_SpriteRenderer_Loop(T3_Component *self) {
-    
-    
     if (T3_Helper_Binary_Has_Flag(&self->EventFlags, OnDestroy << 8)) {
         free((T3C_Sprite *) self);
     } else if (T3_Helper_Binary_Has_Flag(&self->EventFlags, OnAddComponent << 8)) {
-        
         T3_Component *positionComponent = T3_Entity_GetComponent(self->Owner, Position);
         T3_Component *spriteComponent = T3_Entity_GetComponent(self->Owner, Sprite);
         T3C_SpriteRenderer *renderer = (T3C_SpriteRenderer *) self;
         T3_Helper_Error_If(positionComponent == NULL, __FILE__, __LINE__,
                            "Can't add sprite renderer. No position component on entity!");
+       
         T3_Helper_Error_If(spriteComponent == NULL, __FILE__, __LINE__,
                            "Can't add sprite renderer. No sprite component on entity!");
 
         renderer->Sprite = (T3C_Sprite *) spriteComponent;
         renderer->Position = (T3C_Position *) positionComponent;
         T3_Helper_Binary_Clear_Flag(&self->EventFlags, OnAddComponent << 8);
-        printf("onadd");
+        
     } else if (T3_Helper_Binary_Has_Flag(&self->EventFlags, OnLoop << 8)) {
         T3C_SpriteRenderer *renderer = (T3C_SpriteRenderer *) self;
         T3C_Sprite *sprite = renderer->Sprite;
@@ -92,7 +84,6 @@ void T3C_SpriteRenderer_Loop(T3_Component *self) {
         SDL_Point pivotConverted;
         SDL_Rect clipped;
         T3_Vector2 pixelPosition;
-
         pivotPoint.x = sprite->AnchorPoint.x * spriteRect.w;
         pivotPoint.y = sprite->AnchorPoint.y * spriteRect.h;
 
