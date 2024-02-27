@@ -1,5 +1,5 @@
-#ifndef T3_CONFIG_PROJECT_H
-#define T3_CONFIG_PROJECT_H
+#ifndef T3_T3_CONFIG_PROJECT_H
+#define T3_T3_CONFIG_PROJECT_H
 
 struct T3_Entity;
 

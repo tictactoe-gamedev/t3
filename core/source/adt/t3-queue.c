@@ -1,5 +1,5 @@
-#include "helpers.h"
-#include "adt.h"
+#include "t3-helpers.h"
+#include "t3-abstract-data-types.h"
 
 T3_Queue *T3_Queue_Init(void) {
     T3_Queue *queue = T3_Helper_Malloc_Safe(sizeof *queue, T3_FILE_LINE);

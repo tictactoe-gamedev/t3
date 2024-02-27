@@ -1,12 +1,16 @@
-#include "helpers.h"
-#include "ecs.h"
+#include "t3-helpers.h"
+#include "t3-ecs.h"
 
 T3_ECS_GameLoop *internalGameLoopRef;
 
-T3_Entity *T3_Entity_Init(const char *name, T3_Entity *parent, T3_List *children, T3_List *components, bool isEnabled) {
-    uint componentCount;
-    T3_Entity * entity = T3_Helper_Malloc_Safe(sizeof *entity, T3_FILE_LINE);
-    entity->Name = name;
+T3_Entity *T3_Entity_Init(const char *name30,
+                          T3_Entity *parent,
+                          T3_List *children,
+                          T3_List *components,
+                          bool isEnabled) {
+    uint32 componentCount;
+    T3_Entity *entity = T3_Helper_Malloc_Safe(sizeof *entity, T3_FILE_LINE);
+    T3_Char_Assign_Unsafe(entity->Name, name30, 0, 29);
     entity->Parent = parent;
     entity->Children = children;
     entity->Components = components;
@@ -16,15 +20,12 @@ T3_Entity *T3_Entity_Init(const char *name, T3_Entity *parent, T3_List *children
     componentCount = components->Size;
 
     if (componentCount > 0) {
-        uint i;
+        uint32 i;
 
         for (i = 0; i < componentCount; ++i) {
             T3_Component *component = T3_Entity_GetComponentAt(entity, i);
             component->Owner = entity;
-
-            if (component->OnAddComponent != NULL) {
-                T3_Queue_Enqueue(internalGameLoopRef->OnAddComponent, T3_Node_Init(component));
-            }
+            T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnAddComponent);
         }
     }
 
@@ -32,60 +33,46 @@ T3_Entity *T3_Entity_Init(const char *name, T3_Entity *parent, T3_List *children
 }
 
 void T3_Entity_AddComponent(T3_Entity *entity, T3_Component *component) {
-    T3_Helper_Assert(component->Owner == NULL,__FILE__, __LINE__, "Component has already owned by an entity!");
+    T3_Helper_Assert(component->Owner == NULL, __FILE__, __LINE__, "Component has already owned by an entity!");
 
     T3_List_Add(entity->Components, component);
     component->Owner = entity;
 
-    if (component->OnAddComponent != NULL)
-        T3_Queue_Enqueue(internalGameLoopRef->OnAddComponent, T3_Node_Init(component));
+    T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnAddComponent);
 }
 
 void T3_Entity_AddComponentSafe(T3_Entity *entity, T3_Component *component) {
-    T3_Helper_Assert(component->Owner == NULL, __FILE__, __LINE__,"Component has already owned by an entity!");
+    T3_Helper_Assert(component->Owner == NULL, __FILE__, __LINE__, "Component has already owned by an entity!");
 
     T3_List_AddSafe(entity->Components, component);
     component->Owner = entity;
 
-    if (component->OnAddComponent != NULL)
-        T3_Queue_Enqueue(internalGameLoopRef->OnAddComponent, T3_Node_Init(component));
+    T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnAddComponent);
 }
 
 void T3_Entity_EnterGameLoop(T3_Entity *entity) {
-    uint i;
-    T3_Helper_Assert(entity->IsInLoop == false,__FILE__, __LINE__, "Entity is already in loop?");
+    uint32 i;
+    T3_Helper_Assert(entity->IsInLoop == false, __FILE__, __LINE__, "Entity is already in loop?");
 
     entity->IsInLoop = true;
 
-    
     for (i = 0; i < entity->Components->Size; ++i) {
         T3_Component *component = T3_Entity_GetComponentAt(entity, i);
-
-        if (component->OnEnter != NULL) {
-            T3_Queue_Enqueue(internalGameLoopRef->OnEnter, T3_Node_Init(component));
-        }
-        if (component->OnLoop != NULL) {
-            T3_List_Add(internalGameLoopRef->OnLoop, component);
-        }
-
+        T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnEnter );
+        T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnLoop );
+        T3_List_Add(internalGameLoopRef->Components, component);
         component->IsInLoop = true;
     }
 }
 
 void T3_Entity_ExitGameLoop(T3_Entity *entity) {
-    uint i;
-    T3_Helper_Assert(entity->IsInLoop == true,__FILE__, __LINE__, "Entity is already out of the loop?");
-    
+    uint32 i;
+    T3_Helper_Assert(entity->IsInLoop == true, __FILE__, __LINE__, "Entity is already out of the loop?");
+
     for (i = 0; i < entity->Components->Size; ++i) {
         T3_Component *component = T3_Entity_GetComponentAt(entity, i);
-
-        if (component->OnExit != NULL) {
-            T3_Queue_Enqueue(internalGameLoopRef->OnExit, T3_Node_Init(component));
-        }
-
-        if (component->OnLoop != NULL) {
-            T3_List_Remove(internalGameLoopRef->OnLoop, component);
-        }
+        T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnExit);
+        T3_Helper_Binary_Flag(Clear,&component->IsEventReady, OnLoop);
 
         component->IsInLoop = false;
     }
@@ -97,15 +84,13 @@ void T3_Entity_RemoveComponent(T3_Component *component) {
     T3_List_Remove(component->Owner->Components, component);
     component->Owner = NULL;
 
-    if (component->OnRemoveComponent != NULL)
-        T3_Queue_Enqueue(internalGameLoopRef->OnRemoveComponent, T3_Node_Init(component));
+    T3_Helper_Binary_Flag(Set, &component->IsEventReady, OnRemoveComponent );
 }
 
 void T3_Entity_DestroyComponent(T3_Component *component) {
     T3_List_Remove(component->Owner->Components, component);
 
-    if (component->OnDestroy != NULL)
-        T3_Queue_Enqueue(internalGameLoopRef->OnDestroy, T3_Node_Init(component));
+    T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnDestroy);
 }
 
 void T3_Entity_Destroy(T3_Entity *entity) {
@@ -113,9 +98,7 @@ void T3_Entity_Destroy(T3_Entity *entity) {
 
     for (i = 0; i < entity->Components->Size; ++i) {
         T3_Component *component = (T3_Component *) T3_List_Get(entity->Components, i);
-
-        if (component->OnDestroy != NULL)
-            T3_Queue_Enqueue(internalGameLoopRef->OnDestroy, T3_Node_Init(component));
+        T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnDestroy );
     }
 
     T3_List_Destroy(entity->Components);
@@ -129,12 +112,12 @@ void T3_Entity_Destroy(T3_Entity *entity) {
     free(entity);
 }
 
-T3_Component *T3_Entity_GetComponentAt(T3_Entity *entity, uint index) {
+T3_Component *T3_Entity_GetComponentAt(T3_Entity *entity, uint32 index) {
     return (T3_Component *) T3_List_Get(entity->Components, index);
 }
 
 T3_Component *T3_Entity_GetComponent(T3_Entity *entity, T3C_Type componentType) {
-    uint i;
+    uint32 i;
     for (i = 0; i < entity->Components->Size; ++i) {
         T3_Component *component = (T3_Component *) T3_List_Get(entity->Components, i);
         if (component->Type == componentType) {
@@ -145,7 +128,7 @@ T3_Component *T3_Entity_GetComponent(T3_Entity *entity, T3C_Type componentType) 
 }
 
 void T3_Entity_Enabled(T3_Entity *entity, bool isEnabled) {
-    uint i;
+    uint32 i;
 
     if (entity->IsEnabled == isEnabled)
         return;
@@ -155,11 +138,10 @@ void T3_Entity_Enabled(T3_Entity *entity, bool isEnabled) {
     for (i = 0; i < entity->Components->Size; ++i) {
         T3_Component *component = (T3_Component *) T3_List_Get(entity->Components, i);
 
-        if (isEnabled && component->OnEnable != NULL) {
-            T3_Queue_Enqueue(internalGameLoopRef->OnEnable, T3_Node_Init(component));
-        } else if (isEnabled == false && component->OnDisable != NULL) {
-            T3_Queue_Enqueue(internalGameLoopRef->OnDisable, T3_Node_Init(component));
-        }
+        if (isEnabled)
+            T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnEnable );
+        else
+            T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnDisable );
     }
 }
 

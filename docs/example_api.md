@@ -27,7 +27,7 @@ Summarize "what" this header is, "for what" it is used and "how" it does this jo
 typedef struct T3_SomeStructName{
     int a;  
     const char* c;
-    uint someAmbigousData;
+    uint32 someAmbigousData;
 } T3_SomeStructName;
 ```
 * **someAmbigousData:** We will only describe variables that not so clear. (we should also avoid unclear things :) )

@@ -1,6 +1,6 @@
-#include "ecs.h"
-#include "helpers.h"
-#include "globals.h"
+#include "t3-ecs.h"
+#include "t3-helpers.h"
+#include "t3-globals.h"
 
 void Main(void) {
     T3_Globals *globals = T3_Globals_Get();
@@ -13,7 +13,7 @@ void Main(void) {
             "mainEntity",
             "MainScene",
             1024, 768,
-            globals->InitialEntityCapacity - 1, 0,
+            globals->InitialComponentCapacity - 1, 0,
             true, NULL);
 
     /** Creating a camera entity */
@@ -27,7 +27,7 @@ void Main(void) {
     exampleSprite = T3E_Sprite_Init(
             "exampleSprite",
             globals->MainRenderer,
-            T3_Entity_GetComponent(mainCamera, T3C_TYPE_CAMERA)->Data,
+            (T3C_Camera *)T3_Entity_GetComponent(mainCamera, Camera),
             0, 0,
             "project-root/tileset.png",
             T3_Helper_SDL_Rect_Init(0, 0, 100, 100),
