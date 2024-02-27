@@ -13,7 +13,7 @@ void Main(void) {
             "mainEntity",
             "MainScene",
             1024, 768,
-            globals->InitialEntityCapacity - 1, 0,
+            globals->InitialComponentCapacity - 1, 0,
             true, NULL);
 
     /** Creating a camera entity */

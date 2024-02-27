@@ -1,7 +1,6 @@
 #include "t3-ecs.h"
 #include "t3-helpers.h"
 
-void T3C_Rotation_OnDestroy (T3_Component *self);
 void T3C_Rotation_Loop (T3_Component *self);
 
 T3_Component *T3C_Rotation_Init (float radians) {
@@ -10,12 +9,12 @@ T3_Component *T3C_Rotation_Init (float radians) {
     T3_Component_Default (&rot->component, true);
     rot->component.Type = Rotation;
     rot->component.GameLoopFunction = T3C_Rotation_Loop;
-    T3_Helper_Binary_Set_Flag (&rot->component.EventFlags, OnDestroy);
+    T3_Helper_Binary_Flag(Set,&rot->component.HasEvent, OnDestroy);
     return &rot->component;
 }
 
 void T3C_Rotation_Loop (T3_Component *self) {
-    if (T3_Helper_Binary_Has_Flag (&self->EventFlags, OnDestroy << 8)) {
+    if (T3_Helper_Binary_HasFlag(&self->IsEventReady, OnDestroy)) {
         free ((T3C_Rotation *) self);
     }
 }

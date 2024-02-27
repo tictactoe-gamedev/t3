@@ -34,7 +34,8 @@ struct T3_Component {                                               /* 40-byte*/
     T3_Entity *Owner;                                               /* 8-byte */
     T3_GameLoop_Function GameLoopFunction;                          /* 8-byte */
     T3C_Type Type;                                                  /* 4-byte */
-    uint16 EventFlags;                                              /* 2-byte */
+    unsigned char HasEvent;                                         /* 1-byte */
+    unsigned char IsEventReady;                                     /* 1-byte */
     bool IsEnabled;                                                 /* 1-byte */
     bool IsInLoop;                                                  /* 1-byte */
 };
@@ -92,7 +93,7 @@ typedef struct T3C_SpriteRenderer {
 } T3C_SpriteRenderer;
 
 /** ------------------------------- GAME LOOP --------------------------------- */
-
+void T3_ECS_Initialize(void);
 void T3_Ecs_GameLoop_Init (void);
 void T3_Ecs_GameLoop_Step (void);
 

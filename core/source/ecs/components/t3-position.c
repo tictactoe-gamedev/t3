@@ -13,13 +13,13 @@ T3_Component *T3C_Position_Init(float x, float y) {
     pos->pos.x = x;
     pos->pos.y = y;
     pos->component.GameLoopFunction = T3C_Position_Loop;
-    T3_Helper_Binary_Set_Flag(&pos->component.EventFlags, OnDestroy);
+    T3_Helper_Binary_Flag(Set,&pos->component.HasEvent, OnDestroy);
 
     return &pos->component;
 }
 
 void T3C_Position_Loop(T3_Component *self) {
-    if (T3_Helper_Binary_Has_Flag(&self->EventFlags, OnDestroy << 8)) {
+    if (T3_Helper_Binary_HasFlag(&self->IsEventReady, OnDestroy)) {
         free((T3C_Position *) self);    
     }
 }

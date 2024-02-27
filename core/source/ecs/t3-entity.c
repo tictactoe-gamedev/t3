@@ -25,7 +25,7 @@ T3_Entity *T3_Entity_Init(const char *name30,
         for (i = 0; i < componentCount; ++i) {
             T3_Component *component = T3_Entity_GetComponentAt(entity, i);
             component->Owner = entity;
-            T3_Helper_Binary_Set_Flag(&component->EventFlags, OnAddComponent << 8);
+            T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnAddComponent);
         }
     }
 
@@ -38,7 +38,7 @@ void T3_Entity_AddComponent(T3_Entity *entity, T3_Component *component) {
     T3_List_Add(entity->Components, component);
     component->Owner = entity;
 
-    T3_Helper_Binary_Set_Flag(&component->EventFlags, OnAddComponent << 8);
+    T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnAddComponent);
 }
 
 void T3_Entity_AddComponentSafe(T3_Entity *entity, T3_Component *component) {
@@ -47,7 +47,7 @@ void T3_Entity_AddComponentSafe(T3_Entity *entity, T3_Component *component) {
     T3_List_AddSafe(entity->Components, component);
     component->Owner = entity;
 
-    T3_Helper_Binary_Set_Flag(&component->EventFlags, OnAddComponent << 8);
+    T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnAddComponent);
 }
 
 void T3_Entity_EnterGameLoop(T3_Entity *entity) {
@@ -55,12 +55,11 @@ void T3_Entity_EnterGameLoop(T3_Entity *entity) {
     T3_Helper_Assert(entity->IsInLoop == false, __FILE__, __LINE__, "Entity is already in loop?");
 
     entity->IsInLoop = true;
-    T3_Helper_Log(Info, T3_FILE_LINE, "%s entered the loop", entity->Name);
 
     for (i = 0; i < entity->Components->Size; ++i) {
         T3_Component *component = T3_Entity_GetComponentAt(entity, i);
-        T3_Helper_Binary_Set_Flag(&component->EventFlags, OnEnter << 8);
-        T3_Helper_Binary_Set_Flag(&component->EventFlags, OnLoop << 8);
+        T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnEnter );
+        T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnLoop );
         T3_List_Add(internalGameLoopRef->Components, component);
         component->IsInLoop = true;
     }
@@ -72,8 +71,8 @@ void T3_Entity_ExitGameLoop(T3_Entity *entity) {
 
     for (i = 0; i < entity->Components->Size; ++i) {
         T3_Component *component = T3_Entity_GetComponentAt(entity, i);
-        T3_Helper_Binary_Set_Flag(&component->EventFlags, OnExit << 8);
-        T3_Helper_Binary_Clear_Flag(&component->EventFlags, OnLoop << 8);
+        T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnExit);
+        T3_Helper_Binary_Flag(Clear,&component->IsEventReady, OnLoop);
 
         component->IsInLoop = false;
     }
@@ -85,13 +84,13 @@ void T3_Entity_RemoveComponent(T3_Component *component) {
     T3_List_Remove(component->Owner->Components, component);
     component->Owner = NULL;
 
-    T3_Helper_Binary_Set_Flag(&component->EventFlags, OnRemoveComponent << 8);
+    T3_Helper_Binary_Flag(Set, &component->IsEventReady, OnRemoveComponent );
 }
 
 void T3_Entity_DestroyComponent(T3_Component *component) {
     T3_List_Remove(component->Owner->Components, component);
 
-    T3_Helper_Binary_Set_Flag(&component->EventFlags, OnDestroy << 8);
+    T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnDestroy);
 }
 
 void T3_Entity_Destroy(T3_Entity *entity) {
@@ -99,7 +98,7 @@ void T3_Entity_Destroy(T3_Entity *entity) {
 
     for (i = 0; i < entity->Components->Size; ++i) {
         T3_Component *component = (T3_Component *) T3_List_Get(entity->Components, i);
-        T3_Helper_Binary_Set_Flag(&component->EventFlags, OnDestroy << 8);
+        T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnDestroy );
     }
 
     T3_List_Destroy(entity->Components);
@@ -140,9 +139,9 @@ void T3_Entity_Enabled(T3_Entity *entity, bool isEnabled) {
         T3_Component *component = (T3_Component *) T3_List_Get(entity->Components, i);
 
         if (isEnabled)
-            T3_Helper_Binary_Set_Flag(&component->EventFlags, OnEnable << 8);
+            T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnEnable );
         else
-            T3_Helper_Binary_Set_Flag(&component->EventFlags, OnDisable << 8);
+            T3_Helper_Binary_Flag(Set,&component->IsEventReady, OnDisable );
     }
 }
 

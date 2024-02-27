@@ -14,12 +14,12 @@ T3_Component *T3C_Sprite_Init(T3C_Texture *texture, SDL_Rect rect, float anchorX
     T3_Component_Default(&sprite->component, true);
     sprite->component.Type = Sprite;
     sprite->component.GameLoopFunction = T3C_Sprite_Loop;
-    T3_Helper_Binary_Set_Flag(&sprite->component.EventFlags, OnDestroy);
+    T3_Helper_Binary_Flag(Set, &sprite->component.HasEvent, OnDestroy);
     return &sprite->component;
 }
 
 void T3C_Sprite_Loop(T3_Component *self) {
-    if (T3_Helper_Binary_Has_Flag(&self->EventFlags, OnDestroy << 8)) {
+    if (T3_Helper_Binary_HasFlag(&self->IsEventReady, OnDestroy)) {
         free((T3C_Sprite *) self);
     }
 }
@@ -37,7 +37,7 @@ T3_Component *T3C_SpriteRenderer_Init(void) {
 
     T3_Component_Default(&spriteRenderer->component, true);
     spriteRenderer->component.Type = SpriteRenderer;
-    T3_Helper_Binary_Set_Flag(&spriteRenderer->component.EventFlags, OnDestroy | OnAddComponent | OnLoop);
+    T3_Helper_Binary_Flag(Set, &spriteRenderer->component.HasEvent, OnDestroy | OnAddComponent | OnLoop);
     return &spriteRenderer->component;
 }
 
@@ -50,32 +50,30 @@ T3_Component *T3C_SpriteRenderer_Init_With_Camera(T3C_Camera *camera) {
 
     T3_Component_Default(&spriteRenderer->component, true);
     spriteRenderer->component.Type = SpriteRenderer;
-    T3_Helper_Binary_Set_Flag(&spriteRenderer->component.EventFlags, OnDestroy );
-    T3_Helper_Binary_Set_Flag(&spriteRenderer->component.EventFlags, OnAddComponent );
-    T3_Helper_Binary_Set_Flag(&spriteRenderer->component.EventFlags, OnLoop );
-    printf("SpriteRend Flags: %d",spriteRenderer->component.EventFlags);
+    
+    T3_Helper_Binary_Flag(Set,&spriteRenderer->component.HasEvent, OnDestroy | OnAddComponent |OnLoop);
     spriteRenderer->component.GameLoopFunction = T3C_SpriteRenderer_Loop;
     return &spriteRenderer->component;
 }
 
 void T3C_SpriteRenderer_Loop(T3_Component *self) {
-    if (T3_Helper_Binary_Has_Flag(&self->EventFlags, OnDestroy << 8)) {
+    if (T3_Helper_Binary_HasFlag(&self->IsEventReady, OnDestroy)) {
         free((T3C_Sprite *) self);
-    } else if (T3_Helper_Binary_Has_Flag(&self->EventFlags, OnAddComponent << 8)) {
+    } else if (T3_Helper_Binary_HasFlag(&self->IsEventReady, OnAddComponent)) {
         T3_Component *positionComponent = T3_Entity_GetComponent(self->Owner, Position);
         T3_Component *spriteComponent = T3_Entity_GetComponent(self->Owner, Sprite);
         T3C_SpriteRenderer *renderer = (T3C_SpriteRenderer *) self;
         T3_Helper_Error_If(positionComponent == NULL, __FILE__, __LINE__,
                            "Can't add sprite renderer. No position component on entity!");
-       
+
         T3_Helper_Error_If(spriteComponent == NULL, __FILE__, __LINE__,
                            "Can't add sprite renderer. No sprite component on entity!");
 
         renderer->Sprite = (T3C_Sprite *) spriteComponent;
         renderer->Position = (T3C_Position *) positionComponent;
-        T3_Helper_Binary_Clear_Flag(&self->EventFlags, OnAddComponent << 8);
-        
-    } else if (T3_Helper_Binary_Has_Flag(&self->EventFlags, OnLoop << 8)) {
+        T3_Helper_Binary_Flag(Clear,&self->IsEventReady, OnAddComponent);
+
+    } else if (T3_Helper_Binary_HasFlag(&self->IsEventReady, OnLoop)) {
         T3C_SpriteRenderer *renderer = (T3C_SpriteRenderer *) self;
         T3C_Sprite *sprite = renderer->Sprite;
         SDL_Rect spriteRect = sprite->Rect;

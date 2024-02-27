@@ -10,7 +10,7 @@ typedef struct T3_Globals {
     T3_Config_Resolution Resolution;
     SDL_Color DefaultBackground;
     SDL_Color Black;
-    uint32 InitialEntityCapacity;
+    size_t InitialComponentCapacity;
     SDL_Renderer* MainRenderer;
 } T3_Globals;
 

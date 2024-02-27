@@ -20,7 +20,7 @@ T3_Component *T3C_Texture_Init(void) {
     T3_Component_Default (&texture->component,true);
 
     texture->component.Type = Texture;
-    T3_Helper_Binary_Set_Flag (&texture->component.EventFlags, OnDestroy);
+    T3_Helper_Binary_Flag (Set,&texture->component.HasEvent, OnDestroy);
     texture->component.GameLoopFunction = T3C_Texture_Loop;
 
     return &texture->component;
@@ -39,7 +39,7 @@ T3_Component *T3C_Texture_Init_With_Load(SDL_Renderer *renderer, const char *pat
     T3_Component_Default (&texture->component,true);
 
     texture->component.Type = Texture;
-    T3_Helper_Binary_Set_Flag (&texture->component.EventFlags, OnDestroy);
+    T3_Helper_Binary_Flag (Set,&texture->component.HasEvent, OnDestroy);
     T3_Helper_Error_If(texture->Texture == NULL, __FILE__, __LINE__, "Couldn't load the image %s", SDL_GetError());
     texture->component.GameLoopFunction = T3C_Texture_Loop;
     texture->Rect.w = texture->OriginalWidth;
