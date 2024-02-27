@@ -61,12 +61,7 @@ void T3_Init(void) {
 
     T3_Ecs_GameLoop_Init();
     T3_InputSystem_Init();
-    CONFIG_ENTRY_POINT_FUNCTION_NAME();
-
-    T3_Helper_Log (Info,T3_FILE_LINE,
-                   "Scene: %d \n entity pointer: %d \n, const char* : %d\n bool: %d\n",
-                   sizeof (T3C_SpriteRenderer), sizeof (T3_Entity*), sizeof (const char*), sizeof (bool));
-    
+    CONFIG_ENTRY_POINT_FUNCTION_NAME();    
 }
 
 void T3_GameLoop(void) {
