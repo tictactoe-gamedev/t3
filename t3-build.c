@@ -59,9 +59,7 @@
                                                             SRC(T3_CORE_SOURCE "/t3-math.c")                            \
                                                             SRC(T3_CORE_SOURCE "/t3-globals.c")                            \
                                                             SRC(T3_CORE_SOURCE "/t3-input.c")                           \
-                                                            SRC(T3_HELPERS "/t3-logging.c")                                \
                                                             SRC(T3_HELPERS "/t3-binary.c")                                \
-                                                            SRC(T3_HELPERS "/t3-char.c")                                \
                                                             SRC(T3_HELPERS "/t3-randomisation.c")                          \
                                                             SRC(T3_HELPERS "/t3-memory.c")                              \
                                                             SRC(T3_HELPERS "/t3-sdl-rect-helper.c")                        \
@@ -92,10 +90,10 @@
 #define RUN_FLAGS                                           FLAG_ENABLED("valgrind ")          \
                                                             FLAG_DISABLED("--memcheck:leak-check=full")                           \
                                                             FLAG_DISABLED("--tool=cachegrind")                           \
-                                                            FLAG_ENABLED("--tool=callgrind")                            \
-                                                            FLAG_ENABLED("--dump-instr=yes")                            \
-                                                            FLAG_ENABLED("--simulate-cache=yes")                            \
-                                                            FLAG_ENABLED("--collect-jumps=yes")                            \
+                                                            FLAG_DISABLED("--tool=callgrind")                            \
+                                                            FLAG_DISABLED("--dump-instr=yes")                            \
+                                                            FLAG_DISABLED("--simulate-cache=yes")                            \
+                                                            FLAG_DISABLED("--collect-jumps=yes")                            \
                                                             FLAG_DISABLED("--tool=helgrind")                             \
                                                             FLAG_DISABLED("--tool=drd")                                  \
                                                             FLAG_DISABLED("--tool=massif")                               \

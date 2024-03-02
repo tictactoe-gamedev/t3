@@ -9,8 +9,8 @@ T3_Entity *T3_Entity_Init(const char *name30,
                           T3_List *components,
                           bool isEnabled) {
     uint32 componentCount;
-    T3_Entity *entity = T3_Helper_Malloc_Safe(sizeof *entity, T3_FILE_LINE);
-    T3_Char_Assign_Unsafe(entity->Name, name30, 0, 29);
+    T3_Entity *entity = T3_Helper_Malloc_Safe(sizeof *entity, T3_FILE, T3_LINE);
+    SDL_snprintf(entity->Name,30,"%s",name30);
     entity->Parent = parent;
     entity->Children = children;
     entity->Components = components;
@@ -33,8 +33,8 @@ T3_Entity *T3_Entity_Init(const char *name30,
 }
 
 void T3_Entity_AddComponent(T3_Entity *entity, T3_Component *component) {
-    T3_Helper_Assert(component->Owner == NULL, __FILE__, __LINE__, "Component has already owned by an entity!");
-
+    SDL_assert(component->Owner == NULL);
+    
     T3_List_Add(entity->Components, component);
     component->Owner = entity;
 
@@ -42,8 +42,8 @@ void T3_Entity_AddComponent(T3_Entity *entity, T3_Component *component) {
 }
 
 void T3_Entity_AddComponentSafe(T3_Entity *entity, T3_Component *component) {
-    T3_Helper_Assert(component->Owner == NULL, __FILE__, __LINE__, "Component has already owned by an entity!");
-
+    SDL_assert(component->Owner == NULL);
+    
     T3_List_AddSafe(entity->Components, component);
     component->Owner = entity;
 
@@ -52,8 +52,8 @@ void T3_Entity_AddComponentSafe(T3_Entity *entity, T3_Component *component) {
 
 void T3_Entity_EnterGameLoop(T3_Entity *entity) {
     uint32 i;
-    T3_Helper_Assert(entity->IsInLoop == false, __FILE__, __LINE__, "Entity is already in loop?");
-
+    SDL_assert(entity->IsInLoop == false);
+    
     entity->IsInLoop = true;
 
     for (i = 0; i < entity->Components->Size; ++i) {
@@ -67,7 +67,7 @@ void T3_Entity_EnterGameLoop(T3_Entity *entity) {
 
 void T3_Entity_ExitGameLoop(T3_Entity *entity) {
     uint32 i;
-    T3_Helper_Assert(entity->IsInLoop == true, __FILE__, __LINE__, "Entity is already out of the loop?");
+    SDL_assert(entity->IsInLoop );
 
     for (i = 0; i < entity->Components->Size; ++i) {
         T3_Component *component = T3_Entity_GetComponentAt(entity, i);

@@ -5,7 +5,7 @@ T3_ECS_GameLoop *internal_gameLoop;
 
 
 void T3_Ecs_GameLoop_Init(void) {
-    T3_ECS_GameLoop *gameLoop = T3_Helper_Malloc_Safe(sizeof *gameLoop, T3_FILE_LINE);
+    T3_ECS_GameLoop *gameLoop = T3_Helper_Malloc_Safe(sizeof *gameLoop, T3_FILE, T3_LINE);
     internal_gameLoop = gameLoop;
     internal_gameLoop->Components = T3_List_Init(50);
     T3_Entity_SetGameLoop(gameLoop);

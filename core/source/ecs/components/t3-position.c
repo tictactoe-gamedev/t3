@@ -7,7 +7,7 @@ void T3C_Position_Loop(T3_Component *self);
 
 T3_Component *T3C_Position_Init(float x, float y) {
 
-    T3C_Position *pos = T3_Helper_Malloc_Safe(sizeof *pos, T3_FILE_LINE);
+    T3C_Position *pos = T3_Helper_Malloc_Safe(sizeof *pos, T3_FILE, T3_LINE);
     T3_Component_Default(&pos->component, true);
     pos->component.Type = Position;
     pos->pos.x = x;
@@ -19,7 +19,7 @@ T3_Component *T3C_Position_Init(float x, float y) {
 }
 
 void T3C_Position_Loop(T3_Component *self) {
-    if (T3_Helper_Binary_HasFlag(&self->IsEventReady, OnDestroy)) {
+    if (T3_Helper_Binary_HasFlag(self->IsEventReady, OnDestroy)) {
         free((T3C_Position *) self);    
     }
 }

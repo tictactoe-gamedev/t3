@@ -74,3 +74,5 @@ dkms.conf
 # CMake or Build Tools
 build/
 /compile_commands.json
+
+8086-project/

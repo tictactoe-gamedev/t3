@@ -4,7 +4,7 @@
 void T3C_Rotation_Loop (T3_Component *self);
 
 T3_Component *T3C_Rotation_Init (float radians) {
-    T3C_Rotation *rot = T3_Helper_Malloc_Safe (sizeof *rot, T3_FILE_LINE);
+    T3C_Rotation *rot = T3_Helper_Malloc_Safe (sizeof *rot, T3_FILE, T3_LINE);
     rot->radians = radians;
     T3_Component_Default (&rot->component, true);
     rot->component.Type = Rotation;
@@ -14,7 +14,7 @@ T3_Component *T3C_Rotation_Init (float radians) {
 }
 
 void T3C_Rotation_Loop (T3_Component *self) {
-    if (T3_Helper_Binary_HasFlag(&self->IsEventReady, OnDestroy)) {
+    if (T3_Helper_Binary_HasFlag(self->IsEventReady, OnDestroy)) {
         free ((T3C_Rotation *) self);
     }
 }

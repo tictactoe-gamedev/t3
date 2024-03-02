@@ -1,8 +1,9 @@
+#include <SDL_log.h>
 #include "t3-helpers.h"
 #include "t3-abstract-data-types.h"
 
 T3_Stack *T3_Stack_Init(void) {
-    T3_Stack *stack = T3_Helper_Malloc_Safe(sizeof *stack, T3_FILE_LINE);
+    T3_Stack *stack = T3_Helper_Malloc_Safe(sizeof *stack, T3_FILE, T3_LINE);
     stack->Top = NULL;
     stack->Count = 0;
     return stack;
@@ -37,7 +38,7 @@ void T3_Stack_Log_Int(T3_Stack *queue) {
     int i = 0;
     T3_Node *node = queue->Top;
     while (node != NULL) {
-        T3_Helper_Log(Info, __FILE__, __LINE__, "[%d]: [%d]", i, *(int *) node->Data);
+        SDL_Log("%s[%d]: [%d]->[%d]", T3_FILE,T3_LINE,i, *(int *)node->Data);
         node = node->Next;
         i++;
     }

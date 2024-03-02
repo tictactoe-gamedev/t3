@@ -6,7 +6,7 @@ void T3C_SpriteRenderer_Loop(T3_Component *self);
 void T3C_Sprite_Loop(T3_Component *self);
 
 T3_Component *T3C_Sprite_Init(T3C_Texture *texture, SDL_Rect rect, float anchorX, float anchorY) {
-    T3C_Sprite *sprite = T3_Helper_Malloc_Safe(sizeof *sprite, T3_FILE_LINE);
+    T3C_Sprite *sprite = T3_Helper_Malloc_Safe(sizeof *sprite, T3_FILE, T3_LINE);
     sprite->SourceTexture = texture;
     sprite->Rect = rect;
     sprite->AnchorPoint = T3_Vector2_Init(anchorX, anchorY);
@@ -19,7 +19,7 @@ T3_Component *T3C_Sprite_Init(T3C_Texture *texture, SDL_Rect rect, float anchorX
 }
 
 void T3C_Sprite_Loop(T3_Component *self) {
-    if (T3_Helper_Binary_HasFlag(&self->IsEventReady, OnDestroy)) {
+    if (T3_Helper_Binary_HasFlag(self->IsEventReady, OnDestroy)) {
         free((T3C_Sprite *) self);
     }
 }
@@ -29,7 +29,7 @@ void T3C_Sprite_OnDestroy(T3_Component *component) {
 }
 
 T3_Component *T3C_SpriteRenderer_Init(void) {
-    T3C_SpriteRenderer *spriteRenderer = T3_Helper_Malloc_Safe(sizeof *spriteRenderer, T3_FILE_LINE);
+    T3C_SpriteRenderer *spriteRenderer = T3_Helper_Malloc_Safe(sizeof *spriteRenderer, T3_FILE, T3_LINE);
     spriteRenderer->Position = NULL;
     spriteRenderer->Sprite = NULL;
     spriteRenderer->Camera = NULL;
@@ -42,7 +42,7 @@ T3_Component *T3C_SpriteRenderer_Init(void) {
 }
 
 T3_Component *T3C_SpriteRenderer_Init_With_Camera(T3C_Camera *camera) {
-    T3C_SpriteRenderer *spriteRenderer = T3_Helper_Malloc_Safe(sizeof *spriteRenderer, T3_FILE_LINE);
+    T3C_SpriteRenderer *spriteRenderer = T3_Helper_Malloc_Safe(sizeof *spriteRenderer, T3_FILE, T3_LINE);
     spriteRenderer->Position = NULL;
     spriteRenderer->Sprite = NULL;
     spriteRenderer->Camera = camera;
@@ -50,30 +50,36 @@ T3_Component *T3C_SpriteRenderer_Init_With_Camera(T3C_Camera *camera) {
 
     T3_Component_Default(&spriteRenderer->component, true);
     spriteRenderer->component.Type = SpriteRenderer;
-    
-    T3_Helper_Binary_Flag(Set,&spriteRenderer->component.HasEvent, OnDestroy | OnAddComponent |OnLoop);
+
+    T3_Helper_Binary_Flag(Set, &spriteRenderer->component.HasEvent, OnDestroy | OnAddComponent | OnLoop);
     spriteRenderer->component.GameLoopFunction = T3C_SpriteRenderer_Loop;
     return &spriteRenderer->component;
 }
 
 void T3C_SpriteRenderer_Loop(T3_Component *self) {
-    if (T3_Helper_Binary_HasFlag(&self->IsEventReady, OnDestroy)) {
+    if (T3_Helper_Binary_HasFlag(self->IsEventReady, OnDestroy)) {
         free((T3C_Sprite *) self);
-    } else if (T3_Helper_Binary_HasFlag(&self->IsEventReady, OnAddComponent)) {
+    } else if (T3_Helper_Binary_HasFlag(self->IsEventReady, OnAddComponent)) {
         T3_Component *positionComponent = T3_Entity_GetComponent(self->Owner, Position);
         T3_Component *spriteComponent = T3_Entity_GetComponent(self->Owner, Sprite);
         T3C_SpriteRenderer *renderer = (T3C_SpriteRenderer *) self;
-        T3_Helper_Error_If(positionComponent == NULL, __FILE__, __LINE__,
-                           "Can't add sprite renderer. No position component on entity!");
 
-        T3_Helper_Error_If(spriteComponent == NULL, __FILE__, __LINE__,
-                           "Can't add sprite renderer. No sprite component on entity!");
+        if (positionComponent == NULL) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+                         "%s[%d]:%s", T3_FILE, T3_LINE,
+                         "Can't add sprite renderer. No position component on entity!\n");
+        }
+        if (positionComponent == NULL) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+                         "%s[%d]:%s", T3_FILE, T3_LINE,
+                         "Can't add sprite renderer. No sprite component on entity!\n");
+        }
 
         renderer->Sprite = (T3C_Sprite *) spriteComponent;
         renderer->Position = (T3C_Position *) positionComponent;
-        T3_Helper_Binary_Flag(Clear,&self->IsEventReady, OnAddComponent);
+        T3_Helper_Binary_Flag(Clear, &self->IsEventReady, OnAddComponent);
 
-    } else if (T3_Helper_Binary_HasFlag(&self->IsEventReady, OnLoop)) {
+    } else if (T3_Helper_Binary_HasFlag(self->IsEventReady, OnLoop)) {
         T3C_SpriteRenderer *renderer = (T3C_SpriteRenderer *) self;
         T3C_Sprite *sprite = renderer->Sprite;
         SDL_Rect spriteRect = sprite->Rect;
@@ -108,11 +114,19 @@ void T3C_SpriteRenderer_OnAddComponent(T3_Component *component) {
     T3_Component *positionComponent = T3_Entity_GetComponent(component->Owner, Position);
     T3_Component *spriteComponent = T3_Entity_GetComponent(component->Owner, Sprite);
     T3C_SpriteRenderer *renderer = (T3C_SpriteRenderer *) component;
-    T3_Helper_Error_If(positionComponent == NULL, __FILE__, __LINE__,
-                       "Can't add sprite renderer. No position component on entity!");
-    T3_Helper_Error_If(spriteComponent == NULL, __FILE__, __LINE__,
-                       "Can't add sprite renderer. No sprite component on entity!");
 
+    if (positionComponent == NULL) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+                     "%s[%d]:%s", T3_FILE, T3_LINE,
+                     "Can't add sprite renderer. No position component on entity!\n");
+    }
+    
+    if (positionComponent == NULL) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+                     "%s[%d]:%s", T3_FILE, T3_LINE,
+                     "Can't add sprite renderer. No sprite component on entity!\n");
+    }
+    
     renderer->Sprite = (T3C_Sprite *) spriteComponent;
     renderer->Position = (T3C_Position *) positionComponent;
 }

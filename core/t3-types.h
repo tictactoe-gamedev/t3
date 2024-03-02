@@ -12,7 +12,7 @@ typedef uint16_t uint16;
 typedef int16_t int16;
 typedef uint8_t uint8;
 typedef uint8_t bool;
-
+typedef unsigned char byte;
 
 typedef enum T3C_Type {
     Position,

@@ -1,8 +1,10 @@
+#include <SDL_log.h>
+#include <SDL_assert.h>
 #include "t3-helpers.h"
 #include "t3-abstract-data-types.h"
 
 T3_Queue *T3_Queue_Init(void) {
-    T3_Queue *queue = T3_Helper_Malloc_Safe(sizeof *queue, T3_FILE_LINE);
+    T3_Queue *queue = T3_Helper_Malloc_Safe(sizeof *queue, T3_FILE, T3_LINE);
     queue->Head = NULL;
     queue->Tail = NULL;
     queue->Count = 0;
@@ -25,8 +27,8 @@ void T3_Queue_Enqueue(T3_Queue *queue, T3_Node *node) {
 
 T3_Node *T3_Queue_Dequeue(T3_Queue *queue) {
     T3_Node *current;
-    T3_Helper_Assert(queue->Count != 0,__FILE__, __LINE__, "Nothing to dequeue!");
-
+    SDL_assert(queue->Count != 0);
+    
     current = queue->Head;
     queue->Head = queue->Head->Next;
     if (queue->Count == 2) {
@@ -52,7 +54,7 @@ void T3_Queue_Log_Int(T3_Queue *queue) {
     int i = 0;
     T3_Node *node = queue->Head;
     while (node != NULL) {
-        T3_Helper_Log(Info, __FILE__, __LINE__, "[%d]: [%d]", i, *(int *) node->Data);
+        SDL_Log("%s[%d]: [%d]->[%d]", T3_FILE, T3_LINE, i, *(int *) node->Data);
         node = node->Next;
         i++;
     }

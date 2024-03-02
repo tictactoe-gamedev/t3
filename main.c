@@ -37,7 +37,9 @@ void T3_Init(void) {
     MainWindow = NULL;
     screenSurface = NULL;
 
-    T3_Helper_Error_If(SDL_Init(SDL_INIT_VIDEO) < 0, __FILE__, __LINE__, "%s \n", SDL_GetError());
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s\n", SDL_GetError());
+    }
 
     MainWindow = SDL_CreateWindow(globals->Title,
                                   SDL_WINDOWPOS_UNDEFINED,
@@ -45,15 +47,18 @@ void T3_Init(void) {
                                   globals->Resolution.Width,
                                   globals->Resolution.Height,
                                   SDL_WINDOW_SHOWN);
-
-    T3_Helper_Error_If(MainWindow == NULL, __FILE__, __LINE__, "%s", SDL_GetError());
-
+    if (MainWindow == NULL) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s[%d]: %s\n", T3_FILE, T3_LINE, SDL_GetError());
+    }
 
     MainRenderer = SDL_CreateRenderer(MainWindow, -1, SDL_RENDERER_ACCELERATED);
-    T3_Helper_Error_If(MainRenderer == NULL, __FILE__, __LINE__, "%s", SDL_GetError());
-    T3_Helper_Error_If(
-            IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_WEBP) == 0, __FILE__, __LINE__,
-            "Couldn't load image libraries.");
+
+    if (MainRenderer == NULL) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s[%d]: %s\n", T3_FILE, T3_LINE, SDL_GetError());
+    }
+    if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_WEBP) == 0) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s[%d]: %s\n", T3_FILE, T3_LINE, "Loading image libraries failed!\n");
+    }
 
     globals->MainRenderer = MainRenderer;
     SDL_SetRenderDrawColor(MainRenderer,
@@ -61,13 +66,13 @@ void T3_Init(void) {
 
     T3_Ecs_GameLoop_Init();
     T3_InputSystem_Init();
-    CONFIG_ENTRY_POINT_FUNCTION_NAME();    
+    CONFIG_ENTRY_POINT_FUNCTION_NAME();
 }
 
 void T3_GameLoop(void) {
     SDL_Event e;
     bool quit = false;
-    
+
     while (!quit) {
         CurrentFrameMS = SDL_GetTicks64();
         DeltaTimeInSeconds = (CurrentFrameMS - PreviousFrameMS) / 1000.0;
@@ -78,7 +83,7 @@ void T3_GameLoop(void) {
         SDL_RenderClear(MainRenderer);
         T3_InputSystem_Feed(&e);
         if (e.type == SDL_QUIT) {
-            quit = true; 
+            quit = true;
         }
 
         T3_Ecs_GameLoop_Step();

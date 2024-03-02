@@ -5,9 +5,9 @@ void T3_Scene_Loop (T3_Component *self){}
 
 T3_Component *T3C_Scene_Init (const char *name20, uint16 width, uint16 height) {
 
-    T3C_Scene *scene = T3_Helper_Malloc_Safe (sizeof *scene, T3_FILE_LINE);
+    T3C_Scene *scene = T3_Helper_Malloc_Safe (sizeof *scene, T3_FILE, T3_LINE);
     T3_Component_Default (&scene->component, true);
-    T3_Char_Assign_Unsafe (scene->Name, name20, 0, 19);
+    SDL_snprintf(scene->Name,20,"%s",name20);
     scene->Width = width;
     scene->Height = height;
     scene->component.GameLoopFunction = T3_Scene_Loop;

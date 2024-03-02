@@ -1,15 +1,16 @@
 #include <stdio.h>
+#include <SDL_log.h>
 #include "t3-helpers.h"
 #include "t3-abstract-data-types.h"
 
 size_t GetRealIndex(T3_List *list, size_t index);
 
 T3_List *T3_List_Init(size_t initialCapacity) {
-    T3_List *list = T3_Helper_Malloc_Safe(sizeof *list, T3_FILE_LINE);
+    T3_List *list = T3_Helper_Malloc_Safe(sizeof *list, T3_FILE, T3_LINE);
     list->Capacity = initialCapacity;
     list->Size = 0;
-    list->Array = (void **) malloc(sizeof(void *) * initialCapacity);
-    list->_removedIndices = (size_t *) malloc(sizeof(size_t) * initialCapacity / 2);
+    list->Array = (void **) SDL_malloc(sizeof(void *) * initialCapacity);
+    list->_removedIndices = (size_t *) SDL_malloc(sizeof(size_t) * initialCapacity / 2);
     list->_removedIndicesSize = 0;
     list->_removedIndicesCapacity = initialCapacity / 2;
     return list;
@@ -18,12 +19,12 @@ T3_List *T3_List_Init(size_t initialCapacity) {
 T3_List *T3_List_Init_With_Elements(size_t initialCapacity, size_t elementsCount, ...) {
     int i;
     va_list args;
-    
-    T3_List *list = T3_Helper_Malloc_Safe(sizeof *list, T3_FILE_LINE);
+
+    T3_List *list = T3_Helper_Malloc_Safe(sizeof *list, T3_FILE, T3_LINE);
     list->Capacity = initialCapacity;
     list->Size = 0;
-    list->Array = (void **) malloc(sizeof(void *) * initialCapacity);
-    list->_removedIndices = (size_t *) malloc(sizeof(size_t) * initialCapacity / 2);
+    list->Array = (void **) SDL_malloc(sizeof(void *) * initialCapacity);
+    list->_removedIndices = (size_t *) SDL_malloc(sizeof(size_t) * initialCapacity / 2);
     list->_removedIndicesSize = 0;
     list->_removedIndicesCapacity = initialCapacity / 2;
 
@@ -50,14 +51,17 @@ void T3_List_Add(T3_List *list, void *element) {
 
 void T3_List_Resize(T3_List *list, size_t newCapacity) {
     list->Capacity = newCapacity;
-    list->Array = (void **) realloc(list->Array, sizeof(void *) * newCapacity);
-    T3_Helper_Error_If(list->Array == NULL, __FILE__, __LINE__, "Can't re-alloc");
+    list->Array = (void **) SDL_realloc(list->Array, sizeof(void *) * newCapacity);
+    if (list->Array == NULL)
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s[%d]: Re-alloc failed", T3_FILE, T3_LINE);
 }
 
 void T3_List_ResizeCache(T3_List *list, size_t newCapacity) {
     list->_removedIndicesCapacity = newCapacity;
-    list->_removedIndices = (size_t *) realloc(list->_removedIndices, sizeof(size_t) * newCapacity);
-    T3_Helper_Error_If(list->_removedIndices == NULL, __FILE__, __LINE__, "Can't re-alloc");
+    list->_removedIndices = (size_t *) SDL_realloc(list->_removedIndices, sizeof(size_t) * newCapacity);
+    if (list->_removedIndices == NULL){
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,"%s[%d]: %s",T3_FILE,T3_LINE,"Re-alloc failed");
+    }
 }
 
 void T3_List_Remove(T3_List *list, void *element) {
@@ -143,7 +147,6 @@ void T3_List_CleanCache(T3_List *list) {
         list->Array[i] = NULL;
     }
 
-
     list->_removedIndices =
             (size_t *) realloc(list->_removedIndices, sizeof(size_t) * list->_removedIndicesCapacity);
     list->_removedIndicesSize = 0;
@@ -178,7 +181,6 @@ int T3_List_FindIndexOf(T3_List *list, void *element) {
     return -1;
 }
 
-
 void T3_List_Test(void) {
 #if CONFIG_BUILD_TYPE == DEVELOPMENT
     size_t t;
@@ -202,7 +204,6 @@ void T3_List_Test(void) {
     T3_List_Add(list, &h);
     T3_List_Add(list, &i);
 
-    
     for (t = 0; t < 9; t++) {
         printf("%d\n", *(int *) T3_List_Get(list, t));
     }
